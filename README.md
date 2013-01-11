@@ -1,4 +1,4 @@
-AMC
+YAM
 ===
 
 Yet another media center
