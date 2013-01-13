@@ -90,8 +90,9 @@ class PhononPlayer(QtCore.QObject):
         if self.hasNextTrack():
             self._playlistIdx = self._playlistIdx + 1
             nextTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].filePath)
-            self.player.setCurrentSource(nextTrack)
-            self.player.play()
+            print nextTrack
+            print self.player.setCurrentSource(nextTrack)
+            print self.player.play()
 
     def playPreviousTrack(self):
         if self.hasPreviousTrack():
@@ -108,8 +109,7 @@ class PhononPlayer(QtCore.QObject):
 
     def queueTracks(self, tracks):
         for track in tracks:
-            self.queue(track, emit=False)
-
+            self.queueTrack(track, emit=False)
 
     def stop(self):
         print "Stopping player"
@@ -193,7 +193,7 @@ import socket
 
 class RemoteClient:
     def __init__(self):
-        self.tcpIP = '127.0.0.1'
+        self.tcpIP = '192.168.1.127'
         self.tcpPort = 5005
         self.bufferSize = 1024
 

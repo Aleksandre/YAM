@@ -89,7 +89,7 @@ class TestClient:
 
 class RemoteClient:
     def __init__(self):
-        self.tcpIP = '127.0.0.1'
+        self.tcpIP = '192.168.1.127'
         self.tcpPort = 5005
         self.bufferSize = 1024
 
@@ -169,12 +169,27 @@ def startServer():
     server = Listener()
     server.start()
   
-if __name__ == '__main__':
+
+def testLocal():
     startServer()
     t1 = threading.Thread(target=waitForRequests)
     t1.start()
     PLAYER.start()
 
+def testRemote():
+    #startServer()
+    #t1 = threading.Thread(target=waitForRequests)
+    #t1.start()
+    startClient()
+
+def main():
+    startServer()
+    t1 = threading.Thread(target=waitForRequests)
+    t1.start()
+    PLAYER.start()
+
+if __name__ == '__main__':
+    main()
 
 
 

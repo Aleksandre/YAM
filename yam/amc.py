@@ -19,8 +19,8 @@ class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         global PLAYER
-        PLAYER = RemotePlayer()
-        #PLAYER.setParent(self)
+        PLAYER = PhononPlayer()
+        PLAYER.setParent(self)
 
         self.initUI()
         self.createDockWindows()
@@ -276,6 +276,9 @@ class TrackTable(QtGui.QTableWidget):
                 return
             elif key == QtCore.Qt.Key_Space:
                 PLAYER.togglePlayState()
+                return
+            elif key == QtCore.Qt.Key_N:
+                PLAYER.playNextTrack()
                 return
             elif key == QtCore.Qt.Key_Up:
                 currentRow = self.currentRow()
