@@ -3,16 +3,29 @@ from ConfigParser import SafeConfigParser
 import config
 import time
 from player import LocalPlayer, RemotePlayer
+from socket import *
+import select
+import threading
+
 
 class DeviceManager:
-
-    def __init__(self, mainApp):
+    """
+    Holds device related logic.
+    A device is an application running any version of YAM.
+    """
+    def __init__(self, mainApp = None):
         self.parser = SafeConfigParser()
         self.devicesRegistryPath = config.getConfigFolder() + "devices.ini"
         self.activeDevice = None
         self.mainApp = mainApp
+        self.bindEvents()
 
-    def handleDeviceNotificationReceived(self, deviceName, url):
+    def bindEvents(self):
+        self.deviceWatcher = DeviceWatcher(callback=self.handleDeviceNotificationReceived)
+        self.deviceWatcher.start()
+        pass
+
+    def handleDeviceNotificationReceived(self, device):
         """
         This method is triggered each time another device
         on the network broadcasted it's presence.
@@ -23,10 +36,12 @@ class DeviceManager:
         If the device is not yet in the registry,
         add it and set device-last-seen to now.
         """
-        device = Device("remote", deviceName, url)
         self.registerDevice(device)
 
     def getDevices(self):
+        """
+        Read all configured devices from the registry.
+        """
         filesRead = self.parser.read(self.devicesRegistryPath)
 
         if len(filesRead) == 0:
@@ -45,6 +60,10 @@ class DeviceManager:
             return devices
 
     def registerDevice(self, device):
+        """
+        Register or update the specified device. Devices are stored into the file devices.ini
+        from the config folder.
+        """
         if not isinstance(device, Device):
             error = "The specified device argument must inherit from the type devices.Device."
             logging.info(error)
@@ -125,12 +144,92 @@ class DeviceManager:
             pass
             #TODO
 
+
+class DeviceWatcher():
+    """
+    Watch for other devices presence broadcasts.
+    """
+    def __init__(self, portToWatch = 5555, callback = None):
+        self.portToWatch = portToWatch or config.getProperty("presence_watcher_watched_port")
+        self.running = False
+        self.bufferSize = 1024
+        self.callback = callback
+
+    def start(self):
+        print "Starting PresenceWatcher on UDP port: {0}...".format(self.portToWatch)
+        self.running = True
+        self.thread = threading.Thread(target=self._run)
+        self.thread.start()
+
+    def stop(self):
+        print "Stopping PresenceWatcher..."
+        self.running = False
+
+    def _run(self):
+        s = socket(AF_INET, SOCK_DGRAM)
+        s.bind(('<broadcast>', self.portToWatch))
+        s.setblocking(0)
+        print "Started PresenceWatcher."
+        while self.running:
+            result = select.select([s],[],[])
+            msg = result[0][0].recv(self.bufferSize) 
+            print "Received UDP broadcast msg: {0}".format(msg)
+            if self.callback:
+                self.callback(Device.fromEncodedString(msg))
+        print "Stopped PresenceWatcher."
+
+
+
+class DevicePresenceBroadcaster():
+    """
+    Notify other devices the presence of this device.
+    """
+    def __init__(self, thisDevice, portToTarget = 5555, delayBetweenBroadcastsInSec = 5):
+        self.port = portToTarget or config.getProperty("presence_broadcaster_target_port")
+        self.delay = delayBetweenBroadcastsInSec or config.getProperty("presence_broadcaster_call_delay_seconds")
+        self.thisDevice = thisDevice
+        self.running = False
+
+    def start(self):
+        print "Starting PresenceBroadcaster with delay =", self.delay, "seconds"
+        self.running = True
+        self.thread = threading.Thread(target=self._run)
+        self.thread.start()
+
+    def stop(self):
+        print "Stopping PresenceBroadcaster..."
+        self.running = False
+
+    def _run(self):
+        s = socket(AF_INET, SOCK_DGRAM)
+        s.bind(('', 0))
+        s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+        
+        print "Started PresenceBroadcaster."
+        while self.running:
+            data = self.thisDevice.encodeForTransport() 
+            s.sendto(data, ('<broadcast>', int(self.port)))
+            print "Broadcasting {0} presence on UDP port: {1}".format(self.thisDevice.visibleName, self.port)
+            time.sleep(self.delay)
+        print "Stopped PresenceBroadcaster."
+
 class Device:
+    """
+
+    """
     def __init__(self, type="local", visibleName = None, url = None, lastSeen = None):
         self.visibleName = visibleName
         self.url = url
         self.lastSeen = lastSeen or time.localtime()
         self.type = type
+
+    @staticmethod
+    def fromEncodedString(encodedString):
+        """
+        Copy constructor for Device object encoded wit hencodeForTransport
+        """
+        visibleName, url = Device.decode(encodedString) 
+        return Device("remote", visibleName=visibleName, url=url)
 
     def __eq__(self, other):
         return (isinstance(other, self.__class__)
@@ -145,7 +244,41 @@ class Device:
     def __str__(self):
         return self.visibleName, self.url
 
+
+    def encodeForTransport(self):
+        return "[{0};{1}]".format(self.visibleName, self.url) + '\n'
+
+    @staticmethod
+    def decode(encodedString):
+        args =  encodedString[1:-1].split(';')
+        name = args[0]
+        url = args[1]
+        return name, url
+
+
+def testPresenceBroadcaster():
+    thisDevice = DeviceManager().getActiveDevice()
+    bc = DevicePresenceBroadcaster(thisDevice)
+    #watcher = DeviceWatcher()
+    #watcher.start()
+    bc.start()
+    time.sleep(5)
+    bc.stop()
+    #watcher.stop()
+
 if __name__ == '__main__':
-    man = DeviceManager()
-    man.handleDeviceNotificationReceived("rpi-yam","192.168.1.127:5005")
-    print man.printRegisteredDevices()
+    testPresenceBroadcaster()
+    #man = DeviceManager()
+   # man.handleDeviceNotificationReceived("rpi-yam","192.168.1.127:5005")
+    #print man.printRegisteredDevices()
+
+def startPresenceBroadcaster():
+    from devices import Device
+    thisDevice = Device("rpi")
+    PRESENCE_BROADCASTER = DevicePresenceBroadcaster(thisDevice)
+    PRESENCE_BROADCASTER.start()
+
+def stopPresenceBroadcaster():
+    if PRESENCE_BROADCASTER:
+        PRESENCE_BROADCASTER.stop()
+

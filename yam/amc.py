@@ -13,7 +13,6 @@ import content as content
 import config as config
 from devices import DeviceManager, Device
 
-
 PLAYER = None
 DEVICEMAN = None
 
