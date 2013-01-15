@@ -42,7 +42,7 @@ def getIndexReportFolder():
 
 def getProperty(key):
     parser = SafeConfigParser()
-    parser.read(getConfigFolder() + 'appconfig.ini')
+    parser.read(getConfigFolder() + '/appconfig.ini')
     print parser.get('global', key)
 
 def setProperty(key, value):

@@ -28,7 +28,7 @@ class PlayerStates:
     PAUSED="PAUSED"
     ERROR = "ERROR"
 
-class PhononPlayer(QtCore.QObject):
+class LocalPlayer(QtCore.QObject):
     stateChanged = QtCore.Signal()
     playerTicked = QtCore.Signal()
 
@@ -44,6 +44,7 @@ class PhononPlayer(QtCore.QObject):
         self.app = parent
         self.audioOutput = Phonon.AudioOutput(Phonon.MusicCategory, parent)
         self.player = Phonon.MediaObject(parent)
+        self.player.setPrefinishMark(5000)
         Phonon.createPath(self.player, self.audioOutput)
         self._bindEvents()
 
@@ -190,12 +191,19 @@ class PhononPlayer(QtCore.QObject):
     state = QtCore.Property(QUrl, getState, notify=notifyStateChanged)
 
 import socket 
+from urlparse import urlparse
 
 class RemoteClient:
-    def __init__(self):
-        self.tcpIP = '192.168.1.127'
-        self.tcpPort = 5005
+    def __init__(self, url):
+        print "Remote client initiated with url: {0}".format(url)
+        ip, port = url.split(':') 
+        self.tcpIP = ip
+        self.tcpPort = int(port)
         self.bufferSize = 1024
+        self.printInfo()
+
+    def printInfo(self):
+        print "RemoteClient is targeting: {0}:{1}".format(self.tcpIP,self.tcpPort)
 
     def sendRequest(self, request):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -212,9 +220,10 @@ class RemotePlayer(QtCore.QObject):
     stateChanged = QtCore.Signal()
     playerTicked = QtCore.Signal()
 
-    def __init__(self, parent = None): 
+    def __init__(self, url): 
        QtCore.QObject.__init__(self)
-       self.remoteClient = RemoteClient()
+       print "RemotePlayer initiated with url: {0}".format(url)
+       self.remoteClient = RemoteClient(url)
 
     def setParent(self, parent):
         print "Remote player has no use for a parent..."
@@ -303,7 +312,7 @@ def test():
     tracks = content.getTracks()
 
     qapp=QtGui.QApplication(sys.argv)
-    player = PhononPlayer(qapp)
+    player = LocalPlayer(qapp)
     player.playTrack(tracks[1])
     player.queueTrack(tracks[0])
 

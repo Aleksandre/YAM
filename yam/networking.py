@@ -1,10 +1,13 @@
-import socket
+from socket import *
 import threading
-from player import PhononPlayer
+from player import LocalPlayer
 import Queue
 from content import Mock
+import config
+import time
+import select
 
-PLAYER = PhononPlayer()
+PLAYER = LocalPlayer()
 PLAYER.setHeadless()
 requests = Queue.Queue()
 
@@ -103,6 +106,65 @@ class RemoteClient:
         s.close()
 
 
+
+class PresenceBroadcaster():
+
+    def __init__(self, thisDevice, portToTarget = 5555, delayBetweenBroadcastsInSec = 5):
+        self.port = portToTarget or config.getProperty("presence_broadcaster_target_port")
+        self.delay = delayBetweenBroadcastsInSec or config.getProperty("presence_broadcaster_call_delay_seconds")
+        self.thisDeviceName = thisDevice.visibleName
+        self.running = False
+
+    def start(self):
+        print "Starting PresenceBroadcaster with delay =", self.delay, "seconds"
+        self.running = True
+        self.thread = threading.Thread(target=self._run)
+        self.thread.start()
+
+    def stop(self):
+        print "Stopping PresenceBroadcaster..."
+        self.running = False
+
+    def _run(self):
+        s = socket(AF_INET, SOCK_DGRAM)
+        s.bind(('', 0))
+        s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+        
+        while self.running:
+            data = self.thisDeviceName + '\n'
+            s.sendto(data, ('<broadcast>', int(self.port)))
+            print "Broadcasting {0} presence on UDP port: {1}".format(self.thisDeviceName, self.port)
+            time.sleep(self.delay)
+
+class PresenceWatcher():
+
+    def __init__(self, portToWatch = 5555):
+        self.portToWatch = portToWatch or config.getProperty("presence_watcher_watched_port")
+        self.running = False
+        self.bufferSize = 1024
+
+    def start(self):
+        print "Starting PresenceWatcher on UDP port: {0}...".format(self.portToWatch)
+        self.running = True
+        self.thread = threading.Thread(target=self._run)
+        self.thread.start()
+
+    def stop(self):
+        print "Stopping PresenceWatcher..."
+        self.running = False
+
+    def _run(self):
+        s = socket(AF_INET, SOCK_DGRAM)
+        s.bind(('<broadcast>', self.portToWatch))
+        s.setblocking(0)
+        print "Started PresenceWatcher."
+        while self.running:
+            result = select.select([s],[],[])
+            msg = result[0][0].recv(self.bufferSize) 
+            print "Received UDP broadcast msg: {0}".format(msg)
+        print "Stopped PresenceWatcher."
+
+
 def waitForRequests():
     while True:
         try:
@@ -114,10 +176,12 @@ def waitForRequests():
 
 def handleRequest(requestData):
         """
-        Expecting requestData like: '[1,2,3]'
+        Expecting requestData like: '[1;2;3]'
         where 1 is target (controller)
               2 is method (function to call)
               3 is data (Optionnal)
+
+        Example: [player;playTrack;{a content.Track object}]
         """
         print "Handling remote request..."
         
@@ -138,6 +202,8 @@ def handleRequest(requestData):
         else:
             print "Calling method without arguments..."
             print getattr(controller, method)()
+
+
 
 def getControllerByName(controllerName):
     if controllerName == "player":
@@ -176,6 +242,17 @@ def testLocal():
     t1.start()
     PLAYER.start()
 
+def testPresenceBroadcaster():
+    from devices import Device
+    thisDevice = Device("aleks-desktop")
+    bc = PresenceBroadcaster(thisDevice)
+    watcher = PresenceWatcher()
+    watcher.start()
+    bc.start()
+    time.sleep(11)
+    bc.stop()
+    watcher.stop()
+
 def testRemote():
     #startServer()
     #t1 = threading.Thread(target=waitForRequests)
@@ -189,8 +266,9 @@ def main():
     PLAYER.start()
 
 if __name__ == '__main__':
-    main()
+    #main()
 
+    testPresenceBroadcaster()
 
 
 

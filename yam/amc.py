@@ -6,54 +6,54 @@ import PySide.QtCore as QtCore
 from PySide.QtDeclarative import QDeclarativeView
 import sys
 from PySide import QtDeclarative 
-from player import PhononPlayer
+from player import LocalPlayer
 from player import RemotePlayer
 from profiling import profile
 import content as content
 import config as config
+from devices import DeviceManager, Device
 
 
 PLAYER = None
+DEVICEMAN = None
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         global PLAYER
-        PLAYER = PhononPlayer()
+        PLAYER = LocalPlayer()
         PLAYER.setParent(self)
+        DEVICEMAN.registerDevice(Device("local","My player", "localhost"))
 
         self.initUI()
         self.createDockWindows()
 
+    @profile
     def initUI(self):         
 
-        self.defaultView = DefaultMusicCollectionView(self)
+        self.currentView = DefaultMusicCollectionView(self)
         self.centerStackedWidget = QStackedWidget()
 
-        self.centerStackedWidget.addWidget(self.defaultView)
+        self.centerStackedWidget.addWidget(self.currentView)
         self.setCentralWidget(self.centerStackedWidget)
         
         self.setGeometry(840,0,840,1050)
-
-        exitAction = QtGui.QAction('Exit', self)
-        exitAction.setShortcut('Ctrl+X')
-        exitAction.setStatusTip('Exit application')
-        exitAction.triggered.connect(self.close)
-
-        configAction = QtGui.QAction('Configure', self)
-        configAction.setShortcut('Ctrl+S')
-        configAction.setStatusTip('Configure')
-        configAction.triggered.connect(self.showConfigPanel)
-
-        self.statusBar()
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&File')
-        fileMenu.addAction(exitAction)
-
-        toolbar = self.addToolBar('Exit')
-        toolbar.addAction(exitAction)
-        toolbar.addAction(configAction)
         
+        musicAction = QtGui.QAction(QtGui.QIcon('../art/appicon.ico'), 'Music', self)
+        musicAction.triggered.connect(self.showDefaultMusicView)
+
+        configureAction = QtGui.QAction(QtGui.QIcon('../art/nocover.png'), 'Configure', self)
+        configureAction.triggered.connect(self.showConfigPanel)
+
+        devicesAction = QtGui.QAction(QtGui.QIcon('../art/nocover.png'), 'Show devices', self)
+        devicesAction.triggered.connect(self.showDevicesPanel)
+        
+        self.toolbar = self.addToolBar('Exit')
+        self.toolbar.addAction(musicAction)
+        self.toolbar.addAction(configureAction)
+        self.toolbar.addAction(devicesAction)
+        self.toolbar.setIconSize(QtCore.QSize(75,75))
+
         self.setWindowTitle('YAM')    
 
     def createDockWindows(self):
@@ -66,20 +66,68 @@ class MainWindow(QtGui.QMainWindow):
         topDock.setContentsMargins(0,0,0,0)
         topDock.setFloating(False)
 
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, topDock)
+        #self.addDockWidget(QtCore.Qt.TopDockWidgetArea, topDock)
 
     def showConfigPanel(self):
         wizard = ConfigurationWizard()
         wizard.exec_()
-        self.centerStackedWidget.removeWidget(self.defaultView)
-        self.defaultView = DefaultMusicCollectionView(self)
-        self.centerStackedWidget.addWidget(self.defaultView)
+        self.showDefaultMusicView()
+
+    def showDefaultMusicView(self):
+        self.centerStackedWidget.removeWidget(self.currentView)
+        self.currentView = DefaultMusicCollectionView(self)
+        self.centerStackedWidget.addWidget(self.currentView)
+
+    def showDevicesPanel(self):
+        deviceManPanel = DeviceManagementPanel()
+        deviceManPanel.exec_()
+        self.showDefaultMusicView()
 
 
     def show_and_raise(self):
         self.show()
         self.raise_()
 
+class DeviceManagementPanel(QtGui.QDialog):
+    def __init__(self, parent=None):
+        super(DeviceManagementPanel, self).__init__(parent)
+        self.initUI()
+
+    def initUI(self):
+
+        mainLayout = QtGui.QVBoxLayout()
+
+        self.deviceListView = DeviceList()
+        mainLayout.addWidget(self.deviceListView)
+
+        applyButton = QtGui.QPushButton("Apply")
+        applyButton.clicked.connect(self.applyChanges)
+
+        closeButton = QtGui.QPushButton("Close")
+        closeButton.setDefault(True)
+        closeButton.clicked.connect(self.tryClose)
+
+        buttonLayout = QtGui.QHBoxLayout()
+        buttonLayout.addStretch(1)
+        buttonLayout.addWidget(applyButton)
+        buttonLayout.addWidget(closeButton)
+        mainLayout.addLayout(buttonLayout)
+        
+        self.setLayout(mainLayout)
+
+    def tryClose(self):
+        print "Closing device manager..."
+        self.close()
+
+    def applyChanges(self):
+        print "Applying changes to DeviceManager..."
+        selectedDevice = self.deviceListView.selectedDevice
+        if selectedDevice:
+            DEVICEMAN.setActiveDevice(selectedDevice)
+            global PLAYER
+            PLAYER = DEVICEMAN.getActivePlayer()
+        else :
+            print "No device selected. Cannot apply changes."
 
 class ConfigurationWizard(QtGui.QWizard):
     def __init__(self, parent=None):
@@ -215,6 +263,64 @@ class ConfigurationWizard(QtGui.QWizard):
 
 
 
+class DeviceList(QtGui.QListView):
+
+        def __init__(self):
+            super(DeviceList, self).__init__()
+            self.initUI()
+            self.bindEvents()
+            self.loadDevices()
+            self.selectedDevice = DEVICEMAN.getActiveDevice()
+
+        def initUI(self):
+            self.setMaximumHeight(240)
+            self.setIconSize(QtCore.QSize(80, 80))
+            
+        def bindEvents(self):
+            pass
+            #self.itemClicked.connect(self._deviceSelected)
+
+        def keyPressEvent(self, event):
+            key = event.key()
+            print "Device list received KeyPressed event: ", key
+            
+            if key == QtCore.Qt.Key_Return:
+                return
+            elif key == QtCore.Qt.Key_Left:
+                return
+            elif key == QtCore.Qt.Key_Right:
+                return
+            elif key == QtCore.Qt.Key_Up:
+                currentRow = self.currentRow()
+                if currentRow > 0:
+                    currentRow = currentRow - 1
+                    self.setCurrentRow(currentRow)
+                return
+            elif key == QtCore.Qt.Key_Down:
+                currentRow = self.currentRow()
+                if currentRow < (self.count() - 1):
+                    currentRow = currentRow + 1
+                    self.setCurrentRow(currentRow)
+                return
+            else:
+                return super(QListWidget, self).keyPressEvent(event)
+
+        def loadDevices(self):
+            print "Loading devices into listview..."
+            self.devices = DEVICEMAN.getDevices()
+            self.devicesWithIcon = []
+            for device in self.devices:
+                model = repr(device) , '../art/nocover.png'
+                self.devicesWithIcon.append(model)
+            list_model = ListModel(self.devicesWithIcon)
+            self.setModel(list_model)
+
+        def selectionChanged(self, newSelection, oldSelection):
+            selectedIdx = newSelection.indexes()[0].row()
+            self.selectedDevice = self.devices[selectedIdx]
+            print "The device '{0}' was selected from the list.".format(self.selectedDevice.visibleName)
+
+
 
 class ListModel(QtCore.QAbstractListModel):
     def __init__(self, os_list):
@@ -231,7 +337,7 @@ class ListModel(QtCore.QAbstractListModel):
         if role == QtCore.Qt.DisplayRole:
             return os_name
         elif role == QtCore.Qt.DecorationRole:
-            return QtGui.QIcon(os_logo_path)
+            return QtGui.QIcon('../art/nocover.png')
 
         return None
 
@@ -452,7 +558,7 @@ class ArtistList(QtGui.QListView):
         self.bindEvents()
 
      def initUI(self):
-        self.setIconSize(QtCore.QSize(50, 50))
+        self.setIconSize(QtCore.QSize(55, 55))
         self.setSpacing(5)
         self.setUniformItemSizes(True)
         self.setMaximumWidth(300)
@@ -560,7 +666,8 @@ class DefaultMusicCollectionView(QtGui.QWidget):
         
         #Prepare tracks view
         self.tracksTable = TrackTable()
-        self.tracksTable.setTracks(self.tracks)
+        #self.tracksTable.setTracks(self.tracks)
+        self.tracksTable.setHeader()
         self.rightVBox.addWidget(self.tracksTable)
 
 
@@ -586,10 +693,12 @@ if __name__ == '__main__':
     logging.info("Starting amc client.")
 
     # Create a Qt application
-    app = QApplication(sys.argv,QApplication.GuiServer)
+    app = QApplication(sys.argv, QApplication.GuiServer)
     app.setApplicationName('yam')
 
+    DEVICEMAN = DeviceManager(app)
     main = MainWindow()
+    trayIcon = QtGui.QSystemTrayIcon(QtGui.QIcon("../art/appicon.ico"), app)
     main.show_and_raise()
 
     # Enter Qt application main loop

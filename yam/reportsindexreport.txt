@@ -4,10 +4,10 @@ p1
 (dp2
 S'numberOfIndexedFiles'
 p3
-I15880
+I15956
 sS'numberOfFilesNotImported'
 p4
-I1460
+I1478
 sS'filesNotImported'
 p5
 (lp6
@@ -2299,642 +2299,678 @@ aS'/media/dat/mus/Bonobo/Animal Magic/._02 - Sleepy Seven.flac'
 p1149
 aS'/media/dat/mus/Bonobo/Animal Magic/._06 - The Plug.flac'
 p1150
-aS'/media/dat/mus/Chopin/Piano Concerto 2 - Long/1-Maestoso.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/09. Janelle Mon\xc3\xa1e - Oh, Maker.mp3'
 p1151
-aS'/media/dat/mus/Chopin/Piano Concerto 2 - Long/3-Allegro vivace.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/03. Janelle Mon\xc3\xa1e - Faster.mp3'
 p1152
-aS'/media/dat/mus/Chopin/Piano Concerto 2 - Long/2-Larghetto.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/07. Janelle Mon\xc3\xa1e - Tightrope (feat. Big Boi).mp3'
 p1153
-aS'/media/dat/mus/Beau dommage/(11)Marcher tout seul la nuit sur une route de campagne.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/11. Janelle Mon\xc3\xa1e - Mushrooms & Roses.mp3'
 p1154
-aS'/media/dat/mus/Beau dommage/(07)Rive-Sud.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/14. Janelle Mon\xc3\xa1e - Make the Bus (feat. of Montreal).mp3'
 p1155
-aS'/media/dat/mus/Beau dommage/(02)Le retour du fl\xc3\xa2neur.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/08. Janelle Mon\xc3\xa1e - Neon Gumbo.mp3'
 p1156
-aS'/media/dat/mus/Beau dommage/(06)Du milieu du pont Jacques-Cartier.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/01. Janelle Mon\xc3\xa1e - Suite II Overture.mp3'
 p1157
-aS'/media/dat/mus/Beau dommage/(08)Grande chemin\xc3\xa9e.flac'
+aS"/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/17. Janelle Mon\xc3\xa1e - Say You'll Go.mp3"
 p1158
-aS'/media/dat/mus/Beau dommage/(10)Sur la v\xc3\xa9randa.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/12. Janelle Mon\xc3\xa1e - Suite III Overture.mp3'
 p1159
-aS'/media/dat/mus/Beau dommage/(04)Quand Rose va chez son fils.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/06. Janelle Mon\xc3\xa1e - Cold War.mp3'
 p1160
-aS"/media/dat/mus/Beau dommage/(09)J'aimais l'hiver.flac"
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/13. Janelle Mon\xc3\xa1e - Neon Valley Street.mp3'
 p1161
-aS'/media/dat/mus/Beau dommage/(01)La nouvelle saison.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/16. Janelle Mon\xc3\xa1e - 57821 (feat. Deep Cotton).mp3'
 p1162
-aS'/media/dat/mus/Beau dommage/(05)\xc3\x89chapp\xc3\xa9 belle.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/15. Janelle Mon\xc3\xa1e - Wondaland.mp3'
 p1163
-aS'/media/dat/mus/Beau dommage/(03)Tout simplement jaloux....flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/02. Janelle Mon\xc3\xa1e - Dance or Die (feat. Saul Williams).mp3'
 p1164
-aS'/media/dat/mus/Genesis/Foxtrot/02 time table.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/18. Janelle Mon\xc3\xa1e - BaBopBye Ya.mp3'
 p1165
-aS'/media/dat/mus/IQ/IQ - Subterranea (1997)/Disc 2/06-Somewhere in Time.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/05. Janelle Mon\xc3\xa1e - Sir Greendown.mp3'
 p1166
-aS'/media/dat/mus/IQ/IQ - Subterranea (1997)/Disc 2/05-Unsolid Ground.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/10. Janelle Mon\xc3\xa1e - Come Alive (War Of The Roses).mp3'
 p1167
-aS'/media/dat/mus/IQ/IQ - Subterranea (1997)/Disc 1/08-Infernal Chorus.flac'
+aS'/media/dat/mus/Janelle Mon\xc3\xa1e - The ArchAndroid 2010/04. Janelle Mon\xc3\xa1e - Locked Inside.mp3'
 p1168
-aS'/media/dat/mus/IQ/IQ - Subterranea (1997)/Disc 1/11-State of Mine.flac'
+aS'/media/dat/mus/Chopin/Piano Concerto 2 - Long/1-Maestoso.flac'
 p1169
-aS'/media/dat/mus/IQ/IQ - Subterranea (1997)/Disc 1/04-Sleepless Incidental.flac'
+aS'/media/dat/mus/Chopin/Piano Concerto 2 - Long/3-Allegro vivace.flac'
 p1170
-aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/10-No Love Lost (Piano-Vocal Version).flac'
+aS'/media/dat/mus/Chopin/Piano Concerto 2 - Long/2-Larghetto.flac'
 p1171
-aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/04-Still Life.flac'
+aS'/media/dat/mus/Beau dommage/(11)Marcher tout seul la nuit sur une route de campagne.flac'
 p1172
-aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/07-Screaming.flac'
+aS'/media/dat/mus/Beau dommage/(07)Rive-Sud.flac'
 p1173
-aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/08-Common Ground.flac'
+aS'/media/dat/mus/Beau dommage/(02)Le retour du fl\xc3\xa2neur.flac'
 p1174
-aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/11-Common Ground (Live).flac'
+aS'/media/dat/mus/Beau dommage/(06)Du milieu du pont Jacques-Cartier.flac'
 p1175
-aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/05-Passing Strangers.flac'
+aS'/media/dat/mus/Beau dommage/(08)Grande chemin\xc3\xa9e.flac'
 p1176
-aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/03-Nomzamo.flac'
+aS'/media/dat/mus/Beau dommage/(10)Sur la v\xc3\xa9randa.flac'
 p1177
-aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/09-Colurflow.flac'
+aS'/media/dat/mus/Beau dommage/(04)Quand Rose va chez son fils.flac'
 p1178
-aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/01-No Love Lost.flac'
+aS"/media/dat/mus/Beau dommage/(09)J'aimais l'hiver.flac"
 p1179
-aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/06-Human Nature.flac'
+aS'/media/dat/mus/Beau dommage/(01)La nouvelle saison.flac'
 p1180
-aS'/media/dat/mus/IQ/IQ - Are You Sitting Comfortably (1989)/09-Nothing At All (Live).flac'
+aS'/media/dat/mus/Beau dommage/(05)\xc3\x89chapp\xc3\xa9 belle.flac'
 p1181
-aS'/media/dat/mus/IQ/IQ - Tales from the Lush Attic (1983)/06-Just Changing Hands.flac'
+aS'/media/dat/mus/Beau dommage/(03)Tout simplement jaloux....flac'
 p1182
-aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/01-It All Stops Here.flac"
+aS'/media/dat/mus/Genesis/Foxtrot/02 time table.flac'
 p1183
-aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/06-Common Ground.flac"
+aS'/media/dat/mus/IQ/IQ - Subterranea (1997)/Disc 2/06-Somewhere in Time.flac'
 p1184
-aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/05-Medley.flac"
+aS'/media/dat/mus/IQ/IQ - Subterranea (1997)/Disc 2/05-Unsolid Ground.flac'
 p1185
-aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/02-Sera Sera.flac"
+aS'/media/dat/mus/IQ/IQ - Subterranea (1997)/Disc 1/08-Infernal Chorus.flac'
 p1186
-aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/07-Promises.flac"
+aS'/media/dat/mus/IQ/IQ - Subterranea (1997)/Disc 1/11-State of Mine.flac'
 p1187
-aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/03-Intelligence Quotient.flac"
+aS'/media/dat/mus/IQ/IQ - Subterranea (1997)/Disc 1/04-Sleepless Incidental.flac'
 p1188
-aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/08-Wurensh.flac"
+aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/10-No Love Lost (Piano-Vocal Version).flac'
 p1189
-aS"/media/dat/mus/Deep Purple/Fireball/._03 Demon's eye.flac"
+aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/04-Still Life.flac'
 p1190
-aS'/media/dat/mus/Deep Purple/Abandon/11 Evil Louie.flac'
+aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/07-Screaming.flac'
 p1191
-aS'/media/dat/mus/Deep Purple/Perfect Strangers/01 Knocking At Your Back Door.flac'
+aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/08-Common Ground.flac'
 p1192
-aS'/media/dat/mus/Deep Purple/Made In Europe/01 Burn.flac'
+aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/11-Common Ground (Live).flac'
 p1193
-aS"/media/dat/mus/Deep Purple/Come Taste The Band/03 Gettin' Tighter.flac"
+aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/05-Passing Strangers.flac'
 p1194
-aS"/media/dat/mus/Deep Purple/Come Taste The Band/01 Comin' Home.flac"
+aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/03-Nomzamo.flac'
 p1195
-aS'/media/dat/mus/Tangerine Dream/Hyperborea/02 hyperborea.flac'
+aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/09-Colurflow.flac'
 p1196
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/08 - Vin Landers & Fudge Fingas - Don\xc2\xb4t Fret It.mp3'
+aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/01-No Love Lost.flac'
 p1197
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/14 - Das Goldene Zeitalter - Vision.mp3'
+aS'/media/dat/mus/IQ/IQ - Nomzamo (1987)/06-Human Nature.flac'
 p1198
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/10 - G Love & Special Sauce - Blues Music.mp3'
+aS'/media/dat/mus/IQ/IQ - Are You Sitting Comfortably (1989)/09-Nothing At All (Live).flac'
 p1199
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/09 - Fingathing - You Fly Me.mp3'
+aS'/media/dat/mus/IQ/IQ - Tales from the Lush Attic (1983)/06-Just Changing Hands.flac'
 p1200
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/12 - Deyampert - Held Him First.mp3'
+aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/01-It All Stops Here.flac"
 p1201
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/02 - Rick James - Getting It On (In The Sunshine).mp3'
+aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/06-Common Ground.flac"
 p1202
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/05 - Donald Byrd - Kofi.mp3'
+aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/05-Medley.flac"
 p1203
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/13 - Home Life - Strangers.mp3'
+aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/02-Sera Sera.flac"
 p1204
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/07 - Odyssey - Our Lives Are Shaped By What We Love.mp3'
+aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/07-Promises.flac"
 p1205
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/04 - Dom E Aboliciao Salvador - Hei Voce.mp3'
+aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/03-Intelligence Quotient.flac"
 p1206
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/03 - Sarah Winton - Summer Brass (The Same Old Same Old).mp3'
+aS"/media/dat/mus/IQ/IQ - J'ai Pollette D'arnu (1991)/08-Wurensh.flac"
 p1207
-aS"/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/01 - D'Angelo - Everybody Loves The Sunshine.mp3"
+aS"/media/dat/mus/Deep Purple/Fireball/._03 Demon's eye.flac"
 p1208
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/11 - Ernesto - Devil\xc2\xb4s Gotta Run.mp3'
+aS'/media/dat/mus/Deep Purple/Abandon/11 Evil Louie.flac'
 p1209
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/06 - Moacir Santos - Off And On.mp3'
+aS'/media/dat/mus/Deep Purple/Perfect Strangers/01 Knocking At Your Back Door.flac'
 p1210
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/13 - Fela Ransom Kuti & Nigeria 70 - My Lady Frustration.mp3'
+aS'/media/dat/mus/Deep Purple/Made In Europe/01 Burn.flac'
 p1211
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/09 - Treva Whateva - Music\xc2\xb4s Made Of Memories.mp3'
+aS"/media/dat/mus/Deep Purple/Come Taste The Band/03 Gettin' Tighter.flac"
 p1212
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/08 - Extended Spirit - Illicity.mp3'
+aS"/media/dat/mus/Deep Purple/Come Taste The Band/01 Comin' Home.flac"
 p1213
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/03 - Gary Bartz & NTU Troop - Celestial Blues.mp3'
+aS'/media/dat/mus/Tangerine Dream/Hyperborea/02 hyperborea.flac'
 p1214
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/05 - Johnny Hammond - Can\xc2\xb4t We Smile.mp3'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/08 - Vin Landers & Fudge Fingas - Don\xc2\xb4t Fret It.mp3'
 p1215
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/04 - Dennis Yost & The Classics IV - All In Your Mind.mp3'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/14 - Das Goldene Zeitalter - Vision.mp3'
 p1216
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/11 - Glen Brown & King Tubby - Wicked Can\xc2\xb4t Run This Dub.mp3'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/10 - G Love & Special Sauce - Blues Music.mp3'
 p1217
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/07 - Nobukazu Takemura - Serene.mp3'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/09 - Fingathing - You Fly Me.mp3'
 p1218
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/10 - In Crowd - Back A Yard.mp3'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/12 - Deyampert - Held Him First.mp3'
 p1219
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/12 - Daweh Congo - Provherbs.mp3'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/02 - Rick James - Getting It On (In The Sunshine).mp3'
 p1220
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/01 - Mike Westbrook - Metropolis IX.mp3'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/05 - Donald Byrd - Kofi.mp3'
 p1221
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/14 - Grady Tate - Moondance.mp3'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/13 - Home Life - Strangers.mp3'
 p1222
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/06 - Paul Hunter - Peaceful Morning.mp3'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/07 - Odyssey - Our Lives Are Shaped By What We Love.mp3'
 p1223
-aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/02 - Ousmane Kouyate Band - N Nafanta.mp3'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/04 - Dom E Aboliciao Salvador - Hei Voce.mp3'
 p1224
-aS'/media/dat/mus/Guns N Roses/Appetite For Destruction/6. Paradise City.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/03 - Sarah Winton - Summer Brass (The Same Old Same Old).mp3'
 p1225
-aS'/media/dat/mus/Kabanjak/Grow/Switchstance Recordings - Grow - 04 Protassov - Let\xc2\xb4s Make Friends.flac'
+aS"/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/01 - D'Angelo - Everybody Loves The Sunshine.mp3"
 p1226
-aS'/media/dat/mus/Nirvana/Nevermind/01 - Nirvana - Smells like teen spirit.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/11 - Ernesto - Devil\xc2\xb4s Gotta Run.mp3'
 p1227
-aS'/media/dat/mus/Nirvana/Nevermind/04 - Nirvana - Breed.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 2/06 - Moacir Santos - Off And On.mp3'
 p1228
-aS'/media/dat/mus/Nirvana/Nevermind/02 - Nirvana - In Bloom.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/13 - Fela Ransom Kuti & Nigeria 70 - My Lady Frustration.mp3'
 p1229
-aS'/media/dat/mus/Nirvana/Nevermind/12 - Nirvana - Something in the Way.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/09 - Treva Whateva - Music\xc2\xb4s Made Of Memories.mp3'
 p1230
-aS'/media/dat/mus/Nirvana/Nevermind/09 - Nirvana - Lounge Act.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/08 - Extended Spirit - Illicity.mp3'
 p1231
-aS'/media/dat/mus/Nirvana/Nevermind/06 - Nirvana - Polly.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/03 - Gary Bartz & NTU Troop - Celestial Blues.mp3'
 p1232
-aS'/media/dat/mus/Nirvana/Nevermind/10 - Nirvana - Stay Away.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/05 - Johnny Hammond - Can\xc2\xb4t We Smile.mp3'
 p1233
-aS'/media/dat/mus/Nirvana/Nevermind/03 - Nirvana - Come as You Are.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/04 - Dennis Yost & The Classics IV - All In Your Mind.mp3'
 p1234
-aS'/media/dat/mus/Nirvana/Nevermind/11 - Nirvana - On A Plain.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/11 - Glen Brown & King Tubby - Wicked Can\xc2\xb4t Run This Dub.mp3'
 p1235
-aS'/media/dat/mus/Nirvana/Nevermind/08 - Nirvana - Drain You.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/07 - Nobukazu Takemura - Serene.mp3'
 p1236
-aS'/media/dat/mus/Nirvana/Nevermind/07 - Nirvana - Territorial Pissings.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/10 - In Crowd - Back A Yard.mp3'
 p1237
-aS'/media/dat/mus/Nirvana/Nevermind/05 - Nirvana - Lithium.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/12 - Daweh Congo - Provherbs.mp3'
 p1238
-aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 03 Transistors.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/01 - Mike Westbrook - Metropolis IX.mp3'
 p1239
-aS"/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 02 Bull's Eye.flac"
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/14 - Grady Tate - Moondance.mp3'
 p1240
-aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 07 Le coeur en t\xc3\xa9flon.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/06 - Paul Hunter - Peaceful Morning.mp3'
 p1241
-aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 10 Un refrain trop long.flac'
+aS'/media/dat/mus/Mr. Scruff/2006 - Mr. Scruff\xc2\xb4s Big Chill Classics/CD 1/02 - Ousmane Kouyate Band - N Nafanta.mp3'
 p1242
-aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 12 La seule question.flac'
+aS'/media/dat/mus/Guns N Roses/Appetite For Destruction/6. Paradise City.flac'
 p1243
-aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 06 Tout le monde en m\xc3\xaame temps.flac'
+aS'/media/dat/mus/Kabanjak/Grow/Switchstance Recordings - Grow - 04 Protassov - Let\xc2\xb4s Make Friends.flac'
 p1244
-aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 01 La cassette.flac'
+aS'/media/dat/mus/Nirvana/Nevermind/01 - Nirvana - Smells like teen spirit.flac'
 p1245
-aS"/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 04 J'ha\xc3\xafs les happy ends.flac"
+aS'/media/dat/mus/Nirvana/Nevermind/04 - Nirvana - Breed.flac'
 p1246
-aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 09 Un monstre.flac'
+aS'/media/dat/mus/Nirvana/Nevermind/02 - Nirvana - In Bloom.flac'
 p1247
-aS"/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 08 L'ascenseur.flac"
+aS'/media/dat/mus/Nirvana/Nevermind/12 - Nirvana - Something in the Way.flac'
 p1248
-aS"/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 11 L'air.flac"
+aS'/media/dat/mus/Nirvana/Nevermind/09 - Nirvana - Lounge Act.flac'
 p1249
-aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 05 Les chansons folles.flac'
+aS'/media/dat/mus/Nirvana/Nevermind/06 - Nirvana - Polly.flac'
 p1250
-aS"/media/dat/mus/Delerium - Odyssey/Delerium - Odyssey - The Remix Collection CD1/Delerium - Odyssey - The Remix Collection CD1 - 01 - Silence (DJ Ti\xc3\xabsto's in Search of Sunrise Remix).flac"
+aS'/media/dat/mus/Nirvana/Nevermind/10 - Nirvana - Stay Away.flac'
 p1251
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/09 - Soul Bossa Nova.mp3'
+aS'/media/dat/mus/Nirvana/Nevermind/03 - Nirvana - Come as You Are.flac'
 p1252
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/12 - West And Soda.mp3'
+aS'/media/dat/mus/Nirvana/Nevermind/11 - Nirvana - On A Plain.flac'
 p1253
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/01 - Anytime Swingers.mp3'
+aS'/media/dat/mus/Nirvana/Nevermind/08 - Nirvana - Drain You.flac'
 p1254
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/06 - Baise Moi.mp3'
+aS'/media/dat/mus/Nirvana/Nevermind/07 - Nirvana - Territorial Pissings.flac'
 p1255
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/14 - This Is Jazz (Tantratribe Mix).mp3'
+aS'/media/dat/mus/Nirvana/Nevermind/05 - Nirvana - Lithium.flac'
 p1256
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/02 - Oh Jeje.mp3'
+aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 03 Transistors.flac'
 p1257
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/08 - Falar Do Tempo.mp3'
+aS"/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 02 Bull's Eye.flac"
 p1258
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/11 - A 100-lounge Lizard.mp3'
+aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 07 Le coeur en t\xc3\xa9flon.flac'
 p1259
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/13 - Anytime Swingers (Magnetic 4 Remix).mp3'
+aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 10 Un refrain trop long.flac'
 p1260
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/03 - Djazzonga.mp3'
+aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 12 La seule question.flac'
 p1261
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/07 - Il Sorpasso.mp3'
+aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 06 Tout le monde en m\xc3\xaame temps.flac'
 p1262
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/04 - Come As You Are.mp3'
+aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 01 La cassette.flac'
 p1263
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/05 - Amarcord Jazz.mp3'
+aS"/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 04 J'ha\xc3\xafs les happy ends.flac"
 p1264
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/10 - Je Taime Bb.mp3'
+aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 09 Un monstre.flac'
 p1265
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2007 - Sitar & Bossa/10 - Life Is On Teh Sea.mp3'
+aS"/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 08 L'ascenseur.flac"
 p1266
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2007 - Sitar & Bossa/08 - Entao En Vou.mp3'
+aS"/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 11 L'air.flac"
 p1267
-aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2007 - Sitar & Bossa/05 - Beat Conductor.mp3'
+aS'/media/dat/mus/Louis-Jean Cormier/Le Treizi\xc3\xa8me \xc3\x89tage/Louis-Jean Cormier - Le Treizi\xc3\xa8me \xc3\x89tage - 05 Les chansons folles.flac'
 p1268
-aS'/media/dat/mus/Dream Theater/{2001} Live Scenes From New York/Disc 1/[03] Strange D\xc3\xa9j\xc3\xa0 Vu.flac'
+aS"/media/dat/mus/Delerium - Odyssey/Delerium - Odyssey - The Remix Collection CD1/Delerium - Odyssey - The Remix Collection CD1 - 01 - Silence (DJ Ti\xc3\xabsto's in Search of Sunrise Remix).flac"
 p1269
-aS'/media/dat/mus/Dream Theater/{2002} Six Degrees of Inner Turbulence/Part 2/[\xc2\xb01] The Glass Prison.flac'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/09 - Soul Bossa Nova.mp3'
 p1270
-aS'/media/dat/mus/Dream Theater/{2002} Six Degrees of Inner Turbulence/Part 2/[\xc2\xb05] Disappear.flac'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/12 - West And Soda.mp3'
 p1271
-aS'/media/dat/mus/Dream Theater/{2002} Six Degrees of Inner Turbulence/Part 2/[\xc2\xb03] Misunderstood.flac'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/01 - Anytime Swingers.mp3'
 p1272
-aS'/media/dat/mus/Dream Theater/{2002} Six Degrees of Inner Turbulence/Part 2/[\xc2\xb04] The Great Debate.flac'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/06 - Baise Moi.mp3'
 p1273
-aS'/media/dat/mus/Dream Theater/{2002} Six Degrees of Inner Turbulence/Part 2/[\xc2\xb02] Blind Faith.flac'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/14 - This Is Jazz (Tantratribe Mix).mp3'
 p1274
-aS'/media/dat/mus/Thunderdome/Hardcore.flac'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/02 - Oh Jeje.mp3'
 p1275
-aS'/media/dat/mus/Thunderdome/Nonhslen Tustokken (Ode To Vortex).flac'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/08 - Falar Do Tempo.mp3'
 p1276
-aS'/media/dat/mus/Thunderdome/Necronomicon.flac'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/11 - A 100-lounge Lizard.mp3'
 p1277
-aS'/media/dat/mus/Thunderdome/Addicted 2 Raves (Buzz Fuzz Mix).flac'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/13 - Anytime Swingers (Magnetic 4 Remix).mp3'
 p1278
-aS"/media/dat/mus/Thunderdome/Fuckin' Hostile.flac"
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/03 - Djazzonga.mp3'
 p1279
-aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/01_daft_punk-robot_rock_(soulwax_remix).mp3'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/07 - Il Sorpasso.mp3'
 p1280
-aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/09_daft_punk-technologic_(vitalic_remix).mp3'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/04 - Come As You Are.mp3'
 p1281
-aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/06_daft_punk-human_after_all_(guy_man_after_all_justice_remix).mp3'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/05 - Amarcord Jazz.mp3'
 p1282
-aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/02_daft_punk-human_after_all_(sebastian_remix).mp3'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2008 - D\xe2\x80\x99Jazzonga/10 - Je Taime Bb.mp3'
 p1283
-aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/08_daft_punk-human_after_all_(alter_ego_remix).mp3'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2007 - Sitar & Bossa/10 - Life Is On Teh Sea.mp3'
 p1284
-aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/05_daft_punk-the_prime_time_of_your_life_(para_one_remix).mp3'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2007 - Sitar & Bossa/08 - Entao En Vou.mp3'
 p1285
-aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/04_daft_punk-the_brainwasher_(erol_alkans_horrorhouse_dub).mp3'
+aS'/media/dat/mus/Bebo Best & Super Lounge Orchestra/2007 - Sitar & Bossa/05 - Beat Conductor.mp3'
 p1286
-aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/03_daft_punk-technologic_(peaches_no_logic_remix).mp3'
+aS'/media/dat/mus/Dream Theater/{2001} Live Scenes From New York/Disc 1/[03] Strange D\xc3\xa9j\xc3\xa0 Vu.flac'
 p1287
-aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/07_daft_punk-technologic_(digitalism_highway_to_paris_remix).mp3'
+aS'/media/dat/mus/Dream Theater/{2002} Six Degrees of Inner Turbulence/Part 2/[\xc2\xb01] The Glass Prison.flac'
 p1288
-aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/10_daft_punk-robot_rock_(daft_punk_maximum_overdrive_mix).mp3'
+aS'/media/dat/mus/Dream Theater/{2002} Six Degrees of Inner Turbulence/Part 2/[\xc2\xb05] Disappear.flac'
 p1289
-aS'/media/dat/mus/Daft Punk/Tron OST/._04 - Recognizer.flac'
+aS'/media/dat/mus/Dream Theater/{2002} Six Degrees of Inner Turbulence/Part 2/[\xc2\xb03] Misunderstood.flac'
 p1290
-aS'/media/dat/mus/Daft Punk/Tron OST/._06 - Arena.flac'
+aS'/media/dat/mus/Dream Theater/{2002} Six Degrees of Inner Turbulence/Part 2/[\xc2\xb04] The Great Debate.flac'
 p1291
-aS'/media/dat/mus/Daft Punk/Tron OST/._10 - Adagio For TRON.flac'
+aS'/media/dat/mus/Dream Theater/{2002} Six Degrees of Inner Turbulence/Part 2/[\xc2\xb02] Blind Faith.flac'
 p1292
-aS'/media/dat/mus/Daft Punk/Tron OST/._13 - Derezzed.flac'
+aS'/media/dat/mus/Thunderdome/Hardcore.flac'
 p1293
-aS'/media/dat/mus/Daft Punk/Tron OST/._07 - Rinzler.flac'
+aS'/media/dat/mus/Thunderdome/Nonhslen Tustokken (Ode To Vortex).flac'
 p1294
-aS'/media/dat/mus/Daft Punk/Tron OST/._12 - End of Line.flac'
+aS'/media/dat/mus/Thunderdome/Necronomicon.flac'
 p1295
-aS'/media/dat/mus/Daft Punk/Tron OST/._02 - The Grid.flac'
+aS'/media/dat/mus/Thunderdome/Addicted 2 Raves (Buzz Fuzz Mix).flac'
 p1296
-aS'/media/dat/mus/Daft Punk/Tron OST/._08 - The Game Has Changed.flac'
+aS"/media/dat/mus/Thunderdome/Fuckin' Hostile.flac"
 p1297
-aS'/media/dat/mus/Daft Punk/Tron OST/._03 - The Son of Flynn.flac'
+aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/01_daft_punk-robot_rock_(soulwax_remix).mp3'
 p1298
-aS'/media/dat/mus/Daft Punk/Tron OST/._01 - Overture.flac'
+aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/09_daft_punk-technologic_(vitalic_remix).mp3'
 p1299
-aS'/media/dat/mus/Daft Punk/Tron OST/._09 - Outlands.flac'
+aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/06_daft_punk-human_after_all_(guy_man_after_all_justice_remix).mp3'
 p1300
-aS'/media/dat/mus/Daft Punk/Tron OST/._05 - Armory.flac'
+aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/02_daft_punk-human_after_all_(sebastian_remix).mp3'
 p1301
-aS'/media/dat/mus/Daft Punk/Tron OST/._11 - Nocturne.flac'
+aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/08_daft_punk-human_after_all_(alter_ego_remix).mp3'
 p1302
-aS'/media/dat/mus/Megadeth/So Far, So Good... So What!/07 - Liar.flac'
+aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/05_daft_punk-the_prime_time_of_your_life_(para_one_remix).mp3'
 p1303
-aS'/media/dat/mus/Megadeth/So Far, So Good... So What!/03 - Anarchy In The U.K..flac'
+aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/04_daft_punk-the_brainwasher_(erol_alkans_horrorhouse_dub).mp3'
 p1304
-aS'/media/dat/mus/Peter Gabriel/III Melt/_Peter Gabriel - III.flac'
+aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/03_daft_punk-technologic_(peaches_no_logic_remix).mp3'
 p1305
-aS'/media/dat/mus/Peter Gabriel/Us/07 - Digging in the Dirt.flac'
+aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/07_daft_punk-technologic_(digitalism_highway_to_paris_remix).mp3'
 p1306
-aS'/media/dat/mus/Peter Gabriel/Scratch my back/10. Peter Gabriel - Apr\xc3\xa8s Moi.flac'
+aS'/media/dat/mus/Daft Punk/2006 - Human After All Remixes Limited Edition/10_daft_punk-robot_rock_(daft_punk_maximum_overdrive_mix).mp3'
 p1307
-aS'/media/dat/mus/Peter Gabriel/IV/Peter Gabriel (IV).flac'
+aS'/media/dat/mus/Daft Punk/Tron OST/._04 - Recognizer.flac'
 p1308
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/04-Not Fighting Anymore.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._06 - Arena.flac'
 p1309
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/02-Where Will I Be.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._10 - Adagio For TRON.flac'
 p1310
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/17-Joy.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._13 - Derezzed.flac'
 p1311
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/16-Sacred and Secular.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._07 - Rinzler.flac'
 p1312
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/12-I Like That.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._12 - End of Line.flac'
 p1313
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/18-Luna Samba.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._02 - The Grid.flac'
 p1314
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/08-Harry.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._08 - The Game Has Changed.flac'
 p1315
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/14-Bladesteel.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._03 - The Son of Flynn.flac'
 p1316
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/09-Bells Of Oaxaca.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._01 - Overture.flac'
 p1317
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/06-Blue Bus.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._09 - Outlands.flac'
 p1318
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/07-Lovechild.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._05 - Armory.flac'
 p1319
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/15-Moondog.mp3'
+aS'/media/dat/mus/Daft Punk/Tron OST/._11 - Nocturne.flac'
 p1320
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/05-Beauty.mp3'
+aS'/media/dat/mus/Megadeth/So Far, So Good... So What!/07 - Liar.flac'
 p1321
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/01-Chest Of Drawers.mp3'
+aS'/media/dat/mus/Megadeth/So Far, So Good... So What!/03 - Anarchy In The U.K..flac'
 p1322
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/03-Here Is What Is.mp3'
+aS'/media/dat/mus/Peter Gabriel/III Melt/_Peter Gabriel - III.flac'
 p1323
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/10-This May Be The Last Time.mp3'
+aS'/media/dat/mus/Peter Gabriel/Us/07 - Digging in the Dirt.flac'
 p1324
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/13-Duo Glide.mp3'
+aS'/media/dat/mus/Peter Gabriel/Scratch my back/10. Peter Gabriel - Apr\xc3\xa8s Moi.flac'
 p1325
-aS'/media/dat/mus/Daniel Lanois/Here Is What Is/11-Smoke #6.mp3'
+aS'/media/dat/mus/Peter Gabriel/IV/Peter Gabriel (IV).flac'
 p1326
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/03-Still Water.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/04-Not Fighting Anymore.mp3'
 p1327
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/13-Rain Weather.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/02-Where Will I Be.mp3'
 p1328
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/05-Unbreakable Chain.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/17-Joy.mp3'
 p1329
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/10-The Messenger.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/16-Sacred and Secular.mp3'
 p1330
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/14-Elle Est Bonne Et Belle.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/12-I Like That.mp3'
 p1331
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/08-Brother LA.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/18-Luna Samba.mp3'
 p1332
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/12-Rocky World.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/08-Harry.mp3'
 p1333
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/06-O Marie.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/14-Bladesteel.mp3'
 p1334
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/17-Steadfast.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/09-Bells Of Oaxaca.mp3'
 p1335
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/04-The Maker  River Rise.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/06-Blue Bus.mp3'
 p1336
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/11-The Maker  River Rise.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/07-Lovechild.mp3'
 p1337
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/02-For the Beauty of Wynona.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/15-Moondog.mp3'
 p1338
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/15-Another SIlver Morning.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/05-Beauty.mp3'
 p1339
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/07-Rocky World.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/01-Chest Of Drawers.mp3'
 p1340
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/09-Irish Melody.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/03-Here Is What Is.mp3'
 p1341
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/01-The Messenger.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/10-This May Be The Last Time.mp3'
 p1342
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/18-Trembling.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/13-Duo Glide.mp3'
 p1343
-aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/16-Collection of Marie Claire.mp3'
+aS'/media/dat/mus/Daniel Lanois/Here Is What Is/11-Smoke #6.mp3'
 p1344
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/12 - Flametop green.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/03-Still Water.mp3'
 p1345
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/13 - Todos santos.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/13-Rain Weather.mp3'
 p1346
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/08 - The deadly nightshade.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/05-Unbreakable Chain.mp3'
 p1347
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/06 - Desert rose.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/10-The Messenger.mp3'
 p1348
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/07 - Carla.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/14-Elle Est Bonne Et Belle.mp3'
 p1349
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/03 - Oaxaca.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/08-Brother LA.mp3'
 p1350
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/05 - Telco.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/12-Rocky World.mp3'
 p1351
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/11 - Panorama.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/06-O Marie.mp3'
 p1352
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/04 - Agave.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/17-Steadfast.mp3'
 p1353
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/10 - Frozen.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/04-The Maker  River Rise.mp3'
 p1354
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/09 - Dusty.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/11-The Maker  River Rise.mp3'
 p1355
-aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/02 - Sketches.mp3'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/02-For the Beauty of Wynona.mp3'
 p1356
-aS"/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/18 The Source Of Fisherman's Daughter.flac"
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/15-Another SIlver Morning.mp3'
 p1357
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/13 The Maker [Early Bass & Lyrics].flac'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/07-Rocky World.mp3'
 p1358
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/14 The Maker [Calypso Demo].flac'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/09-Irish Melody.mp3'
 p1359
-aS"/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/11 St Ann's Gold.flac"
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/01-The Messenger.mp3'
 p1360
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/04 Jolie Louise.flac'
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/18-Trembling.mp3'
 p1361
-aS"/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/05 Fisherman's Daughter.flac"
+aS'/media/dat/mus/Daniel Lanois/Cool water (1993)/16-Collection of Marie Claire.mp3'
 p1362
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/12 Amazing Grace.flac'
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/12 - Flametop green.mp3'
 p1363
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/16 Jolie Louise [Before Dublin].flac'
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/13 - Todos santos.mp3'
 p1364
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/10 Ice.flac'
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/08 - The deadly nightshade.mp3'
 p1365
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/02 The Maker.flac'
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/06 - Desert rose.mp3'
 p1366
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/17 Early Dourado Sketch.flac'
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/07 - Carla.mp3'
 p1367
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/01 Still Water.flac'
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/03 - Oaxaca.mp3'
 p1368
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/07 Under A Stormy Sky.flac'
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/05 - Telco.mp3'
 p1369
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/06 White Mustang II.flac'
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/11 - Panorama.mp3'
 p1370
-aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/08 Where The Hawkwind Kills.flac.flac'
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/04 - Agave.mp3'
 p1371
-aS"/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/15 Still Water [From Eno's House].flac"
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/10 - Frozen.mp3'
 p1372
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/07 - bells of new orleans.mp3'
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/09 - Dusty.mp3'
 p1373
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/11 - symphonic chords.mp3'
+aS'/media/dat/mus/Daniel Lanois/Belladonna (2005)/02 - Sketches.mp3'
 p1374
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/02 - el conquistador.mp3'
+aS"/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/18 The Source Of Fisherman's Daughter.flac"
 p1375
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/06 - mighty cloud.mp3'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/13 The Maker [Early Bass & Lyrics].flac'
 p1376
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/03 - rota.mp3'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/14 The Maker [Calypso Demo].flac'
 p1377
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/08 - beatrice.mp3'
+aS"/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/11 St Ann's Gold.flac"
 p1378
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/05 - diego painting.mp3'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/04 Jolie Louise.flac'
 p1379
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/09 - two worlds.mp3'
+aS"/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/05 Fisherman's Daughter.flac"
 p1380
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/01 - needles.mp3'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/12 Amazing Grace.flac'
 p1381
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/10 - white mustang ii.mp3'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/16 Jolie Louise [Before Dublin].flac'
 p1382
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/13 - blue waltz.mp3'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/10 Ice.flac'
 p1383
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/14 - sonho dourado.mp3'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/02 The Maker.flac'
 p1384
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/04 - da luna funk.mp3'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/17 Early Dourado Sketch.flac'
 p1385
-aS'/media/dat/mus/Daniel Lanois/Trip (1993)/12 - romantic tremolo.mp3'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/01 Still Water.flac'
 p1386
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/06 The Collection of Marie Claire.flac'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/07 Under A Stormy Sky.flac'
 p1387
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/07 Death of a Train.flac'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/06 White Mustang II.flac'
 p1388
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/03 Still Learning How to Crowl.flac'
+aS'/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/08 Where The Hawkwind Kills.flac.flac'
 p1389
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/12 For the Beauty of Wynona.flac'
+aS"/media/dat/mus/Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/15 Still Water [From Eno's House].flac"
 p1390
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/13 Rocky World.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/07 - bells of new orleans.mp3'
 p1391
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/09 Lotta Love to Give.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/11 - symphonic chords.mp3'
 p1392
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/08 The Unbreakable Chain.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/02 - el conquistador.mp3'
 p1393
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/02 Brother L.A.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/06 - mighty cloud.mp3'
 p1394
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/05 Waiting.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/03 - rota.mp3'
 p1395
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/10 Indian Red.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/08 - beatrice.mp3'
 p1396
-aS"/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/11 Sleeping in the Devil's Bed.flac"
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/05 - diego painting.mp3'
 p1397
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/01 The Messenger.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/09 - two worlds.mp3'
 p1398
-aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/04 Beatrice.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/01 - needles.mp3'
 p1399
-aS'/media/dat/mus/Hawkwind/In Search of Space/08 - Silver Machine (Original Single Version).flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/10 - white mustang ii.mp3'
 p1400
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/01 Beast of Chaos.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/13 - blue waltz.mp3'
 p1401
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/09 Silver Machine.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/14 - sonho dourado.mp3'
 p1402
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/08 Earth Calling.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/04 - da luna funk.mp3'
 p1403
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/05 Master Of The Universe.flac'
+aS'/media/dat/mus/Daniel Lanois/Trip (1993)/12 - romantic tremolo.mp3'
 p1404
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/04 Only Dreaming.flac'
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/06 The Collection of Marie Claire.flac'
 p1405
-aS"/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/02 You Shouldn't Do That.flac"
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/07 Death of a Train.flac'
 p1406
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/07 The Awakening.flac'
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/03 Still Learning How to Crowl.flac'
 p1407
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/03 Technicians Of Spaceship Earth.flac'
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/12 For the Beauty of Wynona.flac'
 p1408
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/06 Paranoia.flac'
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/13 Rocky World.flac'
 p1409
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/10 Spirit Of The Age (narrative).flac'
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/09 Lotta Love to Give.flac'
 p1410
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/08 Paranoia.flac'
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/08 The Unbreakable Chain.flac'
 p1411
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/02 Earth Calling.flac'
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/02 Brother L.A.flac'
 p1412
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/09 Shores Of Paradise pt 2.flac'
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/05 Waiting.flac'
 p1413
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/07 Master Of The Universe.flac'
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/10 Indian Red.flac'
 p1414
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/05 jam.flac'
+aS"/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/11 Sleeping in the Devil's Bed.flac"
 p1415
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/06 Shores Of Paradise pt 1.flac'
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/01 The Messenger.flac'
 p1416
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/04 Only Dreaming.flac'
+aS'/media/dat/mus/Daniel Lanois/For the Beauty of Wynona/04 Beatrice.flac'
 p1417
-aS"/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/03 You Shouldn't Do That.flac"
+aS'/media/dat/mus/Hawkwind/In Search of Space/08 - Silver Machine (Original Single Version).flac'
 p1418
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/11 Sweet Mistress Of Pain.flac'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/01 Beast of Chaos.flac'
 p1419
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/10 Seeing It.flac'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/09 Silver Machine.flac'
 p1420
-aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/01 intro.flac'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/08 Earth Calling.flac'
 p1421
-aS'/media/dat/mus/Gazpacho/Tick Tock/Gazpacho - Tick Tock.flac'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/05 Master Of The Universe.flac'
 p1422
-aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Nobody\xd1\x82\xd0\x90\xd0\xa9s free.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/04 Only Dreaming.flac'
 p1423
-aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/All in.mp3'
+aS"/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/02 You Shouldn't Do That.flac"
 p1424
-aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Je te prends par les cheveux.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/07 The Awakening.flac'
 p1425
-aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Va savoir pourquoi.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/03 Technicians Of Spaceship Earth.flac'
 p1426
-aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Les atomes.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/06 Paranoia.flac'
 p1427
-aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Les deux h\xd0\x92rons.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Potters/10 Spirit Of The Age (narrative).flac'
 p1428
-aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Le shack \xd0\x95 Chuck.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/08 Paranoia.flac'
 p1429
-aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Prends moi tel quel.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/02 Earth Calling.flac'
 p1430
-aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/L\xd1\x82\xd0\x90\xd0\xa9invisible.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/09 Shores Of Paradise pt 2.flac'
 p1431
-aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Je redeviens le vent.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/07 Master Of The Universe.flac'
 p1432
-aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Un lac.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/05 jam.flac'
 p1433
-aS'/media/dat/mus/Marilyn Manson/Holy Wood (In The Shadow Of The Valley Of Death)/18 - King Kill 33\xc2\xb0.flac'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/06 Shores Of Paradise pt 1.flac'
 p1434
-aS'/media/dat/mus/Nicolas Repac - Swing Swing (2004)/03 -  La P\xc3\xa8gre.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/04 Only Dreaming.flac'
 p1435
-aS"/media/dat/mus/Nicolas Repac - Swing Swing (2004)/16 -  Tant Qu'il Y Aura Des \xc3\x89toiles.mp3"
+aS"/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/03 You Shouldn't Do That.flac"
 p1436
-aS'/media/dat/mus/Nicolas Repac - Swing Swing (2004)/06 -  Les Ann\xc3\xa9es Folles.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/11 Sweet Mistress Of Pain.flac'
 p1437
-aS'/media/dat/mus/Nicolas Repac - Swing Swing (2004)/12 -  La Nuit M\xc3\xa8ne Une Existence Obscure.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/10 Seeing It.flac'
 p1438
-aS'/media/dat/mus/Carptree/Carptree - 2001 - Carptree [320]/06 - It Doesn\xc2\xb4t Know It.mp3'
+aS'/media/dat/mus/Hawkwind/Wolverhampton & Potters Bar/Wolv/01 intro.flac'
 p1439
-aS'/media/dat/mus/Coeur de pirate/Coeur de pirate - Coeur de pirate (2008) - 10 - Pour un infid\xc3\xa8le.mp3'
+aS'/media/dat/mus/Gazpacho/Tick Tock/Gazpacho - Tick Tock.flac'
 p1440
-aS"/media/dat/mus/Coeur de pirate/Coeur de pirate - Coeur de pirate (2008) - 12 - C'\xc3\xa9tait salement romantique.mp3"
+aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Nobody\xd1\x82\xd0\x90\xd0\xa9s free.mp3'
 p1441
-aS'/media/dat/mus/Black Sabbath/Forbidden/04 - Shaking Off The Chains.flac'
+aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/All in.mp3'
 p1442
-aS'/media/dat/mus/Black Sabbath/Forbidden/09 - Forbidden.flac'
+aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Je te prends par les cheveux.mp3'
 p1443
-aS'/media/dat/mus/Black Sabbath/Forbidden/07 - Sick & Tired.flac'
+aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Va savoir pourquoi.mp3'
 p1444
-aS'/media/dat/mus/Black Sabbath/Forbidden/06 - Guilty As Hell.flac'
+aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Les atomes.mp3'
 p1445
-aS'/media/dat/mus/Black Sabbath/Forbidden/01 - The Illusion Of Power.flac'
+aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Les deux h\xd0\x92rons.mp3'
 p1446
-aS"/media/dat/mus/Black Sabbath/Forbidden/03 - Can't Get Close Enough.flac"
+aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Le shack \xd0\x95 Chuck.mp3'
 p1447
-aS"/media/dat/mus/Black Sabbath/Forbidden/05 - I Won't Cry For You.flac"
+aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Prends moi tel quel.mp3'
 p1448
-aS'/media/dat/mus/Jean Leloup/1985- 2005/La vall\xc3\xa9e des r\xc3\xa9putations.flac'
+aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/L\xd1\x82\xd0\x90\xd0\xa9invisible.mp3'
 p1449
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Le d\xc3\xb4me.flac'
+aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Je redeviens le vent.mp3'
 p1450
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Le monde est \xc3\xa0 pleurer.flac'
+aS'/media/dat/mus/Martin L\xc3\xa9on - Les Atomes/Un lac.mp3'
 p1451
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Johnny Go [Video Remix].flac'
+aS'/media/dat/mus/Marilyn Manson/Holy Wood (In The Shadow Of The Valley Of Death)/18 - King Kill 33\xc2\xb0.flac'
 p1452
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Forest.flac'
+aS'/media/dat/mus/Nicolas Repac - Swing Swing (2004)/03 -  La P\xc3\xa8gre.mp3'
 p1453
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Balade \xc3\xa0 Toronto.flac'
+aS"/media/dat/mus/Nicolas Repac - Swing Swing (2004)/16 -  Tant Qu'il Y Aura Des \xc3\x89toiles.mp3"
 p1454
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Je joue de la guitare [Version Radio].flac'
+aS'/media/dat/mus/Nicolas Repac - Swing Swing (2004)/06 -  Les Ann\xc3\xa9es Folles.mp3'
 p1455
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Plein gaz !.flac'
+aS'/media/dat/mus/Nicolas Repac - Swing Swing (2004)/12 -  La Nuit M\xc3\xa8ne Une Existence Obscure.mp3'
 p1456
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Paradis perdu.flac'
+aS'/media/dat/mus/Carptree/Carptree - 2001 - Carptree [320]/06 - It Doesn\xc2\xb4t Know It.mp3'
 p1457
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Alger.flac'
+aS'/media/dat/mus/Coeur de pirate/Coeur de pirate - Coeur de pirate (2008) - 10 - Pour un infid\xc3\xa8le.mp3'
 p1458
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Cookie.flac'
+aS"/media/dat/mus/Coeur de pirate/Coeur de pirate - Coeur de pirate (2008) - 12 - C'\xc3\xa9tait salement romantique.mp3"
 p1459
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Les fourmis [Version Radio].flac'
+aS'/media/dat/mus/Black Sabbath/Forbidden/04 - Shaking Off The Chains.flac'
 p1460
-aS'/media/dat/mus/Jean Leloup/1985- 2005/La fin du monde est \xc3\xa0 7 heures.flac'
+aS'/media/dat/mus/Black Sabbath/Forbidden/09 - Forbidden.flac'
 p1461
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Edgar.flac'
+aS'/media/dat/mus/Black Sabbath/Forbidden/07 - Sick & Tired.flac'
 p1462
-aS'/media/dat/mus/Jean Leloup/1985- 2005/D\xc3\xa9cadence.flac'
+aS'/media/dat/mus/Black Sabbath/Forbidden/06 - Guilty As Hell.flac'
 p1463
-aS'/media/dat/mus/Jean Leloup/1985- 2005/La vie est laide [Version Radio].flac'
+aS'/media/dat/mus/Black Sabbath/Forbidden/01 - The Illusion Of Power.flac'
 p1464
-aS"/media/dat/mus/Jean Leloup/1985- 2005/L'amour est sans piti\xc3\xa9.flac"
+aS"/media/dat/mus/Black Sabbath/Forbidden/03 - Can't Get Close Enough.flac"
 p1465
-aS'/media/dat/mus/Jean Leloup/1985- 2005/Printemps \xc3\xa9t\xc3\xa9.flac'
+aS"/media/dat/mus/Black Sabbath/Forbidden/05 - I Won't Cry For You.flac"
 p1466
-asS'processRunningTimeInMS'
+aS'/media/dat/mus/Jean Leloup/1985- 2005/La vall\xc3\xa9e des r\xc3\xa9putations.flac'
 p1467
-F509.74714803695679
-sS'totalFileCount'
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Le d\xc3\xb4me.flac'
 p1468
-I17340
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Le monde est \xc3\xa0 pleurer.flac'
+p1469
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Johnny Go [Video Remix].flac'
+p1470
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Forest.flac'
+p1471
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Balade \xc3\xa0 Toronto.flac'
+p1472
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Je joue de la guitare [Version Radio].flac'
+p1473
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Plein gaz !.flac'
+p1474
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Paradis perdu.flac'
+p1475
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Alger.flac'
+p1476
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Cookie.flac'
+p1477
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Les fourmis [Version Radio].flac'
+p1478
+aS'/media/dat/mus/Jean Leloup/1985- 2005/La fin du monde est \xc3\xa0 7 heures.flac'
+p1479
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Edgar.flac'
+p1480
+aS'/media/dat/mus/Jean Leloup/1985- 2005/D\xc3\xa9cadence.flac'
+p1481
+aS'/media/dat/mus/Jean Leloup/1985- 2005/La vie est laide [Version Radio].flac'
+p1482
+aS"/media/dat/mus/Jean Leloup/1985- 2005/L'amour est sans piti\xc3\xa9.flac"
+p1483
+aS'/media/dat/mus/Jean Leloup/1985- 2005/Printemps \xc3\xa9t\xc3\xa9.flac'
+p1484
+asS'processRunningTimeInMS'
+p1485
+F389.5352840423584
+sS'totalFileCount'
+p1486
+I17434
 sb.
