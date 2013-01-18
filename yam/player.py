@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-#-*- coding:utf-8 -*-
+
 """
-play audio via phonon
+This module holds differents implementation of Player like : local, remote and stream (coming soon)
 """
 import sys
 import os
@@ -13,13 +12,13 @@ try:
     from PySide.phonon import Phonon
     #app = PySide.QtGui.QApplication(sys.argv)
     #app.setApplicationName('myname')
-except ImportError:
+except ImportError as error:
     app = QtGui.QApplication(sys.argv)
     QtGui.QMessageBox.critical(None, "Music Player",
             "Your Qt installation does not have Phonon support.",
             QtGui.QMessageBox.Ok | QtGui.QMessageBox.Default,
             QtGui.QMessageBox.NoButton)
-    print "Your Qt installation does not have Phonon support."
+    print error
     sys.exit(1)
 
 class PlayerStates:
@@ -29,6 +28,9 @@ class PlayerStates:
     ERROR = "ERROR"
 
 class LocalPlayer(QtCore.QObject):
+    """
+    The LocalPlayer uses the Qt Phonon module to play music files
+    """
     stateChanged = QtCore.Signal()
     playerTicked = QtCore.Signal()
 
@@ -50,6 +52,7 @@ class LocalPlayer(QtCore.QObject):
 
     def setHeadless(self):
         app = QCoreApplication(sys.argv)
+        app.setApplicationName('headless-player')
         self.setParent(app)
 
     def currentPlaylist(self):
@@ -194,9 +197,12 @@ import socket
 from urlparse import urlparse
 
 class RemoteClient:
+    """
+    The RemoteClient sends str commands to a remote device via TCP.
+    """
     def __init__(self, url):
         print "Remote client initiated with url: {0}".format(url)
-        ip, port = url.split(':') 
+        ip, port = url[1:-1].split(':')
         self.tcpIP = ip
         self.tcpPort = int(port)
         self.bufferSize = 1024
@@ -216,7 +222,9 @@ class RemoteClient:
         return ""
 
 class RemotePlayer(QtCore.QObject):
-
+    """
+    The RemotePlayer redirects all requests to an host using a RemoteClient
+    """
     stateChanged = QtCore.Signal()
     playerTicked = QtCore.Signal()
 

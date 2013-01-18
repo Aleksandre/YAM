@@ -1,5 +1,8 @@
-import sys, os
 
+
+"""
+This module contains everything related to the app configuration
+"""
 from ConfigParser import SafeConfigParser
 
 
@@ -16,7 +19,6 @@ def setConfigFolder(newConfigLocation):
 
     with open("config.ini", 'w') as configfile:
         coreParser.write(configfile)
-
 
 def getConfigFolder():
     config = "config.ini"

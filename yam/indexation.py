@@ -1,6 +1,7 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 
+"""
+This module contains music indexation logic.
+"""
 import os
 from profiling import profile
 from mutagen import mutagen  
@@ -12,14 +13,20 @@ import config
 import cPickle as json
 
 class MusicIndexer:
+    """
+    This class will scan a folder recursievely looking for music files.
 
-    supported_audio_extensions = [".mp3", ".flac"]
-    supported_cover_extensions = [".png", ".bmp", ".jpeg", ".jpg"]
-    likely_artcover_name = ["front", "cover", "art", "folder", "album", ".front", ".cover", ".art", ".folder", ".album"]
+    Each file tags are extracted using mutagen.
+
+    Each time a track is read, the progressCallback method is called
+    """
 
     def __init__(self, pathToIndex = None, progressCallback = None):
         self.pathToIndex = pathToIndex or config.getPathToMusicLibrary()
         self.progressCallback = progressCallback
+        self.supported_audio_extensions = [".mp3", ".flac"]
+        self.supported_cover_extensions = [".png", ".bmp", ".jpeg", ".jpg"]
+        self.likely_artcover_name = ["front", "cover", "art", "folder", "album", ".front", ".cover", ".art", ".folder", ".album"]
 
     @profile
     def run(self):
@@ -68,6 +75,10 @@ class MusicIndexer:
         return tracks, result
     
 
+    """
+    Scan the configured path to get how many files will be handled
+    when the indexer is actually ran with the current configuration.
+    """
     def getNumberOfFilesToHandle(self):
         count = 0
         rootdir = self.pathToIndex

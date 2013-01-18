@@ -1,3 +1,9 @@
+
+"""
+This module holds Devices related components.
+A 'Device' is any computer running the clientapp or the serverapp
+"""
+
 import logging
 from ConfigParser import SafeConfigParser
 import config
@@ -7,11 +13,9 @@ from socket import *
 import select
 import threading
 
-
 class DeviceManager:
     """
-    Holds device related logic.
-    A device is an application running any version of YAM.
+    Keeps a registry of known devices    
     """
     def __init__(self, mainApp = None):
         self.parser = SafeConfigParser()
@@ -23,10 +27,10 @@ class DeviceManager:
     def bindEvents(self):
         self.deviceWatcher = DeviceWatcher(callback=self.handleDeviceNotificationReceived)
         self.deviceWatcher.start()
-        pass
 
     def handleDeviceNotificationReceived(self, device):
         """
+        TODO : Move this.
         This method is triggered each time another device
         on the network broadcasted it's presence.
 
@@ -144,6 +148,10 @@ class DeviceManager:
             pass
             #TODO
 
+    def _dispose(self):
+        print "Disposing DeviceManager..."
+        self.deviceWatcher.stop()
+        self.deviceWatcher.thread.join()
 
 class DeviceWatcher():
     """
@@ -156,27 +164,30 @@ class DeviceWatcher():
         self.callback = callback
 
     def start(self):
-        print "Starting PresenceWatcher on UDP port: {0}...".format(self.portToWatch)
+        print "Starting to watch for devices UDP broadcasts on port: {0}...".format(self.portToWatch)
         self.running = True
         self.thread = threading.Thread(target=self._run)
         self.thread.start()
 
     def stop(self):
-        print "Stopping PresenceWatcher..."
+        print "Stopping DeviceWatcher..."
         self.running = False
+        self.sock.close()
+        print "Stopped DeviceWatcher."
 
     def _run(self):
-        s = socket(AF_INET, SOCK_DGRAM)
-        s.bind(('<broadcast>', self.portToWatch))
-        s.setblocking(0)
-        print "Started PresenceWatcher."
+        self.sock = socket(AF_INET, SOCK_DGRAM)
+        self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        self.sock.bind(('<broadcast>', self.portToWatch))
+        self.sock.setblocking(0)
+        print "Started DeviceWatcher."
         while self.running:
-            result = select.select([s],[],[])
-            msg = result[0][0].recv(self.bufferSize) 
+            result = select.select([self.sock],[],[])
+            msg = result[0][0].recv(self.bufferSize).strip() 
             print "Received UDP broadcast msg: {0}".format(msg)
             if self.callback:
                 self.callback(Device.fromEncodedString(msg))
-        print "Stopped PresenceWatcher."
+           
 
 
 
@@ -215,7 +226,7 @@ class DevicePresenceBroadcaster():
 
 class Device:
     """
-
+    A 'Device' is any computer running the clientapp or the serverapp
     """
     def __init__(self, type="local", visibleName = None, url = None, lastSeen = None):
         self.visibleName = visibleName
@@ -253,6 +264,7 @@ class Device:
         args =  encodedString[1:-1].split(';')
         name = args[0]
         url = args[1]
+        print "Decoded device string: {0}, {1}: ".format(name, url)
         return name, url
 
 
