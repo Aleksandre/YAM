@@ -33,10 +33,11 @@ def getAlbums(_tracks = None):
     tracks = _tracks or load()
     albums = []
 
-    for track in tracks:
-        album = track.albumTitle
-        if not album in albums:
-            albums.append(album)
+    if tracks:
+        for track in tracks:
+            album = track.albumTitle
+            if not album in albums:
+                albums.append(album)
     return sorted(albums)
 
 
@@ -49,11 +50,11 @@ def getArtistsWithRandomCover(_tracks = None):
 
 def getArtists(tracks):
     artists = []
-
-    for track in tracks:
-        artist = track.artist
-        if not artist in artists:
-            artists.append(artist)
+    if tracks:
+        for track in tracks:
+            artist = track.artist
+            if not artist in artists:
+                artists.append(artist)
     return sorted(artists)
 
 
@@ -77,11 +78,12 @@ def getTracksForAlbum(albumTitle, artistName = None, _tracks = None):
 def indexAlbums():
     tracks = load()
     albums = {}
-    for track in tracks:
-        if not track.albumTitle in albums:
-            albums[track.albumTitle] = []    
-        
-        albums[track.albumTitle].append(track)
+    if tracks:
+        for track in tracks:
+            if not track.albumTitle in albums:
+                albums[track.albumTitle] = []    
+            
+            albums[track.albumTitle].append(track)
     saveView("albums", albums)
     
 
@@ -153,11 +155,12 @@ def indexArtistsWithRandomCover():
     artists = []
     artists_names = []
 
-    for track in tracks:
-        artist = track.artist
-        if not artist in artists_names:
-            artists_names.append(artist)
-            artists.append([artist, 'art/nocover.png'])
+    if tracks:
+        for track in tracks:
+            artist = track.artist
+            if not artist in artists_names:
+                artists_names.append(artist)
+                artists.append([artist, 'art/nocover.png'])
     data = sorted(artists, key=lambda x: x[0])
     saveView("artistsWithRandomCover", data)
 

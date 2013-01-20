@@ -17,14 +17,12 @@ import PySide.QtGui as QtGui
 import config as config
 import content as content
 from devices import DeviceManager, Device
-from player import LocalPlayer
-from player import RemotePlayer
+import player as players
 from profiling import profile
 
-PLAYER = LocalPlayer()
-DEVICEMAN = None
-
 print sys.executable
+
+APP = None
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -69,8 +67,6 @@ class MainWindow(QtGui.QMainWindow):
         topDock.setFeatures(QDockWidget.NoDockWidgetFeatures)
         topDock.setContentsMargins(0,0,0,0)
         topDock.setFloating(False)
-
-        #self.addDockWidget(QtCore.Qt.TopDockWidgetArea, topDock)
 
     def showConfigPanel(self):
         wizard = ConfigurationWizard()
@@ -127,9 +123,8 @@ class DeviceManagementPanel(QtGui.QDialog):
         print "Applying changes to DeviceManager..."
         selectedDevice = self.deviceListView.selectedDevice
         if selectedDevice:
-            DEVICEMAN.setActiveDevice(selectedDevice)
-            global PLAYER
-            PLAYER = DEVICEMAN.getActivePlayer()
+            global APP
+            APP.deviceMan.setActiveDevice(selectedDevice)
         else :
             print "No device selected. Cannot apply changes."
 
@@ -273,7 +268,7 @@ class DeviceList(QtGui.QListView):
             self.initUI()
             self.bindEvents()
             self.loadDevices()
-            self.selectedDevice = DEVICEMAN.getActiveDevice()
+            self.selectedDevice = APP.deviceMan.getActiveDevice()
 
         def initUI(self):
             self.setMaximumHeight(240)
@@ -310,7 +305,7 @@ class DeviceList(QtGui.QListView):
 
         def loadDevices(self):
             print "Loading devices into listview..."
-            self.devices = DEVICEMAN.getDevices()
+            self.devices = APP.deviceMan.getDevices()
             self.devicesWithIcon = []
             for device in self.devices:
                 model = repr(device) , '../art/nocover.png'
@@ -375,7 +370,7 @@ class TrackTable(QtGui.QTableWidget):
                 self._queueTrack(self.currentItem().row())
                 return
             elif key == QtCore.Qt.Key_S:
-                PLAYER.stop()
+                APP.player.stop()
                 return
             elif key == QtCore.Qt.Key_Left:
                 self.focusPreviousChild()
@@ -384,10 +379,10 @@ class TrackTable(QtGui.QTableWidget):
                 self.focusNextChild()
                 return
             elif key == QtCore.Qt.Key_Space:
-                PLAYER.togglePlayState()
+                APP.player.togglePlayState()
                 return
             elif key == QtCore.Qt.Key_N:
-                PLAYER.playNextTrack()
+                APP.player.playNextTrack()
                 return
             elif key == QtCore.Qt.Key_Up:
                 currentRow = self.currentRow()
@@ -415,12 +410,12 @@ class TrackTable(QtGui.QTableWidget):
         def _playTrack(self, row):
             track = self._findTrack(row)
             if not track == None:
-                PLAYER.playTrack(track)    
+                APP.player.playTrack(track)    
 
         def _queueTrack(self, row):
             track = self._findTrack(row)
             if not track == None:
-                PLAYER.queueTrack(track)    
+                APP.player.queueTrack(track)    
 
         def _findTrack(self, row):
             trackTitle = self.item(row,0).text()
@@ -482,10 +477,10 @@ class AlbumList(QtGui.QListWidget):
                 self._queueAlbum(albumTitle)
                 return
             elif key == QtCore.Qt.Key_S:
-                PLAYER.stop()
+                APP.player.stop()
                 return
             elif key == QtCore.Qt.Key_Space:
-                PLAYER.togglePlayState()
+                APP.player.togglePlayState()
                 return
             elif key == QtCore.Qt.Key_Left:
                 self.focusPreviousChild()
@@ -536,11 +531,11 @@ class AlbumList(QtGui.QListWidget):
 
         def _playAlbum(self, albumTitle):
             tracks = self._getTracksForSelectedAlbum(albumTitle)
-            PLAYER.playTracks(tracks)
+            APP.player.playTracks(tracks)
 
         def _queueAlbum(self, albumTitle):
             tracks = self._getTracksForSelectedAlbum(albumTitle)
-            PLAYER.queueTracks(tracks)
+            APP.player.queueTracks(tracks)
 
         def _getTracksForSelectedAlbum(self, albumTitle):
             tracksForAlbum = content.getTracksForAlbum(albumTitle, self.tracks)
@@ -585,10 +580,10 @@ class ArtistList(QtGui.QListView):
             #self._queueAlbum(albumTitle)
             return
         elif key == QtCore.Qt.Key_S:
-            PLAYER.stop()
+            APP.player.stop()
             return
         elif key == QtCore.Qt.Key_Space:
-            PLAYER.togglePlayState()
+            APP.player.togglePlayState()
             return
         elif key == QtCore.Qt.Key_Left:
             self.focusPreviousChild()
@@ -691,36 +686,63 @@ class DefaultMusicCollectionView(QtGui.QWidget):
         self.albumsView.setAlbums(albumsForArtist)
 
 
+
+class Client():
+    def __init__(self, showApp=False):
+        try:
+            self.app = QtGui.QApplication(sys.argv)
+        except RuntimeError:
+            self.app = QtCore.QCoreApplication.instance()
+        self.app.setApplicationName('yamclient')
+        self.mainWin = MainWindow()
+        self.deviceMan = DeviceManager(startWatcher=True)
+        self.showApp = showApp
+        self.updatePlayer()
+        self.bindEvents()
+
+    def bindEvents(self):
+        self.app.aboutToQuit.connect(self.stop)
+
+    def updatePlayer(self):
+        playerType = self.deviceMan.getActiveDeviceType()
+        self.player = players.getPlayerByType(playerType)
+
+    def start(self):
+        try:
+            if self.showApp:
+                self.mainWin.show_and_raise()
+            # Enter Qt application main loop
+            self.app.exec_()
+        except (KeyboardInterrupt, SystemExit):
+            pass
+
+    def close(self):
+        #TODO : Remove
+        self.deviceMan.dispose()
+        self.app.exit()
+        self.player.stop()
+
+    def stop(self):
+        self.deviceMan.dispose()
+        print self.app.exit()
+        self.player.stop()
+
 def main(argv=None):
-     #logging.basicConfig(filename='log/dev.log', level=logging.DEBUG)
-   
-    logging.info("Starting yam client.")
+    config.setConfigFolder('../config/')
+    client = setupClient()
+    client.start()
 
-    # Initiate the QApp object
-    app = QApplication(sys.argv, QApplication.GuiServer)
-    app.setApplicationName('yam')
+def setupTestClient():
+    client = Client(showApp=False)
+    global APP
+    APP = client
+    return client
 
-    #Load the device manager
-    global DEVICEMAN
-    DEVICEMAN = DeviceManager(app)
-    #Register my device. This is the only "local" device in the 
-    #registry and should be used as the default one.
-    DEVICEMAN.registerDevice(Device("local","My player", "localhost"))
-    #Set the main window
-    main = MainWindow()
-    PLAYER.setParent(main)
-   
-    trayIcon = QtGui.QSystemTrayIcon(QtGui.QIcon("../art/appicon.ico"), app)
-    main.show_and_raise()
-
-    try:
-        # Enter Qt application main loop
-        logging.info(app.exec_()) 
-    except (KeyboardInterrupt, SystemExit):
-        print "here"
-        
-    logging.info("Stopped yam client.")
-    DEVICEMAN._dispose()
+def setupClient():
+    client = Client(showApp=True)
+    global APP
+    APP = client
+    return client
 
 if __name__ == '__main__':
     sys.exit(main())

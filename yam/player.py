@@ -10,16 +10,15 @@ from PySide.QtGui import *
 
 try:
     from PySide.phonon import Phonon
-    #app = PySide.QtGui.QApplication(sys.argv)
-    #app.setApplicationName('myname')
 except ImportError as error:
-    app = QtGui.QApplication(sys.argv)
-    QtGui.QMessageBox.critical(None, "Music Player",
-            "Your Qt installation does not have Phonon support.",
-            QtGui.QMessageBox.Ok | QtGui.QMessageBox.Default,
-            QtGui.QMessageBox.NoButton)
     print error
     sys.exit(1)
+
+def getPlayerByType(playerType):
+    if playerType == "local":
+        return LocalPlayer()
+    if playerType == "remote":
+        return RemotePlayer()
 
 class PlayerStates:
     STOPPED="STOPPED"
@@ -37,23 +36,23 @@ class LocalPlayer(QtCore.QObject):
     _playlist = []
     _playlistIdx = 0
 
-    def __init__(self, parent = None): 
-       QtCore.QObject.__init__(self)
-       if parent : 
-          self.setParent(parent)
+    def __init__(self, loadForClient = False): 
+        QtCore.QObject.__init__(self)
+        try:
+            self.app = QtGui.QApplication(sys.argv)
+        except RuntimeError:
+            self.app = QtCore.QCoreApplication.instance()
+        self.init()
 
-    def setParent(self, parent):
-        self.app = parent
-        self.audioOutput = Phonon.AudioOutput(Phonon.MusicCategory, parent)
-        self.player = Phonon.MediaObject(parent)
+    def init(self):
+        self.audioOutput = Phonon.AudioOutput(Phonon.MusicCategory, self.app)
+        self.player = Phonon.MediaObject(self.app)
         self.player.setPrefinishMark(5000)
         Phonon.createPath(self.player, self.audioOutput)
         self._bindEvents()
 
     def setHeadless(self):
-        app = QCoreApplication(sys.argv)
-        app.setApplicationName('headless-player')
-        self.setParent(app)
+        self.app.setApplicationName('headless-player')
 
     def currentPlaylist(self):
         print "Play list requested"
@@ -191,35 +190,10 @@ class LocalPlayer(QtCore.QObject):
     def start(self):
         self.app.exec_()
 
+    def exit(self):
+        self.app.exit()
+
     state = QtCore.Property(QUrl, getState, notify=notifyStateChanged)
-
-import socket 
-from urlparse import urlparse
-
-class RemoteClient:
-    """
-    The RemoteClient sends str commands to a remote device via TCP.
-    """
-    def __init__(self, url):
-        print "Remote client initiated with url: {0}".format(url)
-        ip, port = url[1:-1].split(':')
-        self.tcpIP = ip
-        self.tcpPort = int(port)
-        self.bufferSize = 1024
-        self.printInfo()
-
-    def printInfo(self):
-        print "RemoteClient is targeting: {0}:{1}".format(self.tcpIP,self.tcpPort)
-
-    def sendRequest(self, request):
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((self.tcpIP, self.tcpPort))
-
-        s.send(request)
-        data = s.recv(self.bufferSize)
-        #print "Server answered the client request...", data
-        s.close()
-        return ""
 
 class RemotePlayer(QtCore.QObject):
     """
@@ -228,10 +202,13 @@ class RemotePlayer(QtCore.QObject):
     stateChanged = QtCore.Signal()
     playerTicked = QtCore.Signal()
 
-    def __init__(self, url): 
+    def __init__(self, remoteClient = None): 
        QtCore.QObject.__init__(self)
-       print "RemotePlayer initiated with url: {0}".format(url)
-       self.remoteClient = RemoteClient(url)
+       #print "RemotePlayer initiated with url: {0}".format(url)
+       self.remoteClient = remoteClient
+
+    def setRemoteClient(self,remoteClient):
+        self.remoteClient = remoteClient
 
     def setParent(self, parent):
         print "Remote player has no use for a parent..."

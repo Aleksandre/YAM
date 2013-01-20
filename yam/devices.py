@@ -6,27 +6,39 @@ A 'Device' is any computer running the clientapp or the serverapp
 
 import logging
 from ConfigParser import SafeConfigParser
-import config
+import config as config
 import time
 from player import LocalPlayer, RemotePlayer
 from socket import *
 import select
+import os
 import threading
 
 class DeviceManager:
     """
-    Keeps a registry of known devices    
+    Keeps a registry of known devices.    
     """
-    def __init__(self, mainApp = None):
+    def __init__(self, startWatcher = False, watcher = None):
         self.parser = SafeConfigParser()
         self.devicesRegistryPath = config.getConfigFolder() + "devices.ini"
         self.activeDevice = None
-        self.mainApp = mainApp
-        self.bindEvents()
+        self.bindEvents(startWatcher, watcher)
 
-    def bindEvents(self):
-        self.deviceWatcher = DeviceWatcher(callback=self.handleDeviceNotificationReceived)
-        self.deviceWatcher.start()
+        #TODO : Load hostname and port from config
+        self.deleteRegistry()
+        self.registerLocalDevice()
+
+    def registerLocalDevice(self):
+        self.registerDevice(Device("local","My player", "localhost"))
+
+    def bindEvents(self, startWatcher, watcher = None):
+        self.deviceWatcher = None
+        if startWatcher:
+            if watcher:
+                self.deviceWatcher = watcher
+            else:
+                self.deviceWatcher = DeviceWatcher(callback=self.handleDeviceNotificationReceived)
+            self.deviceWatcher.start()
 
     def handleDeviceNotificationReceived(self, device):
         """
@@ -45,23 +57,29 @@ class DeviceManager:
     def getDevices(self):
         """
         Read all configured devices from the registry.
+        If the registry could not be read, return None
+        If no devices were found in the registry, return an empty array
+        otherwise return an array of Devices.
         """
         filesRead = self.parser.read(self.devicesRegistryPath)
-
         if len(filesRead) == 0:
-            error = "The DeviceManager could not load it's configuration file: {0}".format(self.devicesRegistryPath)
-            logging.error(error)
-            raise Exception(error)
-        else:
-            devices = []
-            for device in self.parser.sections():
-                url = self.parser.get(device, 'url').encode("utf-8")
-                lastSeen = self.parser.get(device, 'lastSeen')
-                visibleName = self.parser.get(device, 'visibleName').encode("utf-8")
-                type = self.parser.get(device, 'type').encode("utf-8")
-                device = Device(type, visibleName, url, lastSeen)
-                devices.append(device)
-            return devices
+            print "The DeviceManager is creating the registry..."
+            if not self.createRegistry():
+                print "The DeviceManager could not create the registry."
+                return None
+        
+        devices = []
+        for device in self.parser.sections():
+            url = self.parser.get(device, 'url').encode("utf-8")
+            lastSeen = self.parser.get(device, 'lastSeen')
+            visibleName = self.parser.get(device, 'visibleName').encode("utf-8")
+            type = self.parser.get(device, 'type').encode("utf-8")
+            device = Device(type, visibleName, url, lastSeen)
+            devices.append(device)
+        return devices
+
+    def getLikelyActiveDevices(self):
+        return self.getDevices()
 
     def registerDevice(self, device):
         """
@@ -73,26 +91,29 @@ class DeviceManager:
             logging.info(error)
             raise TypeError(error)
 
-        currentDevices = self.getDevices()
-        if device in currentDevices:
-            self.updateDeviceLastSeenTime(device)
-            return True
 
         filesRead = self.parser.read(self.devicesRegistryPath)
         if len(filesRead) == 0:
-            error = "The DeviceManager could not load it's configuration file: {0}".format(self.devicesRegistryPath)
-            logging.error(error)
-            raise Exception(error)
-        else:
-            sectionName = device.visibleName
-            self.parser.add_section(sectionName)
-            self.parser.set(sectionName, 'visibleName', device.visibleName)
-            self.parser.set(sectionName, 'url', device.url)
-            self.parser.set(sectionName, 'type', device.type)
-            self.parser.set(sectionName, 'lastSeen', str(device.lastSeen))
-            self.parser.write(file(self.devicesRegistryPath,'w'))
-            print "Added device to the registry: {0} {1}".format(device.visibleName, device.url)
+            print "The DeviceManager is creating the registry..."
+            if not self.createRegistry():
+                print "The DeviceManager could not create the registry."
+                return False
+
+        currentDevices = self.getDevices()
+        if not currentDevices == None and device in currentDevices:
+            self.updateDeviceLastSeenTime(device)
             return True
+
+        sectionName = device.visibleName
+        self.parser.add_section(sectionName)
+        self.parser.set(sectionName, 'visibleName', device.visibleName)
+        self.parser.set(sectionName, 'url', device.url)
+        self.parser.set(sectionName, 'type', device.type)
+        self.parser.set(sectionName, 'lastSeen', str(device.lastSeen))
+        with open(self.devicesRegistryPath,'w') as f:
+            self.parser.write(f)
+        print "Added device to the registry: {0} {1}".format(device.visibleName, device.url)
+        return True
 
     def printRegisteredDevices(self):
         for device in self.getDevices():
@@ -104,10 +125,10 @@ class DeviceManager:
             print "There is no active player to select."
             return
 
-        if activeDevice.type == "local":
-            return LocalPlayer(self.mainApp)
-        elif activeDevice.type == "remote":
-            return RemotePlayer(activeDevice.url)
+       # if activeDevice.type == "local":
+         #   return LocalPlayer(self.mainApp)
+        #elif activeDevice.type == "remote":
+         #   return RemotePlayer(activeDevice.url)
 
     def getActiveDevice(self):
         if self.activeDevice == None:
@@ -118,6 +139,13 @@ class DeviceManager:
                     self.activeDevice = device
                     break
         return self.activeDevice
+
+    def getActiveDeviceType(self):
+        activeDev = self.getActiveDevice()
+        if activeDev:
+            return activeDev.type
+        else :
+            return None
 
     def setActiveDevice(self, device):
         print "Set '{0}' as active device.".format(device.visibleName)
@@ -134,24 +162,41 @@ class DeviceManager:
             sectionName = device.visibleName
             lastSeen = device.lastSeen
             self.parser.set(sectionName, 'lastSeen', str(lastSeen))
-            self.parser.write(file(self.devicesRegistryPath,'w'))
+            with open(self.devicesRegistryPath,'w') as f:
+                self.parser.write(f)
+            
             print "Updated device lastSeen time: {0}".format(lastSeen)
 
+    def createRegistry(self):
+        try:
+            with open(self.devicesRegistryPath, 'w+') as f:
+                print f
+                return True
+        except Exception as e:
+            print e
+            return False
 
-    def clearRegistry(self):
-        filesRead = self.parser.read(self.devicesRegistryPath)
-        if len(filesRead) == 0:
-            error = "The DeviceManager could not load it's configuration file: {0}".format(self.devicesRegistryPath)
-            logging.error(error)
-            raise Exception(error)
+    def isWatching(self):
+        if self.deviceWatcher:
+            return self.deviceWatcher.isRunning()
         else:
-            pass
-            #TODO
+            return False
 
-    def _dispose(self):
+  
+    def deleteRegistry(self):
+        try:
+            self.parser = SafeConfigParser()
+            with open(self.devicesRegistryPath,'w') as f:
+                self.parser.write(f)
+            return True
+        except Exception as e:
+            print e
+            return False
+
+    def dispose(self):
         print "Disposing DeviceManager..."
-        self.deviceWatcher.stop()
-        self.deviceWatcher.thread.join()
+        if self.deviceWatcher:
+            self.deviceWatcher.stop()
 
 class DeviceWatcher():
     """
@@ -162,34 +207,44 @@ class DeviceWatcher():
         self.running = False
         self.bufferSize = 1024
         self.callback = callback
+        self.sock = None
+        self.thread = threading.Thread(target=self._run, name="watcher")
 
     def start(self):
         print "Starting to watch for devices UDP broadcasts on port: {0}...".format(self.portToWatch)
         self.running = True
-        self.thread = threading.Thread(target=self._run)
         self.thread.start()
+
+    def isRunning(self):
+        return self.running 
 
     def stop(self):
         print "Stopping DeviceWatcher..."
         self.running = False
-        self.sock.close()
+        if self.sock:
+            try:
+                self.sock.shutdown(1)
+            except Exception as e:
+                print e
+            self.sock.close()
         print "Stopped DeviceWatcher."
 
     def _run(self):
         self.sock = socket(AF_INET, SOCK_DGRAM)
         self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-        self.sock.bind(('<broadcast>', self.portToWatch))
-        self.sock.setblocking(0)
         print "Started DeviceWatcher."
+
         while self.running:
+            self.sock.bind(('<broadcast>', self.portToWatch))
             result = select.select([self.sock],[],[])
             msg = result[0][0].recv(self.bufferSize).strip() 
             print "Received UDP broadcast msg: {0}".format(msg)
             if self.callback:
                 self.callback(Device.fromEncodedString(msg))
-           
+        self.stop
 
-
+    def getProcName(self):
+        return self.thread.name
 
 class DevicePresenceBroadcaster():
     """
@@ -200,29 +255,47 @@ class DevicePresenceBroadcaster():
         self.delay = delayBetweenBroadcastsInSec or config.getProperty("presence_broadcaster_call_delay_seconds")
         self.thisDevice = thisDevice
         self.running = False
+        self.sock = None
+        self.thread = threading.Thread(target=self._run, name="broadcaster")
 
     def start(self):
         print "Starting PresenceBroadcaster with delay =", self.delay, "seconds"
         self.running = True
-        self.thread = threading.Thread(target=self._run)
         self.thread.start()
 
+    def isRunning(self):
+        return self.running
+
     def stop(self):
-        print "Stopping PresenceBroadcaster..."
+        print "Stopping DevicePresenceBroadcaster..."
         self.running = False
+        if self.sock:
+            try:
+                self.sock.shutdown(1)
+            except Exception as e:
+                print e
+            self.sock.close()
+            print "Stopped PresenceBroadcaster."
 
     def _run(self):
-        s = socket(AF_INET, SOCK_DGRAM)
-        s.bind(('', 0))
-        s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-        
+        self.sock = socket(AF_INET, SOCK_DGRAM)
+        self.sock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+
         print "Started PresenceBroadcaster."
+        self.sock.bind(('', 0))
         while self.running:
-            data = self.thisDevice.encodeForTransport() 
-            s.sendto(data, ('<broadcast>', int(self.port)))
-            print "Broadcasting {0} presence on UDP port: {1}".format(self.thisDevice.visibleName, self.port)
+            try:
+                data = self.thisDevice.encodeForTransport() 
+                self.sock.sendto(data, ('<broadcast>', int(self.port)))
+                print "Broadcasting {0} presence on UDP port: {1}".format(self.thisDevice.visibleName, self.port)
+            except Exception as e:
+                print e
             time.sleep(self.delay)
-        print "Stopped PresenceBroadcaster."
+        self.stop()
+
+    def getProcName(self):
+        return self.thread.name
+
 
 class Device:
     """
@@ -230,9 +303,14 @@ class Device:
     """
     def __init__(self, type="local", visibleName = None, url = None, lastSeen = None):
         self.visibleName = visibleName
-        self.url = url
+        self.url = url or ""
         self.lastSeen = lastSeen or time.localtime()
         self.type = type
+
+    def isLikelyActive(self):
+        lastSeenTime = time.fromtimestamp(self.lastSeen)
+        print time.localtime() - lastSeenTime
+        return self.lastSeen 
 
     @staticmethod
     def fromEncodedString(encodedString):
@@ -257,16 +335,15 @@ class Device:
 
 
     def encodeForTransport(self):
-        return "[{0};{1}]".format(self.visibleName, self.url) + '\n'
+        return "{0};{1}".format(self.visibleName, self.url) + '\n'
 
     @staticmethod
     def decode(encodedString):
-        args =  encodedString[1:-1].split(';')
+        args =  encodedString.split(';')
         name = args[0]
         url = args[1]
         print "Decoded device string: {0}, {1}: ".format(name, url)
         return name, url
-
 
 def testPresenceBroadcaster():
     thisDevice = DeviceManager().getActiveDevice()

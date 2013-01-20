@@ -1,0 +1,3 @@
+py.test tests/unit/
+
+

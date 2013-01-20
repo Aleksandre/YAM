@@ -4,56 +4,59 @@
 This module contains everything related to the app configuration
 """
 from ConfigParser import SafeConfigParser
+import os, sys
 
+_CONFIG_FOLDER = None
 
 class Properties:
     MUSIC_LIBRARY="music_library_folder"
 
-
 def setConfigFolder(newConfigLocation):
-    coreParser = SafeConfigParser()
-    coreParser.read("config.ini") 
-    if not newConfigLocation.endswith("/") and not newConfigLocation.endswith("\\"):
-        newConfigLocation = newConfigLocation + "/"
-    coreParser.set('configuration', 'work_folder', newConfigLocation)
-
-    with open("config.ini", 'w') as configfile:
-        coreParser.write(configfile)
+    global _CONFIG_FOLDER
+    _CONFIG_FOLDER = newConfigLocation
 
 def getConfigFolder():
-    config = "config.ini"
-    coreParser = SafeConfigParser()
-    coreParser.read(config) 
+    return _CONFIG_FOLDER
 
-    configFolderPath = coreParser.get('configuration', 'work_folder')
-    print "Reading config folder path: ", configFolderPath
-    return configFolderPath
+def createConfigFile():
+    try: 
+        if os.path.isfile(getConfigFolder() + 'appconfig.ini'):
+            return
 
-def getPathToMusicLibrary():
-    parser = SafeConfigParser()
-    print getConfigFolder() , '/appconfig.ini'
-    parser.read(getConfigFolder() + '/appconfig.ini')
-    return parser.get('global', 'music_library_folder')
+        with open(getConfigFolder() + 'appconfig.ini', 'w+') as f:
+            print f
+            return True
+    except Exception as e:
+            print e
+            print "here"
+            return False
 
-
-def getIndexReportFolder():
-    parser = SafeConfigParser()
-    parser.read(getConfigFolder() + '/appconfig.ini')
-    return parser.get('global', 'index_report_folder')
-
+def deleteConfigFile():
+    try:
+        os.remove(_CONFIG_FOLDER + 'appconfig.ini')
+        return True
+    except Exception as e:
+        print e
+       # print "here"
+        return False
 
 def getProperty(key):
+    print "Reading property value..."
+    createConfigFile()
     parser = SafeConfigParser()
-    parser.read(getConfigFolder() + '/appconfig.ini')
-    print parser.get('global', key)
+    parser.read(_CONFIG_FOLDER + 'appconfig.ini')
+    value = parser.get('global', key)
+    print "Read value is: {0}".format(value)
+    return value
 
 def setProperty(key, value):
+    createConfigFile()
     print "Setting property[", key, "=", value, "]"
     parser = SafeConfigParser()
-    parser.read(getConfigFolder() + 'appconfig.ini')
+    parser.read(_CONFIG_FOLDER + 'appconfig.ini')
+    if not parser.has_section('global'):
+        parser.add_section('global')
+    
     parser.set('global', key, value)
-    with open(getConfigFolder() + 'appconfig.ini', 'w') as configfile:
-        print parser.write(configfile)
-
-if __name__ == '__main__':
-    print getConfigFolder()
+    with open(_CONFIG_FOLDER + 'appconfig.ini', 'w') as configfile:
+        parser.write(configfile)
