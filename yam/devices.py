@@ -233,9 +233,8 @@ class DeviceWatcher():
         self.sock = socket(AF_INET, SOCK_DGRAM)
         self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
         print "Started DeviceWatcher."
-
+        self.sock.bind(('<broadcast>', self.portToWatch))
         while self.running:
-            self.sock.bind(('<broadcast>', self.portToWatch))
             result = select.select([self.sock],[],[])
             msg = result[0][0].recv(self.bufferSize).strip() 
             print "Received UDP broadcast msg: {0}".format(msg)

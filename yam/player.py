@@ -4,21 +4,23 @@ This module holds differents implementation of Player like : local, remote and s
 """
 import sys
 import os
+from socket import *
 from PySide import QtCore, QtGui
 from PySide.QtCore import *
 from PySide.QtGui import *
-
+import threading
+import socket
 try:
     from PySide.phonon import Phonon
 except ImportError as error:
     print error
     sys.exit(1)
 
-def getPlayerByType(playerType):
-    if playerType == "local":
+def getPlayerByType(device):
+    if device.type == "local":
         return LocalPlayer()
-    if playerType == "remote":
-        return RemotePlayer()
+    if device.type == "remote":
+        return RemotePlayer(RemoteClient(device.url))
 
 class PlayerStates:
     STOPPED="STOPPED"
@@ -42,6 +44,7 @@ class LocalPlayer(QtCore.QObject):
             self.app = QtGui.QApplication(sys.argv)
         except RuntimeError:
             self.app = QtCore.QCoreApplication.instance()
+        self.app.aboutToQuit.connect(self.exit)
         self.init()
 
     def init(self):
@@ -194,6 +197,54 @@ class LocalPlayer(QtCore.QObject):
         self.app.exit()
 
     state = QtCore.Property(QUrl, getState, notify=notifyStateChanged)
+
+
+class RemoteClient():
+    """
+    The RemoteClient sends commands to a remote DeviceRequestListener via TCP.
+    """
+    def __init__(self, url, callback = None, name="reqsender"):
+        print "Remote client initiated with url: {0}".format(url)
+        ip, port = url.split(':')
+        print ip, port
+        self.tcpIP = ip
+        self.tcpPort = int(port)
+        self.bufferSize = 25000
+        self.name = name
+        self.callback = callback
+        self.printInfo()
+        self.sock = None
+    
+    def printInfo(self):
+        print "Targeting: {0}:{1}".format(self.tcpIP,self.tcpPort)
+
+    def sendRequest(self, request):
+        self.thread = threading.Thread(target=self._run, name=self.name) 
+        self.request = request
+        self.thread.start()
+
+    def _run(self):
+        answer = None
+        try:
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+            self.sock.settimeout(5.0)
+            self.sock.connect((self.tcpIP, self.tcpPort))
+
+            self.sock.send(self.request)
+            answer = self.sock.recv(1024)
+        except Exception as e:
+            print e
+        try:
+            self.sock.shutdown(1)
+        except Exception as e:
+            print e
+        if self.sock:
+            self.sock.close()
+        self.request = None
+
+        if self.callback:
+            return self.callback(answer)
 
 class RemotePlayer(QtCore.QObject):
     """

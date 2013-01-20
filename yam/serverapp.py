@@ -18,20 +18,16 @@ from devices import DeviceManager, DevicePresenceBroadcaster, Device
 import sys
 import SocketServer
 
-
-PLAYER = LocalPlayer()
-PLAYER.setHeadless()
-
 class YamRequestHandler(SocketServer.BaseRequestHandler):
     
     def handle(self):
         # Echo the back to the client
         data = self.request.recv(20000)
         print "Handling request: {0}".format(data)
-        self.handleRequest(data)
+        self.handleRequest(data, self.server)
         return
 
-    def handleRequest(self, requestData):
+    def handleRequest(self, requestData, server):
         """
         Default request handler.
         You can inject one using the constuctor.
@@ -52,10 +48,7 @@ class YamRequestHandler(SocketServer.BaseRequestHandler):
         controllerName = args[0].strip()
         method = args[1].strip()   
 
-        if controllerName == "player":
-            controller = PLAYER
-        else:
-            controller = None
+        controller = server.player
 
         if controllerName == None:
             print "Could not find the specified controller: {0}".format(controllerName)
@@ -98,8 +91,9 @@ class YamRequestHandler(SocketServer.BaseRequestHandler):
 
 class YamTcpServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     
-    def __init__(self, server_address = ('localhost', 0), handler_class=YamRequestHandler):
+    def __init__(self, server_address = ('localhost', 0), handler_class=YamRequestHandler, player = None):
         SocketServer.TCPServer.__init__(self, server_address, handler_class)
+        self.player = player
 
     def start(self, name="yamtcpserver"):   
         self.t = threading.Thread(target=self._run, name=name)
@@ -116,9 +110,7 @@ class YamTcpServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
         while True:
             self.handle_request()
         return
-    def handle_request(self):
-        print "Handling request"
-        return SocketServer.TCPServer.handle_request(self)
+
 
     def server_activate(self):
         SocketServer.TCPServer.server_activate(self)
@@ -138,51 +130,6 @@ class YamTcpServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     def close_request(self, request_address):
         return SocketServer.TCPServer.close_request(self, request_address)
 
-class RemoteClient():
-    """
-    The RemoteClient sends commands to a remote DeviceRequestListener via TCP.
-    """
-    def __init__(self, url, callback = None, name="reqsender"):
-        print "Remote client initiated with url: {0}".format(url)
-        ip, port = url.split(':')
-        print ip, port
-        self.tcpIP = ip
-        self.tcpPort = int(port)
-        self.bufferSize = 25000
-        self.name = name
-        self.callback = callback
-        self.printInfo()
-    
-    def printInfo(self):
-        print "Targeting: {0}:{1}".format(self.tcpIP,self.tcpPort)
-
-    def sendRequest(self, request):
-        self.thread = threading.Thread(target=self._run, name=self.name) 
-        self.request = request
-        self.thread.start()
-
-    def _run(self):
-        answer = None
-        try:
-            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-            self.sock.settimeout(5.0)
-            self.sock.connect((self.tcpIP, self.tcpPort))
-
-            self.sock.send(self.request)
-            answer = self.sock.recv(1024)
-        except Exception as e:
-            print e
-        try:
-            self.sock.shutdown(1)
-        except Exception as e:
-            print e
-        self.sock.close()
-        self.request = None
-
-        if self.callback:
-            return self.callback(answer)
-
 class ServerApp():
     def __init__(self, tcpServer, player, device):
         self.tcpServer = tcpServer
@@ -200,30 +147,27 @@ class ServerApp():
         self.presenceBroadcaster.stop()
         self.player.exit()
 
+
 def setupTestServer():
-    server = YamTcpServer()
+    player = LocalPlayer()
+    player.setHeadless()
+
+    server = YamTcpServer(player=player)
     ip, port = server.server_address
 
     thisDevice = Device(type="local", visibleName="rpi-testyamserver", url="{0}:{1}".format(ip,port))
 
-    global PLAYER
-    serverApp = ServerApp(server, PLAYER, thisDevice)
-
-    return serverApp
+    return ServerApp(server, player, thisDevice)
 
 def setupServer():
-    server = YamTcpServer()
-    ip, port = server.server_address
+    player = LocalPlayer()
+    player.setHeadless()
 
+    server = YamTcpServer(player=player)
+    ip, port = server.server_address
     thisDevice = Device(type="local", visibleName="rpi-yamserver", url="{0}:{1}".format(ip,port))
 
-    global PLAYER
-    serverApp = ServerApp(server, PLAYER, thisDevice)
-
-    return serverApp
-
-def cleanUp():
-    PLAYER.exit()
+    return ServerApp(server, player, thisDevice)
 
 def main():
     server = setupServer()

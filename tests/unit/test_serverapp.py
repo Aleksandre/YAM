@@ -2,10 +2,11 @@ import sys
 sys.path.append("yam")
 sys.path.append("../../yam")
 
-from serverapp import YamTcpServer, RemoteClient
+from serverapp import YamTcpServer
 from devices import DeviceWatcher
+from player import RemoteClient
 import config as config
-import serverapp as serverapp
+import serverapp
 import time
 import SocketServer
 import threading
@@ -41,48 +42,6 @@ class TestServerApp:
 		self.listener.stop()
 		#TODO : Check server process has really stopped
 
-	def test_request_received(self):
-		self.listener = YamTcpServer(handler_class=TestRequestHandler)
-		self.listener.start()
-		ip, port = self.listener.server_address 
-		self.requestSender = RemoteClient("{0}:{1}".format(ip, port))
-		self.request = "myrequest;is;this"
-		self.requestSender.sendRequest(self.request)
-		time.sleep(1)
-
-		assert request_received
-		global answer
-		assert answer == self.request
-		self.listener.stop()
-		serverapp.cleanUp()
-
-	def test_server_can_handle_request(self):
-		global request_received
-		request_received = False
-
-		self.listener = YamTcpServer()
-		self.listener.start()
-
-		ip, port = self.listener.server_address 
-		
-		self.requestSender = RemoteClient("{0}:{1}".format(ip, port), callback=self.assert_server_was_called)
-		self.request = "player;getState"
-		print self.requestSender.sendRequest(self.request)
-		
-		time.sleep(1)
-	
-		assert request_received
-		global answer
-		assert answer and len(answer) > 0
-		self.listener.stop()
-		serverapp.cleanUp()
-
-	def assert_server_was_called(self, _answer):
-		global request_received
-		request_received = True
-		global answer
-		answer = _answer
-		assert _answer == "STOPPED"
 
 	def test_server_default_setup(self):
 		pass
@@ -97,7 +56,6 @@ class TestServerApp:
 		watcher.start()
 
 		tcpServer.start()
-		serverapp.cleanUp()
 		watcher.stop()
 		global tcpServerReallyBroadcastedItsPresence
 		assert tcpServerReallyBroadcastedItsPresence

@@ -125,6 +125,7 @@ class DeviceManagementPanel(QtGui.QDialog):
         if selectedDevice:
             global APP
             APP.deviceMan.setActiveDevice(selectedDevice)
+            APP.updatePlayer()
         else :
             print "No device selected. Cannot apply changes."
 
@@ -704,8 +705,8 @@ class Client():
         self.app.aboutToQuit.connect(self.stop)
 
     def updatePlayer(self):
-        playerType = self.deviceMan.getActiveDeviceType()
-        self.player = players.getPlayerByType(playerType)
+        activeDevice = self.deviceMan.getActiveDevice()
+        self.player = players.getPlayerByType(activeDevice)
 
     def start(self):
         try:

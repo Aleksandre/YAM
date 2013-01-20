@@ -43,7 +43,7 @@ class TestClientApp:
 
 		app.deviceMan.deleteRegistry()
 
-		device = Device(type="remote",visibleName="test-client-app")
+		device = Device(type="remote",visibleName="test-client-app", url="localhost:0")
 		app.deviceMan.registerDevice(device)
 		app.deviceMan.setActiveDevice(device)
 
