@@ -20,7 +20,7 @@ def getPlayerByType(device):
     if device.type == "local":
         return LocalPlayer()
     if device.type == "remote":
-        return RemotePlayer(RemoteClient(device.url))
+        return RemotePlayer(device.host, device.port)
 
 class PlayerStates:
     STOPPED="STOPPED"
@@ -89,6 +89,7 @@ class LocalPlayer(QtCore.QObject):
         firstTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].filePath)
         self.player.setCurrentSource(firstTrack)
         self.player.play()
+        return self.getState() == "PLAYING"
 
 
     def playNextTrack(self):
@@ -99,6 +100,7 @@ class LocalPlayer(QtCore.QObject):
             print nextTrack
             print self.player.setCurrentSource(nextTrack)
             print self.player.play()
+        return self.getState() == "PLAYING"
 
     def playPreviousTrack(self):
         if self.hasPreviousTrack():
@@ -106,28 +108,32 @@ class LocalPlayer(QtCore.QObject):
             previousTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].filePath)
             self.player.setCurrentSource(previousTrack)
             self.player.play()
+        return self.getState() == "PLAYING"
 
 
     def queueTrack(self, track, emit=True):
         print "Queuing track: ", track
         self._playlist.append(track)
+        return track in self._playlist
 
 
     def queueTracks(self, tracks):
         for track in tracks:
             self.queueTrack(track, emit=False)
+        return True
 
     def stop(self):
         print "Stopping player"
         self.player.stop()
-
+        return self.getState() == "STOPPED"
 
     def resume(self):
         self.player.play()
-
+        return self.getState() == "PLAYING"
 
     def pause(self):
         self.player.pause()
+        return self.getState() == "PAUSED"
 
     def getCurrentTime(self):
         self.player.currentTime()
@@ -144,7 +150,7 @@ class LocalPlayer(QtCore.QObject):
         if playerState == Phonon.ErrorState:
             return PlayerStates.ERROR
 
-        return ""
+        return "INVALID STATE"
 
     def togglePlayState(self):
         state = self.getState()
@@ -152,6 +158,7 @@ class LocalPlayer(QtCore.QObject):
             self.resume()
         elif state == PlayerStates.PLAYING:
             self.pause()
+        return True
 
     def notifyStateChanged(self):
         print "changed"
@@ -203,48 +210,48 @@ class RemoteClient():
     """
     The RemoteClient sends commands to a remote DeviceRequestListener via TCP.
     """
-    def __init__(self, url, callback = None, name="reqsender"):
-        print "Remote client initiated with url: {0}".format(url)
-        ip, port = url.split(':')
-        print ip, port
-        self.tcpIP = ip
+    def __init__(self, host, port, callback = None, name="reqsender"):
+        print "Remote client initiated with url: {0}:{1}".format(host, port)
+        self.tcpIP = host
         self.tcpPort = int(port)
         self.bufferSize = 25000
         self.name = name
         self.callback = callback
-        self.printInfo()
-        self.sock = None
-    
+
     def printInfo(self):
         print "Targeting: {0}:{1}".format(self.tcpIP,self.tcpPort)
 
-    def sendRequest(self, request):
-        self.thread = threading.Thread(target=self._run, name=self.name) 
-        self.request = request
-        self.thread.start()
+    def connect(self):
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        self.sock.settimeout(5)
+        print "Connecting to {0}:{1}".format(self.tcpIP,self.tcpPort)
+        self.sock.connect((self.tcpIP, self.tcpPort))
+        print "Connected."
 
-    def _run(self):
+    def sendRequest(self, request):
+        self.connect()
+        print "Sending request..."
         answer = None
         try:
-            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-            self.sock.settimeout(5.0)
-            self.sock.connect((self.tcpIP, self.tcpPort))
-
-            self.sock.send(self.request)
-            answer = self.sock.recv(1024)
-        except Exception as e:
+            self.sock.sendall(request + "\n")
+            answer = data = self.sock.recv(4096)
+            print "Receiving data from server: {0}".format(answer)
+            while not data.endswith("\n"): 
+                data = self.sock.recv(4096)
+                answer = answer + data
+            print "Got complete answer from server: {0}".format(answer)
+        except IOError as e:
             print e
-        try:
-            self.sock.shutdown(1)
-        except Exception as e:
-            print e
-        if self.sock:
-            self.sock.close()
-        self.request = None
 
-        if self.callback:
-            return self.callback(answer)
+        #if self.callback:
+           # self.callback(answer)
+        self.disconnect()
+        return answer
+
+    def disconnect(self):
+        print "Disconnecting from server..."
+        self.sock.close()
 
 class RemotePlayer(QtCore.QObject):
     """
@@ -253,10 +260,12 @@ class RemotePlayer(QtCore.QObject):
     stateChanged = QtCore.Signal()
     playerTicked = QtCore.Signal()
 
-    def __init__(self, remoteClient = None): 
+    def __init__(self, host, port, remoteClient = None): 
        QtCore.QObject.__init__(self)
-       #print "RemotePlayer initiated with url: {0}".format(url)
-       self.remoteClient = remoteClient
+       if not remoteClient:
+            self.remoteClient = RemoteClient(host, port)
+       else :
+            self.remoteClient = remoteClient
 
     def setRemoteClient(self,remoteClient):
         self.remoteClient = remoteClient
@@ -272,74 +281,73 @@ class RemotePlayer(QtCore.QObject):
         return self._playlist 
     
     def hasNextTrack(self):
-        request = '[player;hasNextTrack]'
+        request = 'player;hasNextTrack'
         return self.remoteClient.sendRequest(request)
     
     def hasPreviousTrack(self):
-        request = '[player;hasPreviousTrack]'
+        request = 'player;hasPreviousTrack'
         return self.remoteClient.sendRequest(request)
 
     def currentlyPlayingTrack(self):
-        request = '[player;currentlyPlayingTrack]'
+        request = 'player;currentlyPlayingTrack'
         return self.remoteClient.sendRequest(request)
 
     def playTrack(self, track):
-        request = '[player;playTrack;{0}]'.format(track)
+        request = 'player;playTrack;{0}'.format(track)
         return self.remoteClient.sendRequest(request)
 
     def playTracks(self, tracks=[]):
-        request = '[player;playTracks;{0}]'.format(self._encodeTracks(tracks))
+        request = 'player;playTracks;{0}'.format(self._encodeTracks(tracks))
         return self.remoteClient.sendRequest(request)
 
     def queueTrack(self, track, emit=True):
-        request = '[player;queueTrack;{0}]'.format(track)
+        request = 'player;queueTrack;{0}'.format(track)
         return self.remoteClient.sendRequest(request)
 
     def queueTracks(self, tracks):
-        request = '[player;queueTracks;{0}]'.format(self._encodeTracks(tracks))
+        request = 'player;queueTracks;{0}'.format(self._encodeTracks(tracks))
         return self.remoteClient.sendRequest(request)
 
     def playNextTrack(self):
-        request = '[player;playNextTrack]'
+        request = 'player;playNextTrack'
         return self.remoteClient.sendRequest(request)
 
     def playPreviousTrack(self):
-        request = '[player;playPreviousTrack]'
+        request = 'player;playPreviousTrack'
         return self.remoteClient.sendRequest(request)
 
     def stop(self):
-        request = '[player;stop]'
+        request = 'player;stop'
         return self.remoteClient.sendRequest(request)
 
     def resume(self):
-        request = '[player;resume]'
+        request = 'player;resume'
         return self.remoteClient.sendRequest(request)
 
     def pause(self):
-        request = '[player;pause]'
+        request = 'player;pause'
         return self.remoteClient.sendRequest(request)
 
     def getCurrentTime(self):
-        request = '[player;getCurrentTime]'
+        request = 'player;getCurrentTime'
         return self.remoteClient.sendRequest(request)
 
     def getState(self):
-        request = '[player;getState]'
+        request = 'player;getState'
         return self.remoteClient.sendRequest(request)
 
     def togglePlayState(self):
-        request = '[player;togglePlayState]'
+        request = 'player;togglePlayState'
         return self.remoteClient.sendRequest(request)
 
     def notifyStateChanged(self):
         print "changed"
     
     def _encodeTracks(self,tracks):
-        requestData = "["
+        requestData = ""
         for track in tracks:
             requestData = requestData + str(track) + '|'
-        requestData = requestData[:-1] #remote last |
-        requestData = requestData + "]"
+        requestData = requestData[:-1] #remove last |
         return requestData
 
 def test():
@@ -347,8 +355,7 @@ def test():
     import content as content
     tracks = content.getTracks()
 
-    qapp=QtGui.QApplication(sys.argv)
-    player = LocalPlayer(qapp)
+    player = RemotePlayer(qapp)
     player.playTrack(tracks[1])
     player.queueTrack(tracks[0])
 

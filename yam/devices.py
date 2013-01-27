@@ -165,7 +165,7 @@ class DeviceManager:
             with open(self.devicesRegistryPath,'w') as f:
                 self.parser.write(f)
             
-            print "Updated device lastSeen time: {0}".format(lastSeen)
+            #print "Updated device lastSeen time: {0}".format(lastSeen)
 
     def createRegistry(self):
         try:
@@ -207,7 +207,9 @@ class DeviceWatcher():
         self.running = False
         self.bufferSize = 1024
         self.callback = callback
-        self.sock = None
+        self.sock = socket(AF_INET, SOCK_DGRAM)
+        self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        self.sock.bind(('', self.portToWatch))
         self.thread = threading.Thread(target=self._run, name="watcher")
 
     def start(self):
@@ -221,26 +223,23 @@ class DeviceWatcher():
     def stop(self):
         print "Stopping DeviceWatcher..."
         self.running = False
-        if self.sock:
-            try:
-                self.sock.shutdown(1)
-            except Exception as e:
-                print e
-            self.sock.close()
+        self.sock.close()
         print "Stopped DeviceWatcher."
 
     def _run(self):
-        self.sock = socket(AF_INET, SOCK_DGRAM)
-        self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
         print "Started DeviceWatcher."
-        self.sock.bind(('<broadcast>', self.portToWatch))
-        while self.running:
-            result = select.select([self.sock],[],[])
-            msg = result[0][0].recv(self.bufferSize).strip() 
-            print "Received UDP broadcast msg: {0}".format(msg)
-            if self.callback:
-                self.callback(Device.fromEncodedString(msg))
-        self.stop
+        try:
+            while self.running:
+                data, addr = self.sock.recvfrom(self.bufferSize)
+                print "Broadcast received from : {0}".format(addr)
+                print data
+                if self.callback:
+                    decodedMsg = Device.fromEncodedString(data)
+                    #Do no call back for invalid messages
+                    if decodedMsg:
+                        self.callback(decodedMsg)
+        finally:
+            self.sock.close()
 
     def getProcName(self):
         return self.thread.name
@@ -254,7 +253,10 @@ class DevicePresenceBroadcaster():
         self.delay = delayBetweenBroadcastsInSec or config.getProperty("presence_broadcaster_call_delay_seconds")
         self.thisDevice = thisDevice
         self.running = False
-        self.sock = None
+       
+        self.sock = socket(AF_INET, SOCK_DGRAM)
+        self.sock.bind(('', 0))
+        self.sock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
         self.thread = threading.Thread(target=self._run, name="broadcaster")
 
     def start(self):
@@ -268,29 +270,24 @@ class DevicePresenceBroadcaster():
     def stop(self):
         print "Stopping DevicePresenceBroadcaster..."
         self.running = False
-        if self.sock:
-            try:
-                self.sock.shutdown(1)
-            except Exception as e:
-                print e
-            self.sock.close()
-            print "Stopped PresenceBroadcaster."
+        self.sock.close()
+        print "Stopped PresenceBroadcaster."
 
     def _run(self):
-        self.sock = socket(AF_INET, SOCK_DGRAM)
-        self.sock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-
         print "Started PresenceBroadcaster."
-        self.sock.bind(('', 0))
-        while self.running:
-            try:
-                data = self.thisDevice.encodeForTransport() 
-                self.sock.sendto(data, ('<broadcast>', int(self.port)))
-                print "Broadcasting {0} presence on UDP port: {1}".format(self.thisDevice.visibleName, self.port)
-            except Exception as e:
-                print e
-            time.sleep(self.delay)
-        self.stop()
+        try:
+            while self.running:
+                try:
+                    data = self.thisDevice.encodeForTransport() 
+                    self.sock.sendto(data, ('<broadcast>', int(self.port)))
+                    print "Broadcasting {0} presence on UDP port: {1}".format(self.thisDevice.visibleName, self.thisDevice.port)
+                except Exception as e:
+                    print e
+                    #Wait if broadcaster is running
+                if self.running:
+                    time.sleep(self.delay)
+        finally:
+            self.stop()
 
     def getProcName(self):
         return self.thread.name
@@ -301,10 +298,15 @@ class Device:
     A 'Device' is any computer running the clientapp or the serverapp
     """
     def __init__(self, type="local", visibleName = None, url = None, lastSeen = None):
+        print "Instanciating device with url: {0}".format(url)
         self.visibleName = visibleName
-        self.url = url or ""
+        self.url = url or "0:0"
         self.lastSeen = lastSeen or time.localtime()
         self.type = type
+        if ':' in url:
+            self.host, self.port = url.split(':')
+        else:
+            self.host = url
 
     def isLikelyActive(self):
         lastSeenTime = time.fromtimestamp(self.lastSeen)
@@ -334,27 +336,28 @@ class Device:
 
 
     def encodeForTransport(self):
-        return "{0};{1}".format(self.visibleName, self.url) + '\n'
+        return "{0};{1}".format(self.visibleName, self.url)
 
     @staticmethod
     def decode(encodedString):
         args =  encodedString.split(';')
         name = args[0]
         url = args[1]
-        print "Decoded device string: {0}, {1}: ".format(name, url)
+        #print "Decoded device string: {0}, {1}: ".format(name, url)
         return name, url
 
 def testPresenceBroadcaster():
-    thisDevice = DeviceManager().getActiveDevice()
-    bc = DevicePresenceBroadcaster(thisDevice)
-    #watcher = DeviceWatcher()
-    #watcher.start()
+    thisDevice = Device(url="localhost:5000", visibleName="test-device")
+    bc = DevicePresenceBroadcaster(thisDevice, delayBetweenBroadcastsInSec=1)
+    watcher = DeviceWatcher()
+    watcher.start()
     bc.start()
     time.sleep(5)
     bc.stop()
-    #watcher.stop()
+    watcher.stop()
 
 if __name__ == '__main__':
+    config.setConfigFolder('../config/')
     testPresenceBroadcaster()
     #man = DeviceManager()
    # man.handleDeviceNotificationReceived("rpi-yam","192.168.1.127:5005")
