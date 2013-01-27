@@ -163,10 +163,9 @@ def setupTestServer():
 
     return ServerApp(server, player, thisDevice)
 
-def setupServer():
+def assembleServer(host, port):
     player = LocalPlayer()
     player.setHeadless()
-    host, port = socket.gethostname(), 5000
     server = RequestServer((host,port), player=player)
     thisDevice = Device(type="local", visibleName="rpi-yamserver", url="{0}:{1}".format(host,port))
 
@@ -212,14 +211,22 @@ def testServerApp():
 
 
 def main():
-    server = setupServer()
+
+    HOST = socket.gethostname()
+    if len(sys.argv) > 1:
+        HOST = sys.argv[1]
+    
+    PORT = 5005
+    if len(sys.argv) > 2:
+        PORT = int(sys.argv[2])
+    
+
+    server = assembleServer(HOST, PORT)
     try:
         server.start()
     except KeyboardInterrupt:
         print "Received keypress. Stopping the server."
         server.stop()
-
-
 if __name__ == '__main__':
     sys.exit(main())
     

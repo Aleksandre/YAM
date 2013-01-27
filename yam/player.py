@@ -18,7 +18,7 @@ except ImportError as error:
 
 def getPlayerByType(device):
     if device.type == "local":
-        return LocalPlayer()
+        return LocalPlayer(prefinishMark=0)
     if device.type == "remote":
         return RemotePlayer(device.host, device.port)
 
@@ -38,19 +38,19 @@ class LocalPlayer(QtCore.QObject):
     _playlist = []
     _playlistIdx = 0
 
-    def __init__(self, loadForClient = False): 
+    def __init__(self, loadForClient = False, prefinishMark=5000): 
         QtCore.QObject.__init__(self)
         try:
             self.app = QtGui.QApplication(sys.argv)
         except RuntimeError:
             self.app = QtCore.QCoreApplication.instance()
         self.app.aboutToQuit.connect(self.exit)
-        self.init()
+        self.init(prefinishMark)
 
-    def init(self):
+    def init(self, prefinishMark):
         self.audioOutput = Phonon.AudioOutput(Phonon.MusicCategory, self.app)
         self.player = Phonon.MediaObject(self.app)
-        self.player.setPrefinishMark(5000)
+        self.player.setPrefinishMark(prefinishMark)
         Phonon.createPath(self.player, self.audioOutput)
         self._bindEvents()
 
@@ -172,10 +172,13 @@ class LocalPlayer(QtCore.QObject):
 
     def _aboutToFinish(self):
         print "Player is about to finish playing the current track..."
-        if self.hasNextTrack:
-            self._playlistIdx = self._playlistIdx + 1
-            nextTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].filePath)
-            self.player.enqueue(nextTrack)
+        if self.hasNextTrack():
+            if self.getState() == "STOPPED":
+                self.playNextTrack()
+            else:
+                self._playlistIdx = self._playlistIdx + 1
+                nextTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].filePath)
+                self.player.enqueue(nextTrack)
         else:
             print "It was the last track, do nothing."
 
