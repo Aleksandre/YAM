@@ -4,12 +4,11 @@ This module holds differents implementation of Player like : local, remote and s
 """
 import sys
 import os
-from socket import *
 from PySide import QtCore, QtGui
 from PySide.QtCore import *
 from PySide.QtGui import *
-import threading
-import socket
+from networking import RemoteClient
+from content import Mock, Track
 try:
     from PySide.phonon import Phonon
 except ImportError as error:
@@ -30,35 +29,66 @@ class PlayerStates:
 
 class LocalPlayer(QtCore.QObject):
     """
-    The LocalPlayer uses the Qt Phonon module to play music files
+    The LocalPlayer uses the QtPhonon module to play music files
     """
-    stateChanged = QtCore.Signal()
-    playerTicked = QtCore.Signal()
+    #Emit a signal whenever the player state changes
+    stateChanged = QtCore.Signal(str)
+
+    #Emit a signal whenever the player source changes
+    sourceChanged = QtCore.Signal(Track)
+
+    #Emit time elapsed in ms since the current source started playing 
+    ticked = QtCore.Signal(int)
+
+    #Holds a list of hosts interested by the player state
+    hostsInterestedByState = []
 
     _playlist = []
     _playlistIdx = 0
 
-    def __init__(self, loadForClient = False, prefinishMark=5000): 
+    def __init__(self, loadForClient = False, prefinishMark=5000, log_played_tracks=True): 
         QtCore.QObject.__init__(self)
         try:
             self.app = QtGui.QApplication(sys.argv)
         except RuntimeError:
+            """
+            Only one QApplication can be active.
+            """
             self.app = QtCore.QCoreApplication.instance()
         self.app.aboutToQuit.connect(self.exit)
+        self.log_played_tracks = log_played_tracks
         self.init(prefinishMark)
 
     def init(self, prefinishMark):
         self.audioOutput = Phonon.AudioOutput(Phonon.MusicCategory, self.app)
         self.player = Phonon.MediaObject(self.app)
         self.player.setPrefinishMark(prefinishMark)
+        self.player.setTickInterval(1000)
         Phonon.createPath(self.player, self.audioOutput)
         self._bindEvents()
+
+    def registerToStateChanges(self, target):
+        print target
+        #print "Registering host for state change {0}".format(target)
+        if not target in self.hostsInterestedByState:
+            self.hostsInterestedByState.append(target)
+            return True
+        return False
+
+    def unregisterToStateChanges(self, target):
+        if target in self.hostsInterestedByState:
+            self.hostsInterestedByState.remove(target)
+            return True
+        return False
 
     def setHeadless(self):
         self.app.setApplicationName('headless-player')
 
+    def seek(self, timeInMs):
+        print "Seeking track at: {0}".format(timeInMs)
+        self.player.seek(long(timeInMs))
+
     def currentPlaylist(self):
-        print "Play list requested"
         return self._playlist 
     
     def hasNextTrack(self):
@@ -79,7 +109,7 @@ class LocalPlayer(QtCore.QObject):
         self.player.setCurrentSource(Phonon.MediaSource(trackPath))
         self._playlist.append(track)
         self.player.play()
-
+        return self.getState() == "PLAYING"
 
     def playTracks(self, tracks=[]):
         self._resetPlaylist()
@@ -90,7 +120,6 @@ class LocalPlayer(QtCore.QObject):
         self.player.setCurrentSource(firstTrack)
         self.player.play()
         return self.getState() == "PLAYING"
-
 
     def playNextTrack(self):
         print "Playing next track..."
@@ -110,16 +139,16 @@ class LocalPlayer(QtCore.QObject):
             self.player.play()
         return self.getState() == "PLAYING"
 
-
     def queueTrack(self, track, emit=True):
         print "Queuing track: ", track
         self._playlist.append(track)
+        self.stateChanged.emit(self.getState())
         return track in self._playlist
-
 
     def queueTracks(self, tracks):
         for track in tracks:
             self.queueTrack(track, emit=False)
+        self.stateChanged.emit(self.getState())
         return True
 
     def stop(self):
@@ -150,27 +179,37 @@ class LocalPlayer(QtCore.QObject):
         if playerState == Phonon.ErrorState:
             return PlayerStates.ERROR
 
-        return "INVALID STATE"
+        return "INVALID"
 
     def togglePlayState(self):
+        """
+        If the player is playing, it will be paused.
+        If the player is paused, playback will be resumed.
+        If the player is stopped, do nothing.
+        """
         state = self.getState()
         if state == PlayerStates.PAUSED:
             self.resume()
         elif state == PlayerStates.PLAYING:
             self.pause()
+        self.stateChanged.emit(self.getState())
         return True
 
     def notifyStateChanged(self):
         print "changed"
 
-    def _stateChanged(self,state,state1):
-        self.stateChanged.emit()
+    def _stateChanged(self, state, state1):
+        self.stateChanged.emit(self.getState())
 
     def _sourceChanged(self, source):
-        print "Player source changed", source
-        self.stateChanged.emit()
+        self.sourceChanged.emit(self.getState())
 
     def _aboutToFinish(self):
+
+        if self.log_played_tracks:
+            import statistics
+            statistics.addPlayedTrack(self._playlist[self._playlistIdx])
+
         print "Player is about to finish playing the current track..."
         if self.hasNextTrack():
             if self.getState() == "STOPPED":
@@ -183,17 +222,14 @@ class LocalPlayer(QtCore.QObject):
             print "It was the last track, do nothing."
 
     def _bindEvents(self):
+        #self.player.currentSourceChanged.connect(self._sourceChanged)
         self.connect(self.player, SIGNAL('tick(qint64)'), self._tick)
         self.connect(self.player, SIGNAL('stateChanged(Phonon::State, Phonon::State)'), self._stateChanged)
-        self.connect(self.player, SIGNAL('currentSourceChanged(Phonon::MediaSource)'), self._sourceChanged)
         self.connect(self.player, SIGNAL('aboutToFinish()'), self._aboutToFinish)
 
 
-    def _tick(self, time):
-        displayTime = QtCore.QTime(0, (time / 60000) % 60, (time / 1000) % 60)
-        self.playerTicked.emit()
-        #print displayTime
-        #self.timeLcd.display(displayTime.toString('mm:ss'))
+    def _tick(self, timeSinceBeginInMs):
+        self.ticked.emit(timeSinceBeginInMs)
     
     def _resetPlaylist(self):
         self._playlist = []
@@ -201,67 +237,53 @@ class LocalPlayer(QtCore.QObject):
         self.player.clearQueue()
 
     def start(self):
+        """
+        This is a blocking call.
+        When the player is used without an interface,
+        it must run it's own app event loop to enable QtEvents and QtSignals.
+        """
         self.app.exec_()
 
     def exit(self):
+        """
+        When the player is used without an interface,
+        this stops the app event loop.
+        It will unblock the start() call.
+        """
         self.app.exit()
 
-    state = QtCore.Property(QUrl, getState, notify=notifyStateChanged)
+    def getCurrentTrack(self):
+        """
+        Returns the currently playing Track.
+        If the playlist is empty, returns None
+        """
+        if len(self._playlist) > 0:
+            track =  self._playlist[self._playlistIdx]
+            print "Current track is: {0}".format(track)
+            return track
+        return None
 
+    def getFullState(self):
+        mock = Mock(
+            hasNextTrack = self.hasNextTrack(),
+            hasPreviousTrack = self.hasPreviousTrack(),
+            currentTime = self.player.currentTime(),
+            state = self.getState(),
+            currenTrack = str(self.getCurrentTrack())
+        )
+        return mock
 
-class RemoteClient():
-    """
-    The RemoteClient sends commands to a remote DeviceRequestListener via TCP.
-    """
-    def __init__(self, host, port, callback = None, name="reqsender"):
-        print "Remote client initiated with url: {0}:{1}".format(host, port)
-        self.tcpIP = host
-        self.tcpPort = int(port)
-        self.bufferSize = 25000
-        self.name = name
-        self.callback = callback
-
-    def printInfo(self):
-        print "Targeting: {0}:{1}".format(self.tcpIP,self.tcpPort)
-
-    def connect(self):
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-        self.sock.settimeout(5)
-        print "Connecting to {0}:{1}".format(self.tcpIP,self.tcpPort)
-        self.sock.connect((self.tcpIP, self.tcpPort))
-        print "Connected."
-
-    def sendRequest(self, request):
-        self.connect()
-        print "Sending request..."
-        answer = None
-        try:
-            self.sock.sendall(request + "\n")
-            answer = data = self.sock.recv(4096)
-            print "Receiving data from server: {0}".format(answer)
-            while not data.endswith("\n"): 
-                data = self.sock.recv(4096)
-                answer = answer + data
-            print "Got complete answer from server: {0}".format(answer)
-        except IOError as e:
-            print e
-
-        #if self.callback:
-           # self.callback(answer)
-        self.disconnect()
-        return answer
-
-    def disconnect(self):
-        print "Disconnecting from server..."
-        self.sock.close()
 
 class RemotePlayer(QtCore.QObject):
     """
     The RemotePlayer redirects all requests to an host using a RemoteClient
     """
-    stateChanged = QtCore.Signal()
-    playerTicked = QtCore.Signal()
+    stateChanged = QtCore.Signal(str)
+
+    #Emit a signal whenever the player source changes
+    sourceChanged = QtCore.Signal(Track)
+
+    ticked = QtCore.Signal(int)
 
     def __init__(self, host, port, remoteClient = None): 
        QtCore.QObject.__init__(self)
@@ -276,6 +298,11 @@ class RemotePlayer(QtCore.QObject):
     def setParent(self, parent):
         print "Remote player has no use for a parent..."
 
+    def seek(self, timeInMs):
+        request = "player;seek;{0}".format(timeInMs)
+        answer = self.remoteClient.sendRequest(request)
+        return answer
+
     def setHeadless(self):
         print "Remote player has no use for a parent..."
 
@@ -285,15 +312,18 @@ class RemotePlayer(QtCore.QObject):
     
     def hasNextTrack(self):
         request = 'player;hasNextTrack'
-        return self.remoteClient.sendRequest(request)
-    
+        result = bool(self.remoteClient.sendRequest(request))
+        print result
+        return result
+
     def hasPreviousTrack(self):
         request = 'player;hasPreviousTrack'
-        return self.remoteClient.sendRequest(request)
+        return bool(self.remoteClient.sendRequest(request))
 
-    def currentlyPlayingTrack(self):
-        request = 'player;currentlyPlayingTrack'
-        return self.remoteClient.sendRequest(request)
+    def getCurrentTrack(self):
+        request = 'player;getCurrentTrack'
+        result = self.remoteClient.sendRequest(request)
+        return Mock(eval(result))
 
     def playTrack(self, track):
         request = 'player;playTrack;{0}'.format(track)
@@ -336,8 +366,8 @@ class RemotePlayer(QtCore.QObject):
         return self.remoteClient.sendRequest(request)
 
     def getState(self):
-        request = 'player;getState'
-        return self.remoteClient.sendRequest(request)
+        request = 'player;getFullState'
+        return Mock(eval(self.remoteClient.sendRequest(request)))
 
     def togglePlayState(self):
         request = 'player;togglePlayState'
@@ -345,7 +375,19 @@ class RemotePlayer(QtCore.QObject):
 
     def notifyStateChanged(self):
         print "changed"
+
+    def registerToStateChanges(self, target):
+        request = 'player;registerToStateChanges;{0}'.format(target)
+        return self.remoteClient.sendRequest(request)
+
+    def unregisterToStateChanges(self, target):
+        request = 'player;unregisterToStateChanges;{0}'.format(target)
+        return self.remoteClient.sendRequest(request)
     
+    def getFullState(self):
+        request = 'player;getFullState'
+        return Mock(eval(self.remoteClient.sendRequest(request)))
+
     def _encodeTracks(self,tracks):
         requestData = ""
         for track in tracks:

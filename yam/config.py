@@ -4,6 +4,7 @@
 This module contains everything related to the app configuration
 """
 from ConfigParser import SafeConfigParser
+import ConfigParser
 import os, sys
 
 _CONFIG_FOLDER = None
@@ -22,13 +23,13 @@ def createConfigFile():
     try: 
         if os.path.isfile(getConfigFolder() + 'appconfig.ini'):
             return
-
+        print "Creating config file..."
         with open(getConfigFolder() + 'appconfig.ini', 'w+') as f:
-            print f
+            f.write("[global]")
             return True
     except Exception as e:
             print e
-            print "here"
+            print "Error creating config file."
             return False
 
 def deleteConfigFile():
@@ -44,10 +45,14 @@ def getProperty(key):
     print "Reading property value..."
     createConfigFile()
     parser = SafeConfigParser()
-    parser.read(_CONFIG_FOLDER + 'appconfig.ini')
-    value = parser.get('global', key)
-    print "Read value is: {0}".format(value)
-    return value
+    try:   
+        parser.read(_CONFIG_FOLDER + 'appconfig.ini')
+        value = parser.get('global', key)
+        print "Read value is: {0}".format(value)
+        return value
+    except (ConfigParser.NoOptionError  ,ConfigParser.NoSectionError) as e:
+        print e
+        return ""
 
 def setProperty(key, value):
     createConfigFile()

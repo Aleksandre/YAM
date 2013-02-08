@@ -1,0 +1,22 @@
+(iindexation
+Result
+p1
+(dp2
+S'numberOfIndexedFiles'
+p3
+I142
+sS'numberOfFilesNotImported'
+p4
+I1
+sS'filesNotImported'
+p5
+(lp6
+S'/media/dat/mus/Ayreon/Elected/02 - E=mc\xc2\xb2 (acoustic live version).flac'
+p7
+asS'processRunningTimeInMS'
+p8
+F0.40222692489624023
+sS'totalFileCount'
+p9
+I143
+sb.

@@ -1,0 +1,437 @@
+(iindexation
+Result
+p1
+(dp2
+S'numberOfFilesNotImported'
+p3
+I210
+sS'processRunningTimeInMS'
+p4
+F0.13233494758605957
+sS'filesNotImported'
+p5
+(lp6
+S'/media/dat/mus/ACDC/ACDC - Fly On The Wall 1985 (2008 Japanese SICP-1710)/05 ACDC Sink The Pink.flac'
+p7
+aS'/media/dat/mus/ACDC/ACDC - Fly On The Wall 1985 (2008 Japanese SICP-1710)/02 ACDC - Shake Your Foundations.flac'
+p8
+aS'/media/dat/mus/ACDC/ACDC - Fly On The Wall 1985 (2008 Japanese SICP-1710)/06 ACDC - Playing With Girls.flac'
+p9
+aS'/media/dat/mus/ACDC/ACDC - Fly On The Wall 1985 (2008 Japanese SICP-1710)/01 ACDC - Fly On The Wall.flac'
+p10
+aS'/media/dat/mus/ACDC/ACDC - Fly On The Wall 1985 (2008 Japanese SICP-1710)/04 ACDC - Danger.flac'
+p11
+aS'/media/dat/mus/ACDC/ACDC - Fly On The Wall 1985 (2008 Japanese SICP-1710)/03 ACDC - First Blood.flac'
+p12
+aS'/media/dat/mus/ACDC/ACDC - Fly On The Wall 1985 (2008 Japanese SICP-1710)/07 ACDC - Stand Up.flac'
+p13
+aS'/media/dat/mus/ACDC/ACDC - Fly On The Wall 1985 (2008 Japanese SICP-1710)/08 ACDC - Hell Or High Water.flac'
+p14
+aS'/media/dat/mus/ACDC/ACDC - Fly On The Wall 1985 (2008 Japanese SICP-1710)/10 ACDC - Send For The Man.flac'
+p15
+aS'/media/dat/mus/ACDC/ACDC - Fly On The Wall 1985 (2008 Japanese SICP-1710)/09 ACDC - Back In Business.flac'
+p16
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 2/06 ACDC - Whole Lotta Rosie.flac'
+p17
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 2/05 ACDC - You Shook Me All Night Long.flac'
+p18
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 2/02 ACDC - Are You Ready.flac'
+p19
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 2/11 ACDC - For Those About To Rock (We Salute You).flac'
+p20
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 2/01 ACDC - Hells Bells.flac'
+p21
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 2/10 ACDC - T.N.T..flac'
+p22
+aS"/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 2/03 ACDC - That's The Way I Wanna Rock 'n' Roll.flac"
+p23
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 2/04 ACDC - High Voltage.flac'
+p24
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 2/07 ACDC - Let There Be Rock.flac'
+p25
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 2/08 ACDC - Bonny.flac'
+p26
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 2/09 ACDC - Highway To Hell.flac'
+p27
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/08 ACDC - Jailbreak.flac'
+p28
+aS"/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/10 ACDC - The Razor's Edge.flac"
+p29
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/03 ACDC - Back In Black.flac'
+p30
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/06 ACDC - Heatseeker.flac'
+p31
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/01 ACDC - Thunderstruck.flac'
+p32
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/07 ACDC - Fire Your Guns.flac'
+p33
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/11 ACDC - Dirty Deeds Done Dirt Cheap.flac'
+p34
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/05 ACDC - Who Made Who.flac'
+p35
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/04 ACDC - Sin City.flac'
+p36
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/12 ACDC - Moneytalks.flac'
+p37
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/02 ACDC - Shoot To Thrill.flac'
+p38
+aS'/media/dat/mus/ACDC/ACDC - Live [2CD Collectors Edition] 1992 (2008 Japanese SICP-1714-5)/Cd 1/09 ACDC - The Jack.flac'
+p39
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/05 - ACDC - War Machine.flac'
+p40
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/11 - ACDC - She Likes Rock N Roll.flac'
+p41
+aS"/media/dat/mus/ACDC/ACDC - Black Ice 2008/07 - ACDC - Spoilin' For A Fight.flac"
+p42
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/15 - ACDC - Black Ice.flac'
+p43
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/13 - ACDC - Rock N Roll Dream.flac'
+p44
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/04 - ACDC - Anything Goes.flac'
+p45
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/09 - ACDC - Decibel.flac'
+p46
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/02 - ACDC - Skies On Fire.flac'
+p47
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/08 - ACDC - Wheels.flac'
+p48
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/01 - ACDC - Rock N Roll Train.flac'
+p49
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/10 - ACDC - Stormy May Day.flac'
+p50
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/14 - ACDC - Rocking All The Way.flac'
+p51
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/03 - ACDC - Big Jack.flac'
+p52
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/12 - ACDC - Money Made.flac'
+p53
+aS'/media/dat/mus/ACDC/ACDC - Black Ice 2008/06 - ACDC - Smash N Grab.flac'
+p54
+aS'/media/dat/mus/ACDC/ACDC - For Those About To Rock 1981/05 - Snowballed.flac'
+p55
+aS'/media/dat/mus/ACDC/ACDC - For Those About To Rock 1981/04 - Inject The Venom.flac'
+p56
+aS'/media/dat/mus/ACDC/ACDC - For Those About To Rock 1981/07 - C. O. D..flac'
+p57
+aS'/media/dat/mus/ACDC/ACDC - For Those About To Rock 1981/10 - Spellbound.flac'
+p58
+aS'/media/dat/mus/ACDC/ACDC - For Those About To Rock 1981/02 - I Put The Finger On You.flac'
+p59
+aS"/media/dat/mus/ACDC/ACDC - For Those About To Rock 1981/03 - Let's Get It Up.flac"
+p60
+aS'/media/dat/mus/ACDC/ACDC - For Those About To Rock 1981/09 - Night Of The Long Knives.flac'
+p61
+aS'/media/dat/mus/ACDC/ACDC - For Those About To Rock 1981/08 - Breaking The Rules.flac'
+p62
+aS'/media/dat/mus/ACDC/ACDC - For Those About To Rock 1981/01 - For Those About To Rock (We Salute You).flac'
+p63
+aS'/media/dat/mus/ACDC/ACDC - For Those About To Rock 1981/06 - Evil Walks.flac'
+p64
+aS'/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/04 ACDC - Hold Me Back.flac'
+p65
+aS'/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/05 ACDC - Safe In New York City.flac'
+p66
+aS'/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/11 ACDC - All Screwed Up.flac'
+p67
+aS"/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/06 ACDC - Can't Stand Still.flac"
+p68
+aS'/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/03 ACDC - House Of Jazz.flac'
+p69
+aS'/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/12 ACDC - Give It Up.flac'
+p70
+aS'/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/02 ACDC - Meltdown.flac'
+p71
+aS'/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/09 ACDC - Damned.flac'
+p72
+aS'/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/10 ACDC - Come And Get It.flac'
+p73
+aS"/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/07 ACDC - Can't Stop Rock 'n' Roll.flac"
+p74
+aS'/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/01 ACDC - Stiff Upper Lip.flac'
+p75
+aS'/media/dat/mus/ACDC/ACDC - Stiff Upper Lip 2000 (2008 Japanese SICP-1718)/08 ACDC - Satellite Blues.flac'
+p76
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/The Razors Edge.flac"
+p77
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/Shot Of Love.flac"
+p78
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/Thunderstruck.flac"
+p79
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/If You Dare.flac"
+p80
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/Got You By The Balls.flac"
+p81
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/Goodbye And Good Riddance To Bad Luck.flac"
+p82
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/Are You Ready.flac"
+p83
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/Mistress For Christmas.flac"
+p84
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/Let's Make It.flac"
+p85
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/Moneytalks.flac"
+p86
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/Fire Your Guns.flac"
+p87
+aS"/media/dat/mus/ACDC/ACDC - The Razor's Edge (2008 Japanese SICP-1712) 1990/Rock Your Heart Out.flac"
+p88
+aS'/media/dat/mus/ACDC/ACDC - Powerage 1978/AC-DC - Powerage - 02 - Down Payment Blues.flac'
+p89
+aS"/media/dat/mus/ACDC/ACDC - Powerage 1978/AC-DC - Powerage - 07 - Gone Shootin'.flac"
+p90
+aS'/media/dat/mus/ACDC/ACDC - Powerage 1978/AC-DC - Powerage - 03 - Gimme a Bullet.flac'
+p91
+aS'/media/dat/mus/ACDC/ACDC - Powerage 1978/AC-DC - Powerage - 04 - Riff Raff.flac'
+p92
+aS'/media/dat/mus/ACDC/ACDC - Powerage 1978/AC-DC - Powerage - 08 - Up to My Neck in You.flac'
+p93
+aS'/media/dat/mus/ACDC/ACDC - Powerage 1978/AC-DC - Powerage - 09 - Kicked in the Teeth.flac'
+p94
+aS"/media/dat/mus/ACDC/ACDC - Powerage 1978/AC-DC - Powerage - 06 - What's Next to the Moon.flac"
+p95
+aS'/media/dat/mus/ACDC/ACDC - Powerage 1978/AC-DC - Powerage - 05 - Sin City.flac'
+p96
+aS"/media/dat/mus/ACDC/ACDC - Powerage 1978/AC-DC - Powerage - 01 - Rock 'N' Roll Damnation.flac"
+p97
+aS'/media/dat/mus/ACDC/ACDC - Let There Be Rock 1977 (2003 Remastered)/08 - Whole Lotta Rosie.flac'
+p98
+aS"/media/dat/mus/ACDC/ACDC - Let There Be Rock 1977 (2003 Remastered)/07 - Hell Ain't A Bad Place To Be.flac"
+p99
+aS'/media/dat/mus/ACDC/ACDC - Let There Be Rock 1977 (2003 Remastered)/03 - Let There Be Rock.flac'
+p100
+aS'/media/dat/mus/ACDC/ACDC - Let There Be Rock 1977 (2003 Remastered)/06 - Overdose.flac'
+p101
+aS'/media/dat/mus/ACDC/ACDC - Let There Be Rock 1977 (2003 Remastered)/04 - Bad Boy Boogie.flac'
+p102
+aS'/media/dat/mus/ACDC/ACDC - Let There Be Rock 1977 (2003 Remastered)/02 - Dog Eat Dog.flac'
+p103
+aS'/media/dat/mus/ACDC/ACDC - Let There Be Rock 1977 (2003 Remastered)/01 - Go Down.flac'
+p104
+aS'/media/dat/mus/ACDC/ACDC - Let There Be Rock 1977 (2003 Remastered)/05 - Problem Child.flac'
+p105
+aS'/media/dat/mus/ACDC/ACDC - Who Made Who 1986/09. AC-DC - For Those About To Rock.flac'
+p106
+aS'/media/dat/mus/ACDC/ACDC - Who Made Who 1986/08. AC-DC - Chase The Ace.flac'
+p107
+aS'/media/dat/mus/ACDC/ACDC - Who Made Who 1986/02. AC-DC - You Shook Me All Night Long.flac'
+p108
+aS'/media/dat/mus/ACDC/ACDC - Who Made Who 1986/05. AC-DC - Ride On.flac'
+p109
+aS'/media/dat/mus/ACDC/ACDC - Who Made Who 1986/03. AC-DC - D.T..flac'
+p110
+aS'/media/dat/mus/ACDC/ACDC - Who Made Who 1986/01. AC-DC - Who Made Who.flac'
+p111
+aS'/media/dat/mus/ACDC/ACDC - Who Made Who 1986/06. AC-DC - Hells Bells.flac'
+p112
+aS'/media/dat/mus/ACDC/ACDC - Who Made Who 1986/07. AC-DC - Shake Your Foundations.flac'
+p113
+aS'/media/dat/mus/ACDC/ACDC - Who Made Who 1986/04. AC-DC - Sink The Pink.flac'
+p114
+aS'/media/dat/mus/ACDC/ACDC - Live from Atlantic Studios 1997/ACDC - Live from Atlantic Studios/07 - The Jack.flac'
+p115
+aS'/media/dat/mus/ACDC/ACDC - Live from Atlantic Studios 1997/ACDC - Live from Atlantic Studios/06 - Dog Eat Dog.flac'
+p116
+aS'/media/dat/mus/ACDC/ACDC - Live from Atlantic Studios 1997/ACDC - Live from Atlantic Studios/08 - Whole Lotta Rosie.flac'
+p117
+aS'/media/dat/mus/ACDC/ACDC - Live from Atlantic Studios 1997/ACDC - Live from Atlantic Studios/01 - Open.flac'
+p118
+aS"/media/dat/mus/ACDC/ACDC - Live from Atlantic Studios 1997/ACDC - Live from Atlantic Studios/05 - Hell Ain't A Bad Place To Be.flac"
+p119
+aS'/media/dat/mus/ACDC/ACDC - Live from Atlantic Studios 1997/ACDC - Live from Atlantic Studios/02 - Live Wire.flac'
+p120
+aS'/media/dat/mus/ACDC/ACDC - Live from Atlantic Studios 1997/ACDC - Live from Atlantic Studios/04 - High Voltage.flac'
+p121
+aS'/media/dat/mus/ACDC/ACDC - Live from Atlantic Studios 1997/ACDC - Live from Atlantic Studios/03 - Proplem Child.flac'
+p122
+aS'/media/dat/mus/ACDC/ACDC - Live from Atlantic Studios 1997/ACDC - Live from Atlantic Studios/09 - Rocker.flac'
+p123
+aS'/media/dat/mus/ACDC/ACDC - Dirty Deeds Done Dirt Cheap 1976/AC-DC - Dirty Deeds Done Dirt Cheap - 01 - Dirty Deeds Done Dirt Cheap.flac'
+p124
+aS"/media/dat/mus/ACDC/ACDC - Dirty Deeds Done Dirt Cheap 1976/AC-DC - Dirty Deeds Done Dirt Cheap - 06 - There's Gonna Be Some Rockin'.flac"
+p125
+aS'/media/dat/mus/ACDC/ACDC - Dirty Deeds Done Dirt Cheap 1976/AC-DC - Dirty Deeds Done Dirt Cheap - 02 - Love at First Feel.flac'
+p126
+aS'/media/dat/mus/ACDC/ACDC - Dirty Deeds Done Dirt Cheap 1976/AC-DC - Dirty Deeds Done Dirt Cheap - 05 - Problem Child.flac'
+p127
+aS'/media/dat/mus/ACDC/ACDC - Dirty Deeds Done Dirt Cheap 1976/AC-DC - Dirty Deeds Done Dirt Cheap - 09 - Squealer.flac'
+p128
+aS'/media/dat/mus/ACDC/ACDC - Dirty Deeds Done Dirt Cheap 1976/AC-DC - Dirty Deeds Done Dirt Cheap - 03 - Big Balls.flac'
+p129
+aS"/media/dat/mus/ACDC/ACDC - Dirty Deeds Done Dirt Cheap 1976/AC-DC - Dirty Deeds Done Dirt Cheap - 07 - Ain't No Fun (Waiting Round to Be a Millionaire).flac"
+p130
+aS'/media/dat/mus/ACDC/ACDC - Dirty Deeds Done Dirt Cheap 1976/AC-DC - Dirty Deeds Done Dirt Cheap - 04 - Rocker.flac'
+p131
+aS'/media/dat/mus/ACDC/ACDC - Dirty Deeds Done Dirt Cheap 1976/AC-DC - Dirty Deeds Done Dirt Cheap - 08 - Ride On.flac'
+p132
+aS"/media/dat/mus/ACDC/ACDC High Voltage 1976/AC-DC - High Voltage - 02 - Rock 'n' Roll Singer.flac"
+p133
+aS'/media/dat/mus/ACDC/ACDC High Voltage 1976/AC-DC - High Voltage - 03 - The Jack.flac'
+p134
+aS"/media/dat/mus/ACDC/ACDC High Voltage 1976/AC-DC - High Voltage - 01 - It's a Long Way to the Top (If You Wanna Rock 'n' Roll).flac"
+p135
+aS'/media/dat/mus/ACDC/ACDC High Voltage 1976/AC-DC - High Voltage - 07 - Little Lover.flac'
+p136
+aS'/media/dat/mus/ACDC/ACDC High Voltage 1976/AC-DC - High Voltage - 09 - High Voltage.flac'
+p137
+aS"/media/dat/mus/ACDC/ACDC High Voltage 1976/AC-DC - High Voltage - 08 - She's Got Balls.flac"
+p138
+aS'/media/dat/mus/ACDC/ACDC High Voltage 1976/AC-DC - High Voltage - 06 - Can I Sit Next To You Girl !.flac'
+p139
+aS'/media/dat/mus/ACDC/ACDC High Voltage 1976/AC-DC - High Voltage - 05 - TNT !.flac'
+p140
+aS'/media/dat/mus/ACDC/ACDC High Voltage 1976/AC-DC - High Voltage - 04 - Live Wire !.flac'
+p141
+aS'/media/dat/mus/ACDC/ACDC - Highway to Hell 1979/09. AC-DC - Love Hungry Man.flac'
+p142
+aS'/media/dat/mus/ACDC/ACDC - Highway to Hell 1979/10. AC-DC - Night Prowler.flac'
+p143
+aS"/media/dat/mus/ACDC/ACDC - Highway to Hell 1979/08. AC-DC - If You Want Blood (You've Got It).flac"
+p144
+aS'/media/dat/mus/ACDC/ACDC - Highway to Hell 1979/02. AC-DC - Girls Got Rhythm.flac'
+p145
+aS'/media/dat/mus/ACDC/ACDC - Highway to Hell 1979/04. AC-DC - Touch Too Much.flac'
+p146
+aS'/media/dat/mus/ACDC/ACDC - Highway to Hell 1979/06. AC-DC - Shot Down in Flames.flac'
+p147
+aS'/media/dat/mus/ACDC/ACDC - Highway to Hell 1979/03. AC-DC - Walk All Over You.flac'
+p148
+aS'/media/dat/mus/ACDC/ACDC - Highway to Hell 1979/05. AC-DC - Beating Around the Bush.flac'
+p149
+aS'/media/dat/mus/ACDC/ACDC - Highway to Hell 1979/01. AC-DC - Highway to Hell.flac'
+p150
+aS'/media/dat/mus/ACDC/ACDC - Highway to Hell 1979/07. AC-DC - Get It Hot.flac'
+p151
+aS'/media/dat/mus/ACDC/ACDC - If You Want Bad Blood 1978 (2008 Japanese SICP-1704)/03 ACDC - Bad Boy Boogie.flac'
+p152
+aS"/media/dat/mus/ACDC/ACDC - If You Want Bad Blood 1978 (2008 Japanese SICP-1704)/02 ACDC - Hell Ain't A Bad Place To Be.flac"
+p153
+aS'/media/dat/mus/ACDC/ACDC - If You Want Bad Blood 1978 (2008 Japanese SICP-1704)/10 ACDC - Rocker.flac'
+p154
+aS'/media/dat/mus/ACDC/ACDC - If You Want Bad Blood 1978 (2008 Japanese SICP-1704)/01 ACDC - Riff Raff.flac'
+p155
+aS'/media/dat/mus/ACDC/ACDC - If You Want Bad Blood 1978 (2008 Japanese SICP-1704)/06 ACDC - Whole Lotta Rosie.flac'
+p156
+aS'/media/dat/mus/ACDC/ACDC - If You Want Bad Blood 1978 (2008 Japanese SICP-1704)/04 ACDC - The Jack.flac'
+p157
+aS"/media/dat/mus/ACDC/ACDC - If You Want Bad Blood 1978 (2008 Japanese SICP-1704)/07 ACDC - Rock 'N' Roll Damnation.flac"
+p158
+aS'/media/dat/mus/ACDC/ACDC - If You Want Bad Blood 1978 (2008 Japanese SICP-1704)/05 ACDC - Problem Child.flac'
+p159
+aS'/media/dat/mus/ACDC/ACDC - If You Want Bad Blood 1978 (2008 Japanese SICP-1704)/08 ACDC - High Voltage.flac'
+p160
+aS'/media/dat/mus/ACDC/ACDC - If You Want Bad Blood 1978 (2008 Japanese SICP-1704)/09 ACDC - Let There Be Rock.flac'
+p161
+aS'/media/dat/mus/ACDC/ACDC - Ballbreaker (1995) [FLAC] (Remastered 2005)/08 - Love Bomb.flac'
+p162
+aS'/media/dat/mus/ACDC/ACDC - Ballbreaker (1995) [FLAC] (Remastered 2005)/04 - Boogie Man.flac'
+p163
+aS'/media/dat/mus/ACDC/ACDC - Ballbreaker (1995) [FLAC] (Remastered 2005)/11 - Ballbreaker.flac'
+p164
+aS'/media/dat/mus/ACDC/ACDC - Ballbreaker (1995) [FLAC] (Remastered 2005)/07 - Hail Caesar.flac'
+p165
+aS'/media/dat/mus/ACDC/ACDC - Ballbreaker (1995) [FLAC] (Remastered 2005)/03 - The Furor.flac'
+p166
+aS"/media/dat/mus/ACDC/ACDC - Ballbreaker (1995) [FLAC] (Remastered 2005)/06 - Burnin' Alive.flac"
+p167
+aS'/media/dat/mus/ACDC/ACDC - Ballbreaker (1995) [FLAC] (Remastered 2005)/09 - Caught With Your Pants Down.flac'
+p168
+aS'/media/dat/mus/ACDC/ACDC - Ballbreaker (1995) [FLAC] (Remastered 2005)/02 - Cover You In Oil.flac'
+p169
+aS'/media/dat/mus/ACDC/ACDC - Ballbreaker (1995) [FLAC] (Remastered 2005)/10 - Whiskey On The Rocks.flac'
+p170
+aS'/media/dat/mus/ACDC/ACDC - Ballbreaker (1995) [FLAC] (Remastered 2005)/01 - Hard As A Rock.flac'
+p171
+aS'/media/dat/mus/ACDC/ACDC - Ballbreaker (1995) [FLAC] (Remastered 2005)/05 - The Honey Roll.flac'
+p172
+aS"/media/dat/mus/ACDC/ACDC - 74 Jailbreak EP 1984/ACDC 02 You Ain't Got A Hold On Me.flac"
+p173
+aS'/media/dat/mus/ACDC/ACDC - 74 Jailbreak EP 1984/ACDC 01 Jailbreak.flac'
+p174
+aS'/media/dat/mus/ACDC/ACDC - 74 Jailbreak EP 1984/ACDC 04 Soul Stripper.flac'
+p175
+aS"/media/dat/mus/ACDC/ACDC - 74 Jailbreak EP 1984/ACDC 05 Baby, Please Don't Go.flac"
+p176
+aS'/media/dat/mus/ACDC/ACDC - 74 Jailbreak EP 1984/ACDC 03 Show Business.flac'
+p177
+aS'/media/dat/mus/ACDC/ACDC - T.N.T. 1975 [VINYL] (192khz Vinyl Remaster)/06 - Rocker.flac'
+p178
+aS'/media/dat/mus/ACDC/ACDC - T.N.T. 1975 [VINYL] (192khz Vinyl Remaster)/09 - School Days.flac'
+p179
+aS'/media/dat/mus/ACDC/ACDC - T.N.T. 1975 [VINYL] (192khz Vinyl Remaster)/05 - T.N.T..flac'
+p180
+aS'/media/dat/mus/ACDC/ACDC - T.N.T. 1975 [VINYL] (192khz Vinyl Remaster)/03 - The Jack.flac'
+p181
+aS'/media/dat/mus/ACDC/ACDC - T.N.T. 1975 [VINYL] (192khz Vinyl Remaster)/08 - High Voltage.flac'
+p182
+aS"/media/dat/mus/ACDC/ACDC - T.N.T. 1975 [VINYL] (192khz Vinyl Remaster)/01 - It's A Long Way To The Top (If You Wanna Rock And Roll).flac"
+p183
+aS'/media/dat/mus/ACDC/ACDC - T.N.T. 1975 [VINYL] (192khz Vinyl Remaster)/07 - Can I Sit Next To You Girl.flac'
+p184
+aS'/media/dat/mus/ACDC/ACDC - T.N.T. 1975 [VINYL] (192khz Vinyl Remaster)/02 - Rock And Roll Singer.flac'
+p185
+aS'/media/dat/mus/ACDC/ACDC - T.N.T. 1975 [VINYL] (192khz Vinyl Remaster)/04 - Live Wire.flac'
+p186
+aS'/media/dat/mus/ACDC/ACDC - Flick Of The Switch 1986 (2008 Japanese SICP-1709)/04 ACDC - Nervous Shakedown.flac'
+p187
+aS'/media/dat/mus/ACDC/ACDC - Flick Of The Switch 1986 (2008 Japanese SICP-1709)/09 ACDC - Badlands.flac'
+p188
+aS'/media/dat/mus/ACDC/ACDC - Flick Of The Switch 1986 (2008 Japanese SICP-1709)/10 ACDC - Brain Shake.flac'
+p189
+aS'/media/dat/mus/ACDC/ACDC - Flick Of The Switch 1986 (2008 Japanese SICP-1709)/01 ACDC - Rising Power.flac'
+p190
+aS'/media/dat/mus/ACDC/ACDC - Flick Of The Switch 1986 (2008 Japanese SICP-1709)/08 ACDC - Bedlam In Belgium.flac'
+p191
+aS'/media/dat/mus/ACDC/ACDC - Flick Of The Switch 1986 (2008 Japanese SICP-1709)/06 ACDC - Guns For Hire.flac'
+p192
+aS'/media/dat/mus/ACDC/ACDC - Flick Of The Switch 1986 (2008 Japanese SICP-1709)/05 ACDC - Landslide.flac'
+p193
+aS'/media/dat/mus/ACDC/ACDC - Flick Of The Switch 1986 (2008 Japanese SICP-1709)/07 ACDC - Deep In The Hole.flac'
+p194
+aS'/media/dat/mus/ACDC/ACDC - Flick Of The Switch 1986 (2008 Japanese SICP-1709)/02 ACDC - This House Is On Fire.flac'
+p195
+aS'/media/dat/mus/ACDC/ACDC - Flick Of The Switch 1986 (2008 Japanese SICP-1709)/03 ACDC - Flick Of The Switch.flac'
+p196
+aS"/media/dat/mus/ACDC/ACDC - Back in Black 1980/AC-DC - Back in Black - 10 - Rock and Roll Ain't Noise Pollution.flac"
+p197
+aS'/media/dat/mus/ACDC/ACDC - Back in Black 1980/AC-DC - Back in Black - 08 - Have a Drink on Me.flac'
+p198
+aS'/media/dat/mus/ACDC/ACDC - Back in Black 1980/AC-DC - Back in Black - 07 - You Shook Me All Night Long.flac'
+p199
+aS'/media/dat/mus/ACDC/ACDC - Back in Black 1980/AC-DC - Back in Black - 03 - What Do You Do for Money Honey.flac'
+p200
+aS'/media/dat/mus/ACDC/ACDC - Back in Black 1980/AC-DC - Back in Black - 02 - Shoot to Thrill.flac'
+p201
+aS'/media/dat/mus/ACDC/ACDC - Back in Black 1980/AC-DC - Back in Black - 05 - Let Me Put My Love into You.flac'
+p202
+aS'/media/dat/mus/ACDC/ACDC - Back in Black 1980/AC-DC - Back in Black - 01 - Hells Bells.flac'
+p203
+aS'/media/dat/mus/ACDC/ACDC - Back in Black 1980/AC-DC - Back in Black - 04 - Givin the Dog a Bone.flac'
+p204
+aS'/media/dat/mus/ACDC/ACDC - Back in Black 1980/AC-DC - Back in Black - 06 - Back in Black.flac'
+p205
+aS'/media/dat/mus/ACDC/ACDC - Back in Black 1980/AC-DC - Back in Black - 09 - Shake a Leg.flac'
+p206
+aS'/media/dat/mus/ACDC/ACDC - Blow Up Your Video 1988 (Remastered 2003)/03 - Mean Streak.flac'
+p207
+aS"/media/dat/mus/ACDC/ACDC - Blow Up Your Video 1988 (Remastered 2003)/09 - Two's Up.flac"
+p208
+aS'/media/dat/mus/ACDC/ACDC - Blow Up Your Video 1988 (Remastered 2003)/10 - This Means War.flac'
+p209
+aS'/media/dat/mus/ACDC/ACDC - Blow Up Your Video 1988 (Remastered 2003)/08 - Ruff Stuff.flac'
+p210
+aS'/media/dat/mus/ACDC/ACDC - Blow Up Your Video 1988 (Remastered 2003)/01 - Heatseeker.flac'
+p211
+aS"/media/dat/mus/ACDC/ACDC - Blow Up Your Video 1988 (Remastered 2003)/07 - Some Sin for Nuthin'.flac"
+p212
+aS"/media/dat/mus/ACDC/ACDC - Blow Up Your Video 1988 (Remastered 2003)/02 - That's the Way I Wanna Rock N Roll.flac"
+p213
+aS'/media/dat/mus/ACDC/ACDC - Blow Up Your Video 1988 (Remastered 2003)/06 - Nick of Time.flac'
+p214
+aS'/media/dat/mus/ACDC/ACDC - Blow Up Your Video 1988 (Remastered 2003)/04 - Go Zone.flac'
+p215
+aS"/media/dat/mus/ACDC/ACDC - Blow Up Your Video 1988 (Remastered 2003)/05 - Kissin' Dynamite.flac"
+p216
+asS'totalFileCount'
+p217
+I210
+sb.

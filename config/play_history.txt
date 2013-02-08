@@ -1,0 +1,122 @@
+2013-01-26 23:35:46.582995 /media/dat/mus/God Is an Astronaut - Discography [FLAC]/2005 - All Is Violent, All Is Bright [FLAC]/05 - A Deafening Distance.flac
+2013-01-27 23:54:38.535285 /media/dat/mus//El Ten Eleven/2007 - Every Direction Is North/10 Bye Annie, Bye Joe, Bye Michael, Bye Jake.flac
+2013-01-27 23:57:41.970981 /media/dat/mus//El Ten Eleven/2007 - Every Direction Is North/07 Dax Pierson.flac
+2013-01-28 00:02:35.334480 /media/dat/mus//El Ten Eleven/2007 - Every Direction Is North/09 The 49th Day.flac2013-01-28 10:49:02.240197 /media/dat/mus//God Is an Astronaut - Discography [FLAC]/2007 - Far from Refuge (Japanese Release) [FLAC]/01 - Radau.flac
+2013-01-28 10:52:45.435420 /media/dat/mus//God Is an Astronaut - Discography [FLAC]/2007 - Far from Refuge (Japanese Release) [FLAC]/06 - Darkfall.flac
+2013-01-28 10:57:10.690344 /media/dat/mus//God Is an Astronaut - Discography [FLAC]/2007 - Far from Refuge (Japanese Release) [FLAC]/03 - Sunrise In Aries.flac
+2013-01-28 11:01:42.731755 /media/dat/mus//God Is an Astronaut - Discography [FLAC]/2007 - Far from Refuge (Japanese Release) [FLAC]/10 - Sunny Banks Of Sweet Deliverance.flac
+2013-01-28 11:04:04.835517 /media/dat/mus//God Is an Astronaut - Discography [FLAC]/2007 - Far from Refuge (Japanese Release) [FLAC]/11 - Empyrean Glow.flac
+2013-01-28 13:04:07.440048 /media/dat/mus//Tool/10,000 Days /Tool 10,000 Days 06 Lipan Conjuring.flac
+2013-01-28 16:10:48.646989 /media/dat/mus//Pendulum/3 Knocks/CD2 - Exploitation/02 -Insecurity.flac
+2013-01-28 16:26:57.570440 /media/dat/mus//Black Dub/Black Dub - 01 - Love Lives.flac
+2013-01-28 16:54:29.656436 /media/dat/mus//Chilly Gonzales - Ivory Tower/6 - Rococo Chanel.flac
+2013-01-28 16:58:32.191835 /media/dat/mus//Deus/2011 dEUS - Keep You Close/08 dEUS - Second Nature.flac
+2013-01-28 18:13:42.173054 /media/dat/mus//Deus/2011 dEUS - Keep You Close/01 dEUS - Keep You Close.flac
+2013-01-28 18:18:14.769988 /media/dat/mus//Deus/2011 dEUS - Keep You Close/04 dEUS - Twice (We Survive).flac
+2013-01-28 18:22:49.741258 /media/dat/mus//Deus/2011 dEUS - Keep You Close/07 dEUS - The End of Romance.flac
+2013-01-28 18:26:34.835607 /media/dat/mus//Deus/2011 dEUS - Keep You Close/06 dEUS - Constant Now.flac
+2013-01-28 18:31:11.983650 /media/dat/mus//Deus/2011 dEUS - Keep You Close/02 dEUS - The Final Blast.flac
+2013-01-28 18:35:42.720783 /media/dat/mus//Deus/2011 dEUS - Keep You Close/05 dEUS - Ghosts.flac
+2013-01-28 19:36:47.907351 /media/dat/mus//Ratatat/2006. 9 Beats/02 Two.flac
+2013-01-28 19:58:43.661970 /media/dat/mus//Arcade Fire/Neon Bible/05-Black Wave - Bad Vibrations.flac
+2013-01-28 22:39:29.506162 /media/dat/mus//Moonspell/2003 - The Antidote/04 - The southern deathstyle.flac
+2013-01-29 20:47:11.084943 /media/dat/mus//God Is an Astronaut - Discography [FLAC]/2007 - Far from Refuge (Japanese Release) [FLAC]/01 - Radau.flac
+2013-01-29 20:54:18.666552 /media/dat/mus//Tool/10,000 Days /Tool 10,000 Days 09 Intension.flac
+2013-01-30 10:18:40.852351 /media/dat/mus//Puscifer/Puscifer -  C  Is For (Please Insert Sophomoric Genitalia Refrence Here) E.P/04 Vagina Mine (Alive @ Club Nokia).flac
+2013-01-30 10:24:44.174154 /media/dat/mus//Massive Attack/100th Window/07 - Small Time Shot Away.flac
+2013-01-30 10:25:59.903242 /media/dat/mus//Massive Attack/100th Window/05 - Butterfly Caught.flac
+2013-01-30 10:38:01.809845 /media/dat/mus//Ayreon/Ayreon - 01011001 - [2CD] [2008] [MP3]/Disc 2/02-Ayreon - Waking Dreams.mp3
+2013-01-30 10:38:40.061691 /media/dat/mus//Ayreon/Ayreon - 01011001 - [2CD] [2008] [MP3]/Disc 2/03-Ayreon - The Truth Is Here.mp3
+2013-01-30 10:47:44.002157 /media/dat/mus//The Black Keys/Attack And Release/The Black Keys - Attack And Release - 03 - Strange Times.flac
+2013-01-30 10:55:02.080625 /media/dat/mus//The Black Keys/Attack And Release/The Black Keys - Attack And Release - 05 - Lies.flac
+2013-01-30 10:57:58.284179 /media/dat/mus//The Black Keys/Attack And Release/The Black Keys - Attack And Release - 01 - All You Ever Wanted.flac
+2013-01-30 11:01:08.690947 /media/dat/mus//The Black Keys/Attack And Release/The Black Keys - Attack And Release - 03 - Strange Times.flac
+2013-01-30 11:09:42.212710 /media/dat/mus//Tool/10,000 Days /Tool 10,000 Days 09 Intension.flac
+2013-01-30 11:16:33.396922 /media/dat/mus//Tool/10,000 Days /Tool 10,000 Days 05 The Pot.flac
+2013-01-30 11:21:36.182890 /media/dat/mus//Tool/10,000 Days /Tool 10,000 Days 11 Viginti Tres.flac
+2013-01-30 11:22:47.267369 /media/dat/mus//Tool/10,000 Days /Tool 10,000 Days 06 Lipan Conjuring.flac
+2013-01-30 11:29:53.950128 /media/dat/mus//Tool/10,000 Days /Tool 10,000 Days 01 Vicarious.flac
+2013-01-30 11:33:40.292813 /media/dat/mus//Tool/10,000 Days /Tool 10,000 Days 07 Lost Keys (Blame Hofmann).flac
+2013-01-30 13:27:26.994504 /media/dat/mus//Daft Punk/Tron OST/02 - The Grid.flac
+2013-01-30 13:30:52.494521 /media/dat/mus//Daft Punk/Tron OST/08 - The Game Has Changed.flac
+2013-01-30 13:35:03.586603 /media/dat/mus//Daft Punk/Tron OST/10 - Adagio For TRON.flac
+2013-01-30 13:37:45.709479 /media/dat/mus//Daft Punk/Tron OST/15 - Solar Sailer.flac
+2013-01-31 22:05:17.320347 /media/dat/mus//M/2003 Labo M/05 - Ricken.mp3
+2013-01-31 22:08:31.934959 /media/dat/mus//M/2003 Labo M/04 - L'automat.mp3
+2013-01-31 22:13:38.593766 /media/dat/mus//M/2003 Labo M/06 - Stan Est Stone.mp3
+2013-01-31 22:14:27.974110 /media/dat/mus//M/2003 Labo M/02 - Slide Melody.mp3
+2013-01-31 22:18:31.682798 /media/dat/mus//M/2003 Labo M/08 - Jam A La Mer.mp3
+2013-01-31 22:20:28.704370 /media/dat/mus//M/2003 Labo M/10 - Coup D'trash.mp3
+2013-01-31 22:22:30.943884 /media/dat/mus//M/2003 Labo M/07 - Au Kazoo.mp3
+2013-01-31 22:29:26.801906 /media/dat/mus//M/2003 Labo M/11 - La Nebuleuse.mp3
+2013-01-31 22:32:04.569714 /media/dat/mus//M/2003 Labo M/03 - Les Saules.mp3
+2013-01-31 22:37:30.562063 /media/dat/mus//M/2003 Labo M/09 - Tapis Volant 2.mp3
+2013-01-31 22:42:21.443518 /media/dat/mus//Alt-J/Alt-J-An_Awesome_Wave-2012-pLAN9/06-alt-j-something_good.mp3
+2013-02-01 20:35:01.179554 /media/dat/mus//Ratatat/2008b. LP3/12. Gipsy Threat.flac
+2013-02-01 20:38:20.310714 /media/dat/mus//Ratatat/2008b. LP3/06. Bird Priest.flac
+2013-02-01 20:48:18.457098 /media/dat/mus//Ratatat/2008b. LP3/17. Mirando (Animal Collective Remix).flac
+2013-02-01 20:52:32.664637 /media/dat/mus//Ratatat/2008b. LP3/07. Shempi.flac
+2013-02-01 20:57:46.362457 /media/dat/mus//Ratatat/2008b. LP3/14. Shempi (E-Rock Remix).flac
+2013-02-01 20:59:41.803464 /media/dat/mus//Ratatat/2008b. LP3/05. Flynn.flac
+2013-02-01 21:05:06.869358 /media/dat/mus//Ratatat/2008b. LP3/16. Falcon Jab (Copy Remix).flac
+2013-02-01 21:08:54.371980 /media/dat/mus//Ratatat/2008b. LP3/15. Shempi (Zongamin Remix).flac
+2013-02-01 21:12:36.882318 /media/dat/mus//Ratatat/2008b. LP3/10. Brulee.flac
+2013-02-01 21:15:17.055143 /media/dat/mus//Ratatat/2008b. LP3/03. Mi Viejo.flac
+2013-02-01 21:19:09.193932 /media/dat/mus//Ratatat/2008b. LP3/04. Mirando.flac
+2013-02-01 21:21:59.327196 /media/dat/mus//Ratatat/2008b. LP3/18. Mirando (YACHT Remix).flac
+2013-02-01 21:26:16.905172 /media/dat/mus//Ratatat/2008b. LP3/01. Shiller.flac
+2013-02-01 21:30:26.425706 /media/dat/mus//Ratatat/2008b. LP3/13. Black Heroes.flac
+2013-02-01 21:33:34.134579 /media/dat/mus//Ratatat/2008b. LP3/09. Dura.flac
+2013-02-01 22:47:24.484953 /media/dat/mus//Deus/2011 dEUS - Keep You Close/09 dEUS - Easy.flac
+2013-02-01 22:52:14.365693 /media/dat/mus//Deus/2011 dEUS - Keep You Close/03 dEUS - Dark Sets In.flac
+2013-02-01 22:56:14.968858 /media/dat/mus//Deus/2011 dEUS - Keep You Close/08 dEUS - Second Nature.flac
+2013-02-01 23:01:29.453850 /media/dat/mus//Deus/2011 dEUS - Keep You Close/01 dEUS - Keep You Close.flac
+2013-02-02 18:39:40.161547 /media/dat/mus//Deus/2005 dEUS - Pocket Revolution/11 dEUS - Sun Ra.flac
+2013-02-02 18:45:24.190804 /media/dat/mus//Deus/2005 dEUS - Pocket Revolution/09 dEUS - Cold Sun Of Circumstance.flac
+2013-02-02 18:49:17.500616 /media/dat/mus//Deus/2005 dEUS - Pocket Revolution/02 dEUS - 7 Days, 7 Weeks.flac
+2013-02-02 18:54:52.913493 /media/dat/mus//Deus/2005 dEUS - Pocket Revolution/12 dEUS - Nothing Really Ends.flac
+2013-02-02 18:58:42.311126 /media/dat/mus//Deus/2005 dEUS - Pocket Revolution/04 dEUS - If You Don't Get What You Want.flac
+2013-02-02 19:03:09.365922 /media/dat/mus//Deus/2005 dEUS - Pocket Revolution/03 dEUS - Stop-Start Nature.flac
+2013-02-02 19:10:16.986903 /media/dat/mus//Deus/2005 dEUS - Pocket Revolution/01 dEUS - Bad Timing.flac
+2013-02-02 19:15:19.046129 /media/dat/mus//Deus/2005 dEUS - Pocket Revolution/06 dEUS - Include Me Out.flac
+2013-02-02 19:19:20.183211 /media/dat/mus//Deus/2005 dEUS - Pocket Revolution/08 dEUS - Nightshopping.flac
+2013-02-02 19:23:18.887542 /media/dat/mus//Deus/2005 dEUS - Pocket Revolution/10 dEUS - The Real Sugar.flac
+2013-02-02 19:29:45.000733 /media/dat/mus//Deus/1996 dEUS - In A Bar, Under The Sea/02 dEUS - Fell Off The Floor, Man.flac
+2013-02-02 19:32:38.677560 /media/dat/mus//Deus/1996 dEUS - In A Bar, Under The Sea/15 dEUS - Wake Me Up Before I Sleep.flac
+2013-02-02 19:37:30.904480 /media/dat/mus//Deus/1996 dEUS - In A Bar, Under The Sea/14 dEUS - For The Roses.flac
+2013-02-02 19:38:17.240813 /media/dat/mus//Deus/1996 dEUS - In A Bar, Under The Sea/01 dEUS - I Don't Mind What Ever Happens.flac
+2013-02-02 19:41:33.605576 /media/dat/mus//Deus/1996 dEUS - In A Bar, Under The Sea/07 dEUS - Serpentine.flac
+2013-02-02 19:47:36.768651 /media/dat/mus//Deus/1996 dEUS - In A Bar, Under The Sea/13 dEUS - Disappointed In The Sun.flac
+2013-02-02 19:52:30.122497 /media/dat/mus//Charlie Dominici/Charlie Dominici - O3 A Trilogy - Part One/Charlie Dominici - O3 A Trilogy - Part One - 08 - The Plan.flac
+2013-02-02 19:57:10.585393 /media/dat/mus//Charlie Dominici/Charlie Dominici - O3 A Trilogy - Part One/Charlie Dominici - O3 A Trilogy - Part One - 10 - The Hand Of God.flac
+2013-02-02 20:02:03.287710 /media/dat/mus//Charlie Dominici/Charlie Dominici - O3 A Trilogy - Part One/Charlie Dominici - O3 A Trilogy - Part One - 09 - I Will Return.flac
+2013-02-02 20:04:37.860570 /media/dat/mus//Charlie Dominici/Charlie Dominici - O3 A Trilogy - Part One/Charlie Dominici - O3 A Trilogy - Part One - 03 - My New Land.flac
+2013-02-02 20:09:15.138013 /media/dat/mus//Charlie Dominici/Charlie Dominici - O3 A Trilogy - Part One/Charlie Dominici - O3 A Trilogy - Part One - 06 - A Day Of Conflict.flac
+2013-02-02 20:12:13.519805 /media/dat/mus//Charlie Dominici/Charlie Dominici - O3 A Trilogy - Part One/Charlie Dominici - O3 A Trilogy - Part One - 04 - I Found My Love.flac
+2013-02-02 20:15:17.848717 /media/dat/mus//Charlie Dominici/Charlie Dominici - O3 A Trilogy - Part One/Charlie Dominici - O3 A Trilogy - Part One - 02 - Unwilling Volunteer.flac
+2013-02-02 20:18:17.064247 /media/dat/mus//Charlie Dominici/Charlie Dominici - O3 A Trilogy - Part One/Charlie Dominici - O3 A Trilogy - Part One - 01 - Introduction.flac
+2013-02-02 20:22:19.596678 /media/dat/mus//Charlie Dominici/Charlie Dominici - O3 A Trilogy - Part One/Charlie Dominici - O3 A Trilogy - Part One - 07 - The Order Comes.flac
+2013-02-02 20:29:16.011618 /media/dat/mus//Charlie Dominici/Charlie Dominici - O3 A Trilogy - Part One/Charlie Dominici - O3 A Trilogy - Part One - 05 - The Dream.flac
+2013-02-08 11:27:16.591357 /media/dat/mus//Daft Punk/Tron OST/02 - The Grid.flac
+2013-02-08 11:30:42.106292 /media/dat/mus//Daft Punk/Tron OST/08 - The Game Has Changed.flac
+2013-02-08 11:34:53.227226 /media/dat/mus//Daft Punk/Tron OST/10 - Adagio For TRON.flac
+2013-02-08 11:37:35.357288 /media/dat/mus//Daft Punk/Tron OST/15 - Solar Sailer.flac
+2013-02-08 11:39:19.507569 /media/dat/mus//Daft Punk/Tron OST/13 - Derezzed.flac
+2013-02-08 11:42:41.620759 /media/dat/mus//Daft Punk/Tron OST/20 - Flynn Lives.flac
+2013-02-08 11:58:56.796651 /media/dat/mus//Massive Attack/100th Window/07 - Small Time Shot Away.flac
+2013-02-08 12:06:31.505960 /media/dat/mus//Massive Attack/100th Window/05 - Butterfly Caught.flac
+2013-02-08 12:13:10.318105 /media/dat/mus//Massive Attack/100th Window/02 - What Your Soul Sings.flac
+2013-02-08 12:20:49.464868 /media/dat/mus//Massive Attack/100th Window/03 - Everywhen.flac
+2013-02-08 12:32:24.506329 /media/dat/mus//Tool/10,000 Days /Tool 10,000 Days 09 Intension.flac
+2013-02-08 12:43:35.967870 /media/dat/mus//Tool/10,000 Days /Tool 10,000 Days 08 Roseta Stoned.flac
+2013-02-08 12:49:57.928669 /media/dat/mus//Tool/10,000 Days /Tool 10,000 Days 05 The Pot.flac
+2013-02-08 14:05:26.846421 /media/dat/mus//Ayreon/Ayreon - 01011001 - [2CD] [2008] [MP3]/Disc 2/02-Ayreon - Waking Dreams.mp3
+2013-02-08 14:39:12.144325 /media/dat/mus//Pink Floyd/1987 - A Momentary Lapse Of Reason/07-A New Machine Part 1.flac
+2013-02-08 14:39:15.153886 /media/dat/mus//Pink Floyd/1987 - A Momentary Lapse Of Reason/07-A New Machine Part 1.flac
+2013-02-08 14:39:56.194592 /media/dat/mus//Camel/(1991) Dust And Dreams/13 - Whispers.flac
+2013-02-08 15:06:38.782350 /media/dat/mus//Arcade Fire/Funeral/06-Crown of Love.flac
+2013-02-08 16:06:14.808605 /media/dat/mus//Metallica/1988.And Justice for All/03 - Metallica - Eye Of The Beholder.flac
+2013-02-08 16:11:12.224268 /media/dat/mus//Deadmau5/4 x 4 = 12/02 Deadmau5 - Sofi Needs a Ladder.flac
+2013-02-08 16:11:15.226117 /media/dat/mus//Deadmau5/4 x 4 = 12/02 Deadmau5 - Sofi Needs a Ladder.flac
+2013-02-08 16:11:18.225480 /media/dat/mus//Deadmau5/4 x 4 = 12/02 Deadmau5 - Sofi Needs a Ladder.flac
+2013-02-08 16:20:20.879062 /media/dat/mus//Daniel Lanois/Daniel Lanois Acadie [Goldtop Edition]/09 Silium's Hill.flac

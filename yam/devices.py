@@ -38,9 +38,10 @@ class DeviceManager:
                 self.deviceWatcher = watcher
             else:
                 self.deviceWatcher = DeviceWatcher(callback=self.handleDeviceNotificationReceived)
+
             self.deviceWatcher.start()
 
-    def handleDeviceNotificationReceived(self, device):
+    def handleDeviceNotificationReceived(self, msg):
         """
         TODO : Move this.
         This method is triggered each time another device
@@ -52,6 +53,7 @@ class DeviceManager:
         If the device is not yet in the registry,
         add it and set device-last-seen to now.
         """
+        device = Device.fromEncodedString(msg)
         self.registerDevice(device)
 
     def getDevices(self):
@@ -209,8 +211,12 @@ class DeviceWatcher():
         self.callback = callback
         self.sock = socket(AF_INET, SOCK_DGRAM)
         self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        #self.sock.setblocking(0)
         self.sock.bind(('', self.portToWatch))
         self.thread = threading.Thread(target=self._run, name="watcher")
+
+    def setCallbackFunc(self, callback):
+        self.callback = callback
 
     def start(self):
         print "Starting to watch for devices UDP broadcasts on port: {0}...".format(self.portToWatch)
@@ -231,13 +237,8 @@ class DeviceWatcher():
         try:
             while self.running:
                 data, addr = self.sock.recvfrom(self.bufferSize)
-                print "Broadcast received from : {0}".format(addr)
-                print data
                 if self.callback:
-                    decodedMsg = Device.fromEncodedString(data)
-                    #Do no call back for invalid messages
-                    if decodedMsg:
-                        self.callback(decodedMsg)
+                    self.callback(data)
         finally:
             self.sock.close()
 
@@ -298,7 +299,6 @@ class Device:
     A 'Device' is any computer running the clientapp or the serverapp
     """
     def __init__(self, type="local", visibleName = None, url = None, lastSeen = None):
-        print "Instanciating device with url: {0}".format(url)
         self.visibleName = visibleName
         self.url = url or "0:0"
         self.lastSeen = lastSeen or time.localtime()

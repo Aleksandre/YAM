@@ -16,11 +16,13 @@ from PySide.QtGui import *
 import PySide.QtGui as QtGui
 import config as config
 import content as content
-from devices import DeviceManager, Device
+from content import Mock
+from devices import DeviceManager, Device, DeviceWatcher
 import player as players
 from profiling import profile
+import os 
 
-print sys.executable
+print "Running with vm: {0}".format(sys.executable)
 
 APP = None
 
@@ -28,46 +30,45 @@ class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.initUI()
-        self.createDockWindows()
 
     @profile
     def initUI(self):         
-
         self.currentView = DefaultMusicCollectionView(self)
         self.centerStackedWidget = QStackedWidget()
 
         self.centerStackedWidget.addWidget(self.currentView)
         self.setCentralWidget(self.centerStackedWidget)
         
-        self.setGeometry(840,0,840,1050)
+        self.setGeometry(0,0,1680,1050)
         
-        musicAction = QtGui.QAction(QtGui.QIcon('../art/appicon.ico'), 'Music', self)
+        musicAction = QtGui.QAction(QtGui.QIcon('../art/Music.png'), 'Show music collection', self)
         musicAction.triggered.connect(self.showDefaultMusicView)
 
-        configureAction = QtGui.QAction(QtGui.QIcon('../art/nocover.png'), 'Configure', self)
+        configureAction = QtGui.QAction(QtGui.QIcon('../art/Tools.png'), 'Configure YAM', self)
         configureAction.triggered.connect(self.showConfigPanel)
 
-        devicesAction = QtGui.QAction(QtGui.QIcon('../art/nocover.png'), 'Show devices', self)
+        devicesAction = QtGui.QAction(QtGui.QIcon('../art/Network.png'), 'Show availaible devices', self)
         devicesAction.triggered.connect(self.showDevicesPanel)
         
+        fileErrorsAction = QtGui.QAction(QtGui.QIcon('../art/Info.png'), 'Show last index report', self)
+        fileErrorsAction.triggered.connect(self.showIndexReport)
+
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(musicAction)
+        self.toolbar.addSeparator()
         self.toolbar.addAction(configureAction)
+        self.toolbar.addSeparator()
         self.toolbar.addAction(devicesAction)
-        self.toolbar.setIconSize(QtCore.QSize(75,75))
+        self.toolbar.addSeparator()
+        self.toolbar.addAction(fileErrorsAction)
+        self.toolbar.setIconSize(QtCore.QSize(60,60))
+
+        dark = "#2D2D2D"
+        style_str = "QWidget {background-color: %s}"
+        self.toolbar.setStyleSheet(style_str % dark)
 
         self.setWindowTitle('YAM')    
-
-    def createDockWindows(self):
-        print "setting docks"
-        #Set TopPanel
-        topDock = QtGui.QDockWidget("", self)
-        topDock.setLayout(self.layout())
-        topDock.setAllowedAreas(QtCore.Qt.LeftDockWidgetArea)
-        topDock.setFeatures(QDockWidget.NoDockWidgetFeatures)
-        topDock.setContentsMargins(0,0,0,0)
-        topDock.setFloating(False)
-
+        
     def showConfigPanel(self):
         wizard = ConfigurationWizard()
         wizard.exec_()
@@ -78,15 +79,32 @@ class MainWindow(QtGui.QMainWindow):
         self.currentView = DefaultMusicCollectionView(self)
         self.centerStackedWidget.addWidget(self.currentView)
 
+    def showIndexReport(self):
+        self.centerStackedWidget.removeWidget(self.currentView)
+        self.currentView = IndexReportView(self)
+        self.centerStackedWidget.addWidget(self.currentView)
+
     def showDevicesPanel(self):
         deviceManPanel = DeviceManagementPanel()
         deviceManPanel.exec_()
-        self.showDefaultMusicView()
 
     def show_and_raise(self):
         self.show()
         self.raise_()
-   
+ 
+
+class IndexReportView(QtGui.QWidget):
+    def __init__(self, parent=None):
+        QtCore.QObject.__init__(self)
+        self.initUI()
+
+    def initUI(self):
+        pass
+
+    def show_and_raise(self):
+        self.show()
+        self.raise_()
+         
 
 class DeviceManagementPanel(QtGui.QDialog):
     def __init__(self, parent=None):
@@ -94,26 +112,27 @@ class DeviceManagementPanel(QtGui.QDialog):
         self.initUI()
 
     def initUI(self):
-
         mainLayout = QtGui.QVBoxLayout()
 
         self.deviceListView = DeviceList()
         mainLayout.addWidget(self.deviceListView)
 
-        applyButton = QtGui.QPushButton("Apply")
+        applyButton = QtGui.QPushButton("Choose")
         applyButton.clicked.connect(self.applyChanges)
+        applyButton.setDefault(True)
 
-        closeButton = QtGui.QPushButton("Close")
-        closeButton.setDefault(True)
+        closeButton = QtGui.QPushButton("Cancel")
         closeButton.clicked.connect(self.tryClose)
 
         buttonLayout = QtGui.QHBoxLayout()
-        buttonLayout.addStretch(1)
-        buttonLayout.addWidget(applyButton)
         buttonLayout.addWidget(closeButton)
+        buttonLayout.addWidget(applyButton)
         mainLayout.addLayout(buttonLayout)
         
+        self.setWindowTitle('Choose a device to control')  
         self.setLayout(mainLayout)
+
+        self.deviceListView.selectActiveDevice()
 
     def tryClose(self):
         print "Closing device manager..."
@@ -126,6 +145,7 @@ class DeviceManagementPanel(QtGui.QDialog):
             global APP
             APP.deviceMan.setActiveDevice(selectedDevice)
             APP.updatePlayer()
+            self.tryClose()
         else :
             print "No device selected. Cannot apply changes."
 
@@ -161,41 +181,50 @@ class ConfigurationWizard(QtGui.QWizard):
 
     def createLibraryLocationPage(self):
         page = QtGui.QWizardPage()
-        page.setTitle("Library location")
+        page.setTitle("Import music")
         page.setSubTitle("Where is your music ?")
 
-        configLocationDialog = QtGui.QPushButton("Folder:")
-        configLocationDialog.clicked.connect(self._showLibraryDialog)
+        self.configLocationDialog = QtGui.QPushButton("Folder:")
+        self.configLocationDialog.clicked.connect(self._showLibraryDialog)
 
         self.libraryDirectoryEdit = QtGui.QLineEdit()
-        self.libraryDirectoryEdit.setText(config.getPathToMusicLibrary())
+        self.libraryDirectoryEdit.setText(config.getProperty('music_library_folder'))
+        self.libraryDirectoryEdit.textChanged.connect(self._handleLibraryPathChanged)
 
-        indexLibraryButton = QPushButton("Index folder")
-        indexLibraryButton.clicked.connect(self._indexLibrary)
+        self.indexLibraryButton = QPushButton("Index folder")
+        self.indexLibraryButton.clicked.connect(self._indexLibrary)
 
         self.progressBar = QtGui.QProgressBar()
         self.progressBar.setMinimum(0)
         self.progressBar.setMaximum(100)
 
         layout = QtGui.QGridLayout()
-        layout.addWidget(configLocationDialog, 0, 0)
+        layout.addWidget(self.configLocationDialog, 0, 0)
         layout.addWidget(self.libraryDirectoryEdit, 0, 1)
-        layout.addWidget(indexLibraryButton, 1, 0)
+        layout.addWidget(self.indexLibraryButton, 1, 0)
         layout.addWidget(self.progressBar,1,1)
         page.setLayout(layout)
         page.initializePage = self.initLibraryLocationPage
 
         return page
 
+    def _handleLibraryPathChanged(self, newPath):
+        print newPath
+        if os.path.isdir(newPath):
+            self.indexLibraryButton.setEnabled(True)
+        else :
+            self.indexLibraryButton.setEnabled(False)
+
     def initLibraryLocationPage(self):
-        self.libraryDirectoryEdit.setText(config.getPathToMusicLibrary())
+        self.libraryDirectoryEdit.setText(config.getProperty('music_library_folder'))
+
 
     def createRegistrationPage(self):
         page = QtGui.QWizardPage()
-        page.setTitle("Configuration")
-        page.setSubTitle("Set your application workspace.")
+        page.setTitle("Select a workspace")
+        page.setSubTitle("YAM stores application data, configuration files and user data into the workspace.")
 
-        configLocationDialog = QtGui.QPushButton("Folder:")
+        configLocationDialog = QtGui.QPushButton("Workspace:")
         configLocationDialog.clicked.connect(self._showFolderDialog)
 
         self.directoryEdit = QtGui.QLineEdit()
@@ -224,6 +253,8 @@ class ConfigurationWizard(QtGui.QWizard):
            self.libraryDirectoryEdit.setText(directory)
 
     def _indexLibrary(self):
+        self.configLocationDialog.setEnabled(False)
+        self.libraryDirectoryEdit.setEnabled(False)
         musicLibraryFolder = self.libraryDirectoryEdit.text().encode("utf-8")
         musicLibraryFolder = musicLibraryFolder + "/"
         self.task = content.LibraryIndexationTask(musicLibraryFolder)
@@ -261,7 +292,6 @@ class ConfigurationWizard(QtGui.QWizard):
         return self.done(0)
 
 
-
 class DeviceList(QtGui.QListView):
 
         def __init__(self):
@@ -277,7 +307,6 @@ class DeviceList(QtGui.QListView):
             
         def bindEvents(self):
             pass
-            #self.itemClicked.connect(self._deviceSelected)
 
         def keyPressEvent(self, event):
             key = event.key()
@@ -309,10 +338,29 @@ class DeviceList(QtGui.QListView):
             self.devices = APP.deviceMan.getDevices()
             self.devicesWithIcon = []
             for device in self.devices:
-                model = repr(device) , '../art/nocover.png'
+                deviceName = repr(device)
+                art = None
+                print deviceName
+                if 'rpi' in deviceName:
+                    art = '../art/rpi.png'
+                elif device.type == "local":
+                    import platform
+                    if "Linux" == platform.system():
+                        art = '../art/linux.ico'
+                if art == None:
+                    art ='../art/nocover1.jpg'
+                model = repr(device) , art
                 self.devicesWithIcon.append(model)
+
             list_model = ListModel(self.devicesWithIcon)
             self.setModel(list_model)
+
+        def selectActiveDevice(self):
+            for device in self.devices:
+                if device == self.selectedDevice:
+                    pass
+            #items = self.findItems("*")
+
 
         def selectionChanged(self, newSelection, oldSelection):
             selectedIdx = newSelection.indexes()[0].row()
@@ -336,7 +384,9 @@ class ListModel(QtCore.QAbstractListModel):
         if role == QtCore.Qt.DisplayRole:
             return os_name
         elif role == QtCore.Qt.DecorationRole:
-            return QtGui.QIcon('../art/nocover.png')
+            if not os_logo_path or os_logo_path == "" or os_logo_path == None:
+                os_logo_path = '../art/nocover1.jpg'
+            return QtGui.QIcon("")
 
         return None
 
@@ -350,12 +400,12 @@ class TrackTable(QtGui.QTableWidget):
             self.bindEvents()
 
         def initUI(self):
-            self.setColumnCount(3)
+            self.setColumnCount(5)
             self.setSortingEnabled(True)
             self.setAlternatingRowColors(True)
             self.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
             self.setAutoScroll(True)
-            self.setSizePolicy(QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
+            self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
             self.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
 
         def bindEvents(self):
@@ -399,14 +449,14 @@ class TrackTable(QtGui.QTableWidget):
                     currentRow = currentRow + 1
                     self.setCurrentCell(currentRow, 0)
                 else:
-                    self.focusNextChild()
+                    self.setCurrentCell(0, 0)
                 return
             else:
                 QtGui.QWidget.keyPressEvent(self, event)
 
         def trackClicked(self, clickedItem):
             row = clickedItem.row()
-            self.playTrack(row)
+            self._playTrack(row)
             
         def _playTrack(self, row):
             track = self._findTrack(row)
@@ -419,7 +469,7 @@ class TrackTable(QtGui.QTableWidget):
                 APP.player.queueTrack(track)    
 
         def _findTrack(self, row):
-            trackTitle = self.item(row,0).text()
+            trackTitle = self.item(row,1).text()
             print "Looking for track with title: ", trackTitle
             
             tracksWithTitle = filter(lambda x:x.title == trackTitle, self.tracks)
@@ -429,8 +479,14 @@ class TrackTable(QtGui.QTableWidget):
             return None
 
         def setHeader(self, _labels = None):
-            labels = _labels or  ('Title','Artist','Album')
+            labels = ('Track', 'Title','Artist','Album', 'Time')
             self.setHorizontalHeaderLabels(labels)
+            self.horizontalHeader().setStretchLastSection(True)
+            self.horizontalHeader().setResizeMode(0, QtGui.QHeaderView.ResizeToContents)
+            self.horizontalHeader().setResizeMode(1, QtGui.QHeaderView.ResizeToContents)
+            self.horizontalHeader().setResizeMode(2, QtGui.QHeaderView.ResizeToContents)
+            self.horizontalHeader().setResizeMode(3, QtGui.QHeaderView.ResizeToContents)
+            self.horizontalHeader().setResizeMode(4, QtGui.QHeaderView.ResizeToContents)
 
         def setTracks(self, data):
             print "Loading tracks into track table...", str(len(data))
@@ -439,13 +495,15 @@ class TrackTable(QtGui.QTableWidget):
             self.setRowCount(len(data))
             row = 0
             for track in data:
-                self.setItem(row, 0, QTableWidgetItem(track.title ,0))
-                self.setItem(row, 1, QTableWidgetItem(track.artist, 1))
-                self.setItem(row, 2, QTableWidgetItem(track.albumTitle, 2))
+                self.setItem(row, 0, QTableWidgetItem(track.num ,0))
+                self.setItem(row, 1, QTableWidgetItem(track.title ,1))
+                self.setItem(row, 2, QTableWidgetItem(track.artist, 2))
+                self.setItem(row, 3, QTableWidgetItem(track.albumTitle, 3))
+                self.setItem(row, 4, QTableWidgetItem("{:4.2f}".format(track.lengthMS/60), 4))
                 row = row + 1
             self.setHeader()
-            self.resizeColumnsToContents()
 
+        
 
 class AlbumList(QtGui.QListWidget):
 
@@ -474,7 +532,7 @@ class AlbumList(QtGui.QListWidget):
                 self._albumClicked(self.currentItem())
                 return
             elif key == QtCore.Qt.Key_Q:
-                albumTitle = self.item(self.currentRow).text()
+                albumTitle = self.item(self.currentRow()).text()
                 self._queueAlbum(albumTitle)
                 return
             elif key == QtCore.Qt.Key_S:
@@ -547,71 +605,30 @@ class AlbumList(QtGui.QListWidget):
 
 
 class ArtistList(QtGui.QListView):
-
-     artistsAndCovers = None
      artistClicked = QtCore.Signal(QModelIndex)
-
      def __init__(self):
         super(ArtistList, self).__init__()
+        self.artistsAndCovers = None
         self.initUI()
         self.bindEvents()
 
      def initUI(self):
         self.setIconSize(QtCore.QSize(55, 55))
-        self.setSpacing(5)
+        #self.setSpacing(5)
         self.setUniformItemSizes(True)
         self.setMaximumWidth(300)
 
      def bindEvents(self):
         pass
 
-     def keyPressEvent(self, event):
-        key = event.key()
-        print "Album list received KeyPressed event: ", key
-        
-        if key == QtCore.Qt.Key_P:
-            #albumTitle = self.item(self.currentRow()).text()
-            #self._playAlbum(albumTitle)
-            return
-        elif key == QtCore.Qt.Key_Return:
-            self.artistClicked.emit(previousArtist)
-            return
-        elif key == QtCore.Qt.Key_Q:
-            #albumTitle = self.item(self.currentRow).text()
-            #self._queueAlbum(albumTitle)
-            return
-        elif key == QtCore.Qt.Key_S:
-            APP.player.stop()
-            return
-        elif key == QtCore.Qt.Key_Space:
-            APP.player.togglePlayState()
-            return
-        elif key == QtCore.Qt.Key_Left:
-            self.focusPreviousChild()
-            return
-        elif key == QtCore.Qt.Key_Right:
-            self.focusNextChild()
-            return
-        elif key == QtCore.Qt.Key_Up:
-            previousArtist = self._getPreviousArtistQIndex()
-            if previousArtist:
-                self.setCurrentIndex(previousArtist)
-            self.artistClicked.emit(previousArtist)
-            return
-        elif key == QtCore.Qt.Key_Down:
-            nextArtist = self._getNextArtistQIndex()
-            if nextArtist:
-                self.setCurrentIndex(nextArtist)
-            self.artistClicked.emit(nextArtist)
-            return
-        else:
-            print "Artist list could not handle key event"
-            return super(QListView, self).keyPressEvent(event)
 
      def setArtists(self, artistsAndCovers):
+        allArtistsEntry = ('All {0} artists'.format(len(artistsAndCovers)),"")
         self.artistsAndCovers = artistsAndCovers
-        list_model = ListModel(artistsAndCovers)
+        self.artistsAndCovers.insert(0, allArtistsEntry)
+        list_model = ListModel(self.artistsAndCovers)
         self.setModel(list_model)
+
 
      def _getNextArtistQIndex(self):
         if len(self.selectedIndexes()) > 0:
@@ -632,12 +649,168 @@ class ArtistList(QtGui.QListView):
      def selectionChanged(self, newSelection, oldSelection):
          self.artistClicked.emit(newSelection.indexes()[0])
 
+
+class PlayerStatusPanel(QtGui.QWidget):
+        """The PlayerStatusPanel can :
+        
+            Keep track of the active Player.
+
+            Display information about the Player's state.
+
+            Send commands to the active Player. 
+        """
+        def __init__(self, parent = None):
+            super(PlayerStatusPanel, self).__init__(parent)
+            self.player = APP.player
+            self.currenTrack = None
+            self.initUI()
+            self.bindEvents()
+            self.refreshState()
+
+        def initUI(self):
+            self.setupActions()
+            self.setupUi()
+
+        def bindEvents(self):
+            APP.playerChanged.connect(self._onPlayerChanged)
+
+            self._bindToPlayerSignals()
+
+
+        def _onSliderPressed(self):
+            self.sliding = True
+
+        def _onPlayerChanged(self):
+            self.player = APP.player
+            self._bindToPlayerSignals()
+            self.refreshState(self.player.getCurrentTrack())
+
+        def _bindToPlayerSignals(self):
+            self.player.stateChanged.connect(self._onPlayerStateChanged)
+            self.player.ticked.connect(self._onPlayerTicked)
+            self.playAction.triggered.connect(self.player.togglePlayState)
+            self.pauseAction.triggered.connect(self.player.togglePlayState)
+            self.nextAction.triggered.connect(self.player.playNextTrack)
+            self.previousAction.triggered.connect(self.player.playPreviousTrack)
+            self.timeLcd.sliderReleased.connect(self._onSliderReleased)
+            self.timeLcd.sliderPressed.connect(self._onSliderPressed)
+
+        def _onSliderReleased(self):
+            self.sliding = False
+            self.player.seek(self.timeLcd.value()*1000)
+
+        def _onPlayerTicked(self, timeSinceBegingInSec):
+            if not self.sliding:
+                self.timeLcd.setValue(timeSinceBegingInSec/1000)
+
+        def _onPlayerStateChanged(self):
+            fullState = self.player.getFullState()
+            #self.currenTrack = Mock(eval(fullState.currentTrack()))
+            self.currenTrack = self.player.getCurrentTrack()
+            self.refreshState(self.currenTrack)
+            self.playAction.setEnabled(fullState.state == "PAUSED")
+            self.pauseAction.setEnabled(fullState.state == "PLAYING")
+            self.nextAction.setEnabled(fullState.hasNextTrack)
+            self.previousAction.setEnabled(fullState.hasPreviousTrack)
+            #self.timeLcd.setValue(fullState.currentTime)
+
+        def setupActions(self):
+            self.playAction = QtGui.QAction(QIcon('../art/Play.png'), "Play" ,self)
+            self.pauseAction = QtGui.QAction(QIcon('../art/Pause.png'), "Pause", self)
+            self.nextAction = QtGui.QAction(QIcon('../art/NextTrack.png'),"Play next track", self)
+            self.previousAction = QtGui.QAction(QIcon('../art/PreviousTrack.png'),"Play previous track", self)
+
+        def setupUi(self):
+
+            self.currentPlayerLabel = QLabel()
+            fontPlayerLabel = self.currentPlayerLabel.font()
+            fontPlayerLabel.setPointSize(18)
+            fontPlayerLabel.setBold(True)
+            self.currentPlayerLabel.setFont(fontPlayerLabel)
+            self.currentPlayerLabel.setStyleSheet("QLabel { color : black; }")
+
+            self.imgLabel = QLabel()
+            self.imgLabel.setFixedSize(QSize(300,300))
+
+            self.trackTitleLabel = QLabel()
+            fontTrackTitleLabel = self.trackTitleLabel.font()
+            fontTrackTitleLabel.setPointSize(8)
+            fontTrackTitleLabel.setBold(False)
+            self.trackTitleLabel.setStyleSheet("QLabel { color : black; }")
+            self.trackTitleLabel.setFont(fontTrackTitleLabel)
+
+            albumAndArtistLay = QVBoxLayout()
+            
+            self.albumTitleLabel = QLabel()
+            fontAlbumLabel = self.albumTitleLabel.font()
+            fontAlbumLabel.setPointSize(18)
+            fontAlbumLabel.setBold(True)
+            self.albumTitleLabel.setFont(fontAlbumLabel)
+            self.albumTitleLabel.setStyleSheet("QLabel { color : black; }")
+           
+            self.artistNameLabel = QLabel()
+            fontArtistLabel =  self.artistNameLabel.font()
+            fontArtistLabel.setPointSize(14);
+            fontArtistLabel.setBold(False)
+            self.artistNameLabel.setFont(fontArtistLabel)
+            self.artistNameLabel.setStyleSheet("QLabel { color : black; }")
+            
+            albumAndArtistLay.addWidget(self.albumTitleLabel)
+            albumAndArtistLay.addWidget(self.artistNameLabel)
+
+
+            self.timeLcd = QtGui.QSlider()
+            self.timeLcd.setOrientation(Qt.Horizontal)
+
+            bar = QToolBar()
+            bar.addSeparator()
+            bar.addAction(self.previousAction)
+            bar.addSeparator()
+            bar.addAction(self.playAction)
+            bar.addSeparator()
+            bar.addAction(self.pauseAction)
+            bar.addSeparator()
+            bar.addAction(self.nextAction)
+            bar.addSeparator()
+            bar.setIconSize(QtCore.QSize(45,45))
+            
+            dark = "#2D2D2D"
+            style_str = "QWidget {background-color: %s}"
+            bar.setStyleSheet(style_str % dark)
+
+            mainLayout = QtGui.QVBoxLayout()
+            mainLayout.addWidget(self.currentPlayerLabel)
+            mainLayout.addWidget(bar)
+            mainLayout.addWidget(self.trackTitleLabel)
+            mainLayout.addWidget(self.timeLcd)
+            mainLayout.addWidget(self.imgLabel)
+            mainLayout.addLayout(albumAndArtistLay)
+         
+            mainLayout.addStretch()
+            self.sliding = False
+            self.setLayout(mainLayout)
+            self.setMaximumWidth(300)
+
+        def refreshState(self, track=None):
+            activeDevice = APP.deviceMan.getActiveDevice()
+            self.currentPlayerLabel.setText(activeDevice.visibleName)
+
+            if track:
+                pixmap = QPixmap(track.albumCoverPath).scaledToHeight(300)
+                self.imgLabel.setPixmap(pixmap)
+                self.imgLabel.setFixedSize(QSize(300,300))
+                self.albumTitleLabel.setText(track.albumTitle)
+                self.artistNameLabel.setText(track.artist)
+                self.trackTitleLabel.setText(track.title)
+                self.timeLcd.setMaximum(int(track.lengthMS))
+
 class DefaultMusicCollectionView(QtGui.QWidget):
 
      def __init__(self, parent = None):
         super(DefaultMusicCollectionView, self).__init__(parent)
         self.tracks = content.getTracks()
         self.initUI()
+        self.bindEvents()
 
      def initUI(self):
         #Prepare main layout
@@ -646,7 +819,6 @@ class DefaultMusicCollectionView(QtGui.QWidget):
 
         #Prepare artist view
         self.artistsView = ArtistList()
-        self.artistsView.artistClicked.connect(self.artistClicked)
         hbox.addWidget(self.artistsView)
         self.artistsAndCovers = content.getArtistsWithRandomCover()
         self.artistsView.setArtists(self.artistsAndCovers)
@@ -659,15 +831,34 @@ class DefaultMusicCollectionView(QtGui.QWidget):
 
         #Prepare albums view
         self.albumsView = AlbumList()
-        self.albumsView.albumClicked.connect(self.albumClicked)
         self.albumsView.setAlbums(self.tracks)
-        self.rightVBox.addWidget(self.albumsView)
-        
+
+        self.topHBox = QHBoxLayout()
+
+        self.visibleCoverLabel = QLabel("No album selected")
+        pixmap = QPixmap("../art/nocover1.jpg")
+        if pixmap:
+            self.visibleCoverLabel.setPixmap(pixmap)
+        self.visibleCoverLabel.setFixedSize(QSize(200,200))
+
+        self.topHBox.addWidget(self.visibleCoverLabel)
+        self.topHBox.addWidget(self.albumsView)
+        self.rightVBox.addLayout(self.topHBox)
+
         #Prepare tracks view
         self.tracksTable = TrackTable()
-        #self.tracksTable.setTracks(self.tracks)
         self.tracksTable.setHeader()
         self.rightVBox.addWidget(self.tracksTable)
+
+        #Prepare PlayerStatusView
+        self.playerStatus = PlayerStatusPanel()
+        hbox.addWidget(self.playerStatus)
+
+
+     def bindEvents(self):
+        #self.albumsView.albumClicked.connect(self.playerStatus.showAlbum)
+        self.artistsView.artistClicked.connect(self.artistClicked)
+        self.albumsView.albumClicked.connect(self.albumClicked)
 
 
      def albumClicked(self, albumTitle):
@@ -679,34 +870,57 @@ class DefaultMusicCollectionView(QtGui.QWidget):
 
         self.rightVBox.addWidget(self.tracksTable)
 
+        cover = tracksForAlbum[0].albumCoverPath
+        pixmap = QPixmap(cover).scaledToHeight(200)
+        self.visibleCoverLabel.setPixmap(pixmap)
+
      def artistClicked(self, artistRowModel):
-        artistName = self.artistsAndCovers[artistRowModel.row()][0]
+        artistName, cover = self.artistsAndCovers[artistRowModel.row()]
         print "Clicked on artist: ", artistName
 
         albumsForArtist = filter(lambda x:x.artist == artistName, self.tracks)
         self.albumsView.setAlbums(albumsForArtist)
 
+        pixmap = QPixmap(cover).scaledToHeight(200)
+        self.visibleCoverLabel.setPixmap(pixmap)
 
 
-class Client():
+class Client(QtCore.QObject):
+
+    playerChanged = QtCore.Signal()
+
     def __init__(self, showApp=False):
+        QtCore.QObject.__init__(self)
+        self.showApp = showApp
+        self.deviceMan = DeviceManager(startWatcher=True)
+        self.updatePlayer()
+
+    def init(self):
         try:
             self.app = QtGui.QApplication(sys.argv)
         except RuntimeError:
             self.app = QtCore.QCoreApplication.instance()
         self.app.setApplicationName('yamclient')
         self.mainWin = MainWindow()
-        self.deviceMan = DeviceManager(startWatcher=True)
-        self.showApp = showApp
-        self.updatePlayer()
         self.bindEvents()
+        self.deviceStateChangeWatcher = DeviceWatcher(portToWatch=5556, callback=self.playerStateChanged)
+        self.deviceStateChangeWatcher.start()
+
 
     def bindEvents(self):
         self.app.aboutToQuit.connect(self.stop)
-
+        
     def updatePlayer(self):
         activeDevice = self.deviceMan.getActiveDevice()
+        #if self.player != None:
+            #.player.unregisterToStateChanges(activeDevice.host)
+
         self.player = players.getPlayerByType(activeDevice)
+        self.player.registerToStateChanges(activeDevice.host)
+        self.playerChanged.emit()
+
+    def playerStateChanged(self, state):
+        self.player.stateChanged.emit(state)
 
     def start(self):
         try:
@@ -725,7 +939,7 @@ class Client():
 
     def stop(self):
         self.deviceMan.dispose()
-        print self.app.exit()
+        self.app.exit()
         self.player.stop()
 
 def main(argv=None):
@@ -735,15 +949,16 @@ def main(argv=None):
 
 def setupTestClient():
     client = Client(showApp=False)
+    client.init()
     global APP
     APP = client
     return client
 
 def setupClient():
-    client = Client(showApp=True)
     global APP
-    APP = client
-    return client
+    APP = Client(showApp=True)
+    APP.init()
+    return APP
 
 if __name__ == '__main__':
     sys.exit(main())

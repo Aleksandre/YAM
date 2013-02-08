@@ -22,7 +22,7 @@ class MusicIndexer:
     """
 
     def __init__(self, pathToIndex = None, progressCallback = None):
-        self.pathToIndex = pathToIndex or config.getPathToMusicLibrary()
+        self.pathToIndex = pathToIndex or config.getProperty('music_library_folder')
         self.progressCallback = progressCallback
         self.supported_audio_extensions = [".mp3", ".flac"]
         self.supported_cover_extensions = [".png", ".bmp", ".jpeg", ".jpg"]
@@ -75,11 +75,10 @@ class MusicIndexer:
         return tracks, result
     
 
-    """
-    Scan the configured path to get how many files will be handled
-    when the indexer is actually ran with the current configuration.
-    """
     def getNumberOfFilesToHandle(self):
+        """Scan the configured path to get how many files will be handled
+        when the indexer is actually ran with the current configuration.
+        """
         count = 0
         rootdir = self.pathToIndex
         for root, subFolders, files in os.walk(rootdir):
@@ -103,16 +102,15 @@ class MusicIndexer:
             track.albumTitle = trackData["album"][0].encode('utf-8')
             track.lengthMS = trackData.info.length
             track.num = trackData["tracknumber"][0]
-            track.albumCoverPath = ""
-            #track.albumCoverPath = self._getAlbumCover(os.path.dirname(track_path)).encode('utf-8') 
             track.filePath = track_path.encode('utf-8')
+            track.albumCoverPath = self._getAlbumCover(os.path.dirname(track.filePath )).encode('utf-8') 
         except Exception as e:
-            logging.debug(e)
+            print e
             return None
         return track
         
     def _getAlbumCover(self, albumRootDir):
-        coverPath = None
+        coverPath = ""
         #For each file found in album folder  
         for _file in os.listdir(albumRootDir):
             #Don't recurse. If it's a dir, skip to next file.
@@ -133,21 +131,30 @@ class MusicIndexer:
                 else:
                     #The name is weird, keep it anyway in case no other
                     #image is found.
-                    coverPath = os.join(albumRootDir,ext)
+                    coverPath = os.path.join(albumRootDir,ext)
         return coverPath
 
     def _saveResult(self, result):
-        print "Saving indexation process report result..."
-        resultFilename = config.getIndexReportFolder() + "indexreport.txt"
-        print resultFilename
+        reportFolder = config.getConfigFolder() + "reports/"
+        from datetime import datetime
+        now = datetime.now()
+        resultFilename = reportFolder + "{0}.txt".format(datetime(now.year, now.month, now.day, now.hour, now.minute))
         try:
-            with open(resultFilename, 'wb') as _file:
-                json.dump(result, _file)
+            if not os.path.exists(reportFolder):
+                os.makedirs(reportFolder)
+        except IOError as e:
+            print "Could not create directory to save results: {0}".format(reportFolder)
+            return False
+
+        print "Saving indexation result..."
+        try:
+            with open(resultFilename, 'wb') as f:
+                json.dump(result, f)
                 return True
         except IOError as e:
             logging.debug(e)
             print e
-        return False
+            return False
 
 class Result:
     totalFileCount = 0
@@ -159,3 +166,20 @@ class Result:
 
     def __init__(self):
         pass
+
+@profile
+def reIndexArt():
+    import content, config
+    config.setConfigFolder('../config/')
+    indexer = MusicIndexer()
+    tracks = content.load()
+    for track in tracks:
+        track.albumCoverPath = indexer._getAlbumCover(os.path.dirname(track.filePath)).encode("utf-8")  
+    content.save(tracks)
+
+
+def reIndex():
+    reIndexArt()
+
+if __name__ == '__main__':
+    reIndexArt()

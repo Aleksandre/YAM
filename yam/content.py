@@ -8,10 +8,21 @@ from PySide.QtCore import *
 from PySide.QtGui import *
 import PySide.QtGui as QtGui
 import PySide.QtCore as QtCore
+import os
 
 class Mock(object):
-     def __init__(self, **kwargs):
+     def __init__(self, dictCopy=None, **kwargs):
          self.__dict__.update(kwargs)
+         if dictCopy != None:
+            self.__dict__ = dictCopy
+
+     def __repr__(self):
+        return str(self.__dict__)
+
+     def __str__(self):
+        return str(self.__dict__)
+
+VIEWS = {}
 
 class Track:
     def __init__(self):
@@ -29,6 +40,7 @@ class Track:
     def __str__(self):
         return str(self.__dict__)
 
+@profile
 def getAlbums(_tracks = None):
     tracks = _tracks or load()
     albums = []
@@ -67,13 +79,22 @@ def getTracks():
     return load()
 
 
+def getAlbum(albumTitle):
+    tracksForAlbum = getTracksForAlbum(albumTitle)
+    cover = ""
+    for track in tracksForAlbum:
+        if os.path.isfile(track.albumCoverPath):
+            cover = track.albumCoverPath
+            break
+
+    return {'album': albumTitle, 'artist':tracksForAlbum[0].artist, 'albumCoverPath': cover}
+
 def getTracksForAlbum(albumTitle, artistName = None, _tracks = None):
     if not viewExists("albums"):
         indexAlbums()
     albums = loadView("albums")
     print albums[albumTitle]
     return albums[albumTitle]
-
 
 def indexAlbums():
     tracks = load()
@@ -86,7 +107,6 @@ def indexAlbums():
             albums[track.albumTitle].append(track)
     saveView("albums", albums)
     
-
 def save(tracks):
     print "Saving tracks to file..."
     print config.getConfigFolder() + 'artists.mc'
@@ -125,12 +145,17 @@ def saveView(viewName, data):
 
 
 def loadView(viewName):
-    print "Loading view from file..."
+    if viewName in VIEWS:
+        print "Loading view from memory: {0}".format(viewName)
+        return VIEWS[viewName]
+
+    print "Loading view from file: {0}".format(viewName)
     try:
         indexLocation = config.getConfigFolder() + viewName + ".mc"
         print indexLocation
         with open(indexLocation, 'rb') as _file:
             viewData = json.load(_file)
+            VIEWS[viewName] = viewData
             return viewData
     except IOError as e:
         logging.debug(e)
@@ -149,7 +174,6 @@ def viewExists(viewName):
         return False
         
 
-
 def indexArtistsWithRandomCover():
     tracks = load()
     artists = []
@@ -159,8 +183,15 @@ def indexArtistsWithRandomCover():
         for track in tracks:
             artist = track.artist
             if not artist in artists_names:
+                if track.albumCoverPath:
+                    artists_names.append(artist)
+                    artists.append([artist, track.albumCoverPath])
+
+        for track in tracks:
+            artist = track.artist
+            if not artist in artists_names:
                 artists_names.append(artist)
-                artists.append([artist, 'art/nocover.png'])
+                artists.append([artist, '../art/nocover1.jpg'])
     data = sorted(artists, key=lambda x: x[0])
     saveView("artistsWithRandomCover", data)
 
@@ -190,6 +221,42 @@ def reIndex(pathToIndex = None, progressCallback = None):
 
     indexAlbums()
     indexArtistsWithRandomCover()
-          
+   
+
+def extractArtwork():
+    config.setConfigFolder('../config/')
+    tracks = load()
+    from mutagen import File
+    from mutagen.flac import FLAC
+    import os
+
+    for track in tracks:
+        print track
+        dirname = os.path.dirname(track.filePath)
+        coverFullname = dirname + "/" + "cover.jpg"
+
+        _file = File(track.filePath) # mutagen can automatically detect format and type of tags
+        artwork = None
+        try:
+            artwork = _file.tags['APIC:'].data # access APIC frame and grab the image
+        except KeyError as e:
+            pass
+        if not artwork:
+            try:
+                if track.filePath.endswith(".flac"):
+                    _file = FLAC(track.filePath)
+                    if len(_file.pictures) > 0:
+                        artwork = _file.pictures[0].data
+            except KeyError as e:
+                pass
+        if artwork:
+            if not os.path.isfile(coverFullname):
+                print "will write {0}".format(coverFullname)
+                with open(coverFullname, 'wb') as f:
+                    f.write(artwork) # write artwork to new image    
+
 if __name__ == '__main__':
+    import config
+    config.setConfigFolder('../config/')
+    indexArtistsWithRandomCover()
     indexAlbums()
