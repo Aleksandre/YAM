@@ -14,23 +14,27 @@ from player import LocalPlayer
 import socket
 import sys
 import config
-from networking import RemoteClient, EchoRequestHandler, YamRequestHandler, RequestServer, DeviceStateMulticaster
+from networking import RemoteClient, EchoRequestHandler, YamRequestHandler, RequestServer, DeviceStateMulticaster, NetworkInterfaceWatcher
 from devices import DevicePresenceBroadcaster, Device, DeviceWatcher
 
 
 class ServerApp():
-    def __init__(self, tcpServer, player = None, device = None, playerStateBroadcaster = None):
+    def __init__(self, tcpServer, player = None, device = None, playerStateBroadcaster = None, networkIFaceWatcher=None):
         self.tcpServer = tcpServer
         self.presenceBroadcaster = DevicePresenceBroadcaster(device)
         self.player = player
         self.device = device
         self.playerStateBroadcaster = playerStateBroadcaster
+        self.networkIFaceWatcher = networkIFaceWatcher
         self.bindEvents()
 
     def start(self):
         self.tcpServer.start()
         self.presenceBroadcaster.start()
         self.player.start()
+        
+        if self.networkIFaceWatcher:
+            self.networkIFaceWatcher.start()
 
     def bindEvents(self):
         if self.player:
@@ -41,6 +45,7 @@ class ServerApp():
     def stop(self):
         self.tcpServer.stop()
         self.presenceBroadcaster.stop()
+        self.networkIFaceWatcher.stop()
         self.player.exit()
 
     def _playerStateChanged(self):
@@ -61,15 +66,6 @@ def setupTestServer():
     thisDevice = Device(type="local", visibleName="rpi-testyamserver", url="{0}:{1}".format(ip,port))
 
     return ServerApp(server, player, thisDevice)
-
-def assembleServer(host, port):
-    player = LocalPlayer()
-    player.setHeadless()
-    server = RequestServer((host,port), player=player)
-    thisDevice = Device(type="local", visibleName="rpi-yamserver", url="{0}:{1}".format(host,port))
-    stateBroadcaster = DeviceStateMulticaster(player) 
-
-    return ServerApp(server, player, thisDevice, stateBroadcaster)
 
 
 def testServerAndPlayerIntegration():
@@ -109,6 +105,16 @@ def testServerApp():
     app = ServerApp(requestServer, player, thisDevice)
     app.start()
 
+
+def assembleServer(host, port):
+    player = LocalPlayer()
+    player.setHeadless()
+    server = RequestServer((host,port), player=player)
+    thisDevice = Device(type="local", visibleName="rpi-yamserver", url="{0}:{1}".format(host,port))
+    stateBroadcaster = DeviceStateMulticaster(player) 
+    networkIFaceWatcher = NetworkInterfaceWatcher(delayInSec=5)
+    networkIFaceWatcher.start()
+    return ServerApp(server, player, thisDevice, stateBroadcaster, networkIFaceWatcher)
 
 def main():
 
