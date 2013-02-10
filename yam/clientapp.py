@@ -8,7 +8,7 @@ TODO: Split most ui components in a new yam/ui/ subfolder
 import logging
 import sys
 
-from PySide import QtDeclarative 
+from PySide import QtDeclarative
 from PySide.QtCore import *
 import PySide.QtCore as QtCore
 from PySide.QtDeclarative import QDeclarativeView
@@ -20,7 +20,7 @@ from content import Mock
 from devices import DeviceManager, Device, DeviceWatcher
 import player as players
 from profiling import profile
-import os 
+import os
 
 print "Running with vm: {0}".format(sys.executable)
 
@@ -32,15 +32,15 @@ class MainWindow(QtGui.QMainWindow):
         self.initUI()
 
     @profile
-    def initUI(self):         
+    def initUI(self):
         self.currentView = DefaultMusicCollectionView(self)
         self.centerStackedWidget = QStackedWidget()
 
         self.centerStackedWidget.addWidget(self.currentView)
         self.setCentralWidget(self.centerStackedWidget)
-        
+
         self.setGeometry(0,0,1680,1050)
-        
+
         musicAction = QtGui.QAction(QtGui.QIcon('../art/Music.png'), 'Show music collection', self)
         musicAction.triggered.connect(self.showDefaultMusicView)
 
@@ -49,7 +49,7 @@ class MainWindow(QtGui.QMainWindow):
 
         devicesAction = QtGui.QAction(QtGui.QIcon('../art/Network.png'), 'Show availaible devices', self)
         devicesAction.triggered.connect(self.showDevicesPanel)
-        
+
         fileErrorsAction = QtGui.QAction(QtGui.QIcon('../art/Info.png'), 'Show last index report', self)
         fileErrorsAction.triggered.connect(self.showIndexReport)
 
@@ -67,8 +67,8 @@ class MainWindow(QtGui.QMainWindow):
         style_str = "QWidget {background-color: %s}"
         self.toolbar.setStyleSheet(style_str % dark)
 
-        self.setWindowTitle('YAM')    
-        
+        self.setWindowTitle('YAM')
+
     def showConfigPanel(self):
         wizard = ConfigurationWizard()
         wizard.exec_()
@@ -91,7 +91,7 @@ class MainWindow(QtGui.QMainWindow):
     def show_and_raise(self):
         self.show()
         self.raise_()
- 
+
 
 class IndexReportView(QtGui.QWidget):
     def __init__(self, parent=None):
@@ -104,7 +104,7 @@ class IndexReportView(QtGui.QWidget):
     def show_and_raise(self):
         self.show()
         self.raise_()
-         
+
 
 class DeviceManagementPanel(QtGui.QDialog):
     def __init__(self, parent=None):
@@ -128,8 +128,8 @@ class DeviceManagementPanel(QtGui.QDialog):
         buttonLayout.addWidget(closeButton)
         buttonLayout.addWidget(applyButton)
         mainLayout.addLayout(buttonLayout)
-        
-        self.setWindowTitle('Choose a device to control')  
+
+        self.setWindowTitle('Choose a device to control')
         self.setLayout(mainLayout)
 
         self.deviceListView.selectActiveDevice()
@@ -154,7 +154,7 @@ class ConfigurationWizard(QtGui.QWizard):
         super(ConfigurationWizard, self).__init__(parent)
         self.initUI()
 
-    def initUI(self):  
+    def initUI(self):
         self.addPage(self.createIntroPage())
         self.addPage(self.createRegistrationPage())
         self.addPage(self.createLibraryLocationPage())
@@ -286,9 +286,10 @@ class ConfigurationWizard(QtGui.QWizard):
 
         musicLibraryFolder = self.libraryDirectoryEdit.text().encode("utf-8")
         print "Setting music library location:", musicLibraryFolder
-        config.setProperty(config.Properties.MUSIC_LIBRARY,musicLibraryFolder)
+        config.setProperty(config.Properties.MUSIC_LIBRARY, musicLibraryFolder)
 
         print "Settings were changed."
+        APP.mainWin.showDefaultMusicView()
         return self.done(0)
 
 
@@ -304,14 +305,14 @@ class DeviceList(QtGui.QListView):
         def initUI(self):
             self.setMaximumHeight(240)
             self.setIconSize(QtCore.QSize(80, 80))
-            
+
         def bindEvents(self):
             pass
 
         def keyPressEvent(self, event):
             key = event.key()
             print "Device list received KeyPressed event: ", key
-            
+
             if key == QtCore.Qt.Key_Return:
                 return
             elif key == QtCore.Qt.Key_Left:
@@ -393,7 +394,7 @@ class ListModel(QtCore.QAbstractListModel):
 
 
 class TrackTable(QtGui.QTableWidget):
-        
+
         def __init__(self):
             super(TrackTable, self).__init__()
             self.initUI()
@@ -457,21 +458,21 @@ class TrackTable(QtGui.QTableWidget):
         def trackClicked(self, clickedItem):
             row = clickedItem.row()
             self._playTrack(row)
-            
+
         def _playTrack(self, row):
             track = self._findTrack(row)
             if not track == None:
-                APP.player.playTrack(track)    
+                APP.player.playTrack(track)
 
         def _queueTrack(self, row):
             track = self._findTrack(row)
             if not track == None:
-                APP.player.queueTrack(track)    
+                APP.player.queueTrack(track)
 
         def _findTrack(self, row):
             trackTitle = self.item(row,1).text()
             print "Looking for track with title: ", trackTitle
-            
+
             tracksWithTitle = filter(lambda x:x.title == trackTitle, self.tracks)
             if len(tracksWithTitle) > 0:
                 track = tracksWithTitle[0]
@@ -503,7 +504,7 @@ class TrackTable(QtGui.QTableWidget):
                 row = row + 1
             self.setHeader()
 
-        
+
 
 class AlbumList(QtGui.QListWidget):
 
@@ -516,14 +517,14 @@ class AlbumList(QtGui.QListWidget):
 
         def initUI(self):
             self.setMaximumHeight(200)
-            
+
         def bindEvents(self):
             self.itemClicked.connect(self._albumClicked)
 
         def keyPressEvent(self, event):
             key = event.key()
             print "Album list received KeyPressed event: ", key
-            
+
             if key == QtCore.Qt.Key_P:
                 albumTitle = self.item(self.currentRow()).text()
                 self._playAlbum(albumTitle)
@@ -573,12 +574,12 @@ class AlbumList(QtGui.QListWidget):
             self.clear()
             self.tracks = tracks
             albums = content.getAlbums(tracks)
-            
+
             index = 0
             headerText = "All albums (" + str(len(albums)) + ")"
             header = QListWidgetItem(headerText)
             self.insertItem(0, header)
-            
+
             index = index + 1
             for album in albums:
                 item = QListWidgetItem(album)
@@ -609,6 +610,7 @@ class ArtistList(QtGui.QListView):
      def __init__(self):
         super(ArtistList, self).__init__()
         self.artistsAndCovers = None
+        self.allArtistsEntry  = None
         self.initUI()
         self.bindEvents()
 
@@ -623,9 +625,13 @@ class ArtistList(QtGui.QListView):
 
 
      def setArtists(self, artistsAndCovers):
-        allArtistsEntry = ('All {0} artists'.format(len(artistsAndCovers)),"")
         self.artistsAndCovers = artistsAndCovers
-        self.artistsAndCovers.insert(0, allArtistsEntry)
+        if len(self.artistsAndCovers) > 0:
+            firstEntry = self.artistsAndCovers[0]
+            if isinstance(firstEntry, list):
+                self.allArtistsEntry = ('All {0} artists'.format(len(artistsAndCovers)),"")
+                self.artistsAndCovers.insert(0, self.allArtistsEntry)
+
         list_model = ListModel(self.artistsAndCovers)
         self.setModel(list_model)
 
@@ -636,7 +642,7 @@ class ArtistList(QtGui.QListView):
             if currentArtist.row() < (len(self.artistsAndCovers)  - 1):
                 nextArtist = currentArtist.sibling(currentArtist.row() + 1,0)
                 return nextArtist
-        return None 
+        return None
 
      def _getPreviousArtistQIndex(self):
         if len(self.selectedIndexes()) > 0:
@@ -644,7 +650,7 @@ class ArtistList(QtGui.QListView):
             if currentArtist.row() > 0:
                 previousArtist = currentArtist.sibling(currentArtist.row() - 1,0)
                 return previousArtist
-        return None 
+        return None
 
      def selectionChanged(self, newSelection, oldSelection):
          self.artistClicked.emit(newSelection.indexes()[0])
@@ -652,12 +658,12 @@ class ArtistList(QtGui.QListView):
 
 class PlayerStatusPanel(QtGui.QWidget):
         """The PlayerStatusPanel can :
-        
+
             Keep track of the active Player.
 
             Display information about the Player's state.
 
-            Send commands to the active Player. 
+            Send commands to the active Player.
         """
         def __init__(self, parent = None):
             super(PlayerStatusPanel, self).__init__(parent)
@@ -740,21 +746,21 @@ class PlayerStatusPanel(QtGui.QWidget):
             self.trackTitleLabel.setFont(fontTrackTitleLabel)
 
             albumAndArtistLay = QVBoxLayout()
-            
+
             self.albumTitleLabel = QLabel()
             fontAlbumLabel = self.albumTitleLabel.font()
             fontAlbumLabel.setPointSize(18)
             fontAlbumLabel.setBold(True)
             self.albumTitleLabel.setFont(fontAlbumLabel)
             self.albumTitleLabel.setStyleSheet("QLabel { color : black; }")
-           
+
             self.artistNameLabel = QLabel()
             fontArtistLabel =  self.artistNameLabel.font()
             fontArtistLabel.setPointSize(14);
             fontArtistLabel.setBold(False)
             self.artistNameLabel.setFont(fontArtistLabel)
             self.artistNameLabel.setStyleSheet("QLabel { color : black; }")
-            
+
             albumAndArtistLay.addWidget(self.albumTitleLabel)
             albumAndArtistLay.addWidget(self.artistNameLabel)
 
@@ -773,7 +779,7 @@ class PlayerStatusPanel(QtGui.QWidget):
             bar.addAction(self.nextAction)
             bar.addSeparator()
             bar.setIconSize(QtCore.QSize(45,45))
-            
+
             dark = "#2D2D2D"
             style_str = "QWidget {background-color: %s}"
             bar.setStyleSheet(style_str % dark)
@@ -785,7 +791,7 @@ class PlayerStatusPanel(QtGui.QWidget):
             mainLayout.addWidget(self.timeLcd)
             mainLayout.addWidget(self.imgLabel)
             mainLayout.addLayout(albumAndArtistLay)
-         
+
             mainLayout.addStretch()
             self.sliding = False
             self.setLayout(mainLayout)
@@ -822,9 +828,9 @@ class DefaultMusicCollectionView(QtGui.QWidget):
         hbox.addWidget(self.artistsView)
         self.artistsAndCovers = content.getArtistsWithRandomCover()
         self.artistsView.setArtists(self.artistsAndCovers)
-        
+
         #Prepare right layout
-        self.rightPanel = QWidget()     
+        self.rightPanel = QWidget()
         self.rightVBox = QVBoxLayout()
         self.rightPanel.setLayout(self.rightVBox)
         hbox.addWidget(self.rightPanel)
@@ -909,7 +915,7 @@ class Client(QtCore.QObject):
 
     def bindEvents(self):
         self.app.aboutToQuit.connect(self.stop)
-        
+
     def updatePlayer(self):
         activeDevice = self.deviceMan.getActiveDevice()
         #if self.player != None:

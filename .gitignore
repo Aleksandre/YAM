@@ -1,4 +1,4 @@
-*.py[cod]
+*.pyc
 
 # C extensions
 *.so
@@ -33,3 +33,11 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+#Folders
+log
+bin
+local
+config
+include
+share
