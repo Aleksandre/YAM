@@ -1,6 +1,6 @@
 """
 Calling this module puts up a server able to
-process incoming request, keep track of known devices 
+process incoming request, keep track of known devices
 and broadcast it's presence to other devices.
 
 For now, the server only handles music playback requests.
@@ -16,37 +16,34 @@ import sys
 import config
 from networking import RemoteClient, EchoRequestHandler, YamRequestHandler, RequestServer, DeviceStateMulticaster, NetworkInterfaceWatcher
 from devices import DevicePresenceBroadcaster, Device, DeviceWatcher
-
+from optparse import OptionParser
 
 class ServerApp():
-    def __init__(self, tcpServer, player = None, device = None, playerStateBroadcaster = None, networkIFaceWatcher=None):
+    def __init__(self, tcpServer, player = None, presenceBroadcaster=None, playerStateBroadcaster = None):
         self.tcpServer = tcpServer
-        self.presenceBroadcaster = DevicePresenceBroadcaster(device)
         self.player = player
-        self.device = device
+        self.presenceBroadcaster = presenceBroadcaster
         self.playerStateBroadcaster = playerStateBroadcaster
-        self.networkIFaceWatcher = networkIFaceWatcher
         self.bindEvents()
 
     def start(self):
+        print "Starting tcp server on: {0}".format(self.tcpServer.server_address)
         self.tcpServer.start()
         self.presenceBroadcaster.start()
         self.player.start()
-        
-        if self.networkIFaceWatcher:
-            self.networkIFaceWatcher.start()
 
     def bindEvents(self):
         if self.player:
             self.player.ticked.connect(self._playerTicked)
             self.player.stateChanged.connect(self._playerStateChanged)
             self.player.sourceChanged.connect(self._playerStateChanged)
-    
+
     def stop(self):
+        print "Stopping server..."
         self.tcpServer.stop()
         self.presenceBroadcaster.stop()
-        self.networkIFaceWatcher.stop()
         self.player.exit()
+        print "Server stopped..."
 
     def _playerStateChanged(self):
         print "Player state is: {0}".format(self.player.getState())
@@ -75,7 +72,7 @@ def testServerAndPlayerIntegration():
 
     client = RemoteClient(host, port)
     client.sendRequest('player;getState')
-    
+
     server.stop()
 
 def testClientAndServer():
@@ -89,7 +86,7 @@ def testClientAndServer():
     import time
     time.sleep(1)
     client.sendRequest('Second message')
-    
+
     server.stop()
     return 0
 
@@ -106,37 +103,62 @@ def testServerApp():
     app.start()
 
 
-def assembleServer(host, port):
+def assembleServer(host, port, broadcast_port):
+    #init player
     player = LocalPlayer()
     player.setHeadless()
+
+    #init the request server
     server = RequestServer((host,port), player=player)
+
+    #init device
     thisDevice = Device(type="local", visibleName="rpi-yamserver", url="{0}:{1}".format(host,port))
-    stateBroadcaster = DeviceStateMulticaster(player) 
-    networkIFaceWatcher = NetworkInterfaceWatcher(delayInSec=5)
-    networkIFaceWatcher.start()
-    return ServerApp(server, player, thisDevice, stateBroadcaster, networkIFaceWatcher)
+
+    #init presence broadcaster
+    presenceBroadcaster = DevicePresenceBroadcaster(thisDevice, broadcast_port)
+
+    #init state broadcaster
+    stateBroadcaster = DeviceStateMulticaster(player)
+
+    #assemble and return the server
+    return ServerApp(server, player, presenceBroadcaster, stateBroadcaster)
 
 def main():
 
-    HOST = socket.gethostname()
-    if len(sys.argv) > 1:
-        HOST = sys.argv[1]
-    
-    PORT = 5005
-    if len(sys.argv) > 2:
-        PORT = int(sys.argv[2])
-    
-    config.setConfigFolder('../config/')
-    server = assembleServer(HOST, PORT)
+    parser = OptionParser()
+    parser.add_option("-a", "--address", dest="host", action="store", default=socket.gethostname(), type="str", help="the address or host name on which the server is listening")
+    parser.add_option("-p", "--port",
+                      action="store", dest="port", default=5005, type="int",
+                      help="the port number on which the server is listening.")
+    parser.add_option("-w", "--workspace",
+                      action="store", dest="workspace", default='../config/', type="str",
+                      help="the server workspace location.")
+    parser.add_option("-b", "--broadcast_port",
+                      action="store", dest="broadcast_port", default='5555', type="str",
+                      help="the port on which the server is broadcasting it's presence.")
+
+    options, args = parser.parse_args()
+
+    HOST = options.host
+    PORT = options.port
+    TARGET_PORT = options.broadcast_port
+    WORKSPACE = options.workspace
+
+    config.setConfigFolder(WORKSPACE)
+    server = assembleServer(HOST, PORT, TARGET_PORT)
+
     try:
         server.start()
     except KeyboardInterrupt:
-        print "Received keypress. Stopping the server."
+        print "The server received a keypress event. Stopping the server."
+    except Exception as ex:
+        print "The server encountered an unexpected exception: {0}".format(ex)
+    finally:
         server.stop()
 
 if __name__ == '__main__':
     sys.exit(main())
-    
+
 
 
 
