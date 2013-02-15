@@ -16,11 +16,10 @@ import threading
 
 class DeviceManager:
     """
-    Keeps a registry of known devices.    
+    Keeps a registry of known devices.
     """
     def __init__(self, startWatcher = False, watcher = None):
         self.parser = SafeConfigParser()
-        self.devicesRegistryPath = config.getConfigFolder() + "devices.ini"
         self.activeDevice = None
         self.bindEvents(startWatcher, watcher)
 
@@ -63,14 +62,12 @@ class DeviceManager:
         If no devices were found in the registry, return an empty array
         otherwise return an array of Devices.
         """
-        filesRead = self.parser.read(self.devicesRegistryPath)
-        if len(filesRead) == 0:
-            print "The DeviceManager is creating the registry..."
-            if not self.createRegistry():
-                print "The DeviceManager could not create the registry."
-                return None
-        
         devices = []
+        filesRead = self.parser.read(config.getFullFileName("devices.ini"))
+        if len(filesRead) == 0:
+            if not self.createRegistry():
+                return
+
         for device in self.parser.sections():
             url = self.parser.get(device, 'url').encode("utf-8")
             lastSeen = self.parser.get(device, 'lastSeen')
@@ -88,13 +85,16 @@ class DeviceManager:
         Register or update the specified device. Devices are stored into the file devices.ini
         from the config folder.
         """
+        if not config.workspaceIsSet():
+            print "Cannot register a device when the workspace is not set."
+            return False
+
         if not isinstance(device, Device):
             error = "The specified device argument must inherit from the type devices.Device."
             logging.info(error)
             raise TypeError(error)
 
-
-        filesRead = self.parser.read(self.devicesRegistryPath)
+        filesRead = self.parser.read(config.getFullFileName("devices.ini"))
         if len(filesRead) == 0:
             print "The DeviceManager is creating the registry..."
             if not self.createRegistry():
@@ -112,7 +112,7 @@ class DeviceManager:
         self.parser.set(sectionName, 'url', device.url)
         self.parser.set(sectionName, 'type', device.type)
         self.parser.set(sectionName, 'lastSeen', str(device.lastSeen))
-        with open(self.devicesRegistryPath,'w') as f:
+        with open(config.getFullFileName("devices.ini"),'w') as f:
             self.parser.write(f)
         print "Added device to the registry: {0} {1}".format(device.visibleName, device.url)
         return True
@@ -127,14 +127,12 @@ class DeviceManager:
             print "There is no active player to select."
             return
 
-       # if activeDevice.type == "local":
-         #   return LocalPlayer(self.mainApp)
-        #elif activeDevice.type == "remote":
-         #   return RemotePlayer(activeDevice.url)
-
     def getActiveDevice(self):
         if self.activeDevice == None:
             devices = self.getDevices()
+            if not devices:
+                return None
+
             for device in devices:
                 if device.type == "local":
                     print "No device were selected. Using local device '{0}' as default.".format(device.visibleName)
@@ -154,24 +152,25 @@ class DeviceManager:
         self.activeDevice = device
 
     def updateDeviceLastSeenTime(self, device):
-        filesRead = self.parser.read(self.devicesRegistryPath)
+        filesRead = self.parser.read(config.getFullFileName("devices.ini"))
 
         if len(filesRead) == 0:
-            error = "The DeviceManager could not load it's configuration file: {0}".format(self.devicesRegistryPath)
+            error = "The DeviceManager could not load it's configuration file: {0}".format(config.getFullFileName("devices.ini"))
             logging.error(error)
             raise Exception(error)
         else:
             sectionName = device.visibleName
             lastSeen = device.lastSeen
             self.parser.set(sectionName, 'lastSeen', str(lastSeen))
-            with open(self.devicesRegistryPath,'w') as f:
+            with open(config.getFullFileName("devices.ini"),'w') as f:
                 self.parser.write(f)
-            
+
             #print "Updated device lastSeen time: {0}".format(lastSeen)
 
     def createRegistry(self):
         try:
-            with open(self.devicesRegistryPath, 'w+') as f:
+            print "Creating device registry: {0}".format(config.getFullFileName("devices.ini") or 'Undefined')
+            with open(config.getFullFileName("devices.ini"), 'w+') as f:
                 print f
                 return True
         except Exception as e:
@@ -184,11 +183,11 @@ class DeviceManager:
         else:
             return False
 
-  
+
     def deleteRegistry(self):
         try:
             self.parser = SafeConfigParser()
-            with open(self.devicesRegistryPath,'w') as f:
+            with open(config.getFullFileName("devices.ini"),'w') as f:
                 self.parser.write(f)
             return True
         except Exception as e:
@@ -224,7 +223,7 @@ class DeviceWatcher():
         self.thread.start()
 
     def isRunning(self):
-        return self.running 
+        return self.running
 
     def stop(self):
         print "Stopping DeviceWatcher..."
@@ -254,7 +253,7 @@ class DevicePresenceBroadcaster():
         self.delay = delayBetweenBroadcastsInSec or config.getProperty("presence_broadcaster_call_delay_seconds")
         self.thisDevice = thisDevice
         self.running = False
-       
+
         self.sock = socket(AF_INET, SOCK_DGRAM)
         self.sock.bind(('', 0))
         self.sock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
@@ -279,9 +278,9 @@ class DevicePresenceBroadcaster():
         try:
             while self.running:
                 try:
-                    data = self.thisDevice.encodeForTransport() 
+                    data = self.thisDevice.encodeForTransport()
                     self.sock.sendto(data, ('<broadcast>', int(self.port)))
-                    print "Broadcasting {0} presence on UDP port: {1}".format(self.thisDevice.visibleName, self.thisDevice.port)
+                    print "Broadcasting {0} presence on UDP port: {1}".format(self.thisDevice.visibleName, self.port)
                 except Exception as e:
                     print e
                     #Wait if broadcaster is running
@@ -311,14 +310,14 @@ class Device:
     def isLikelyActive(self):
         lastSeenTime = time.fromtimestamp(self.lastSeen)
         print time.localtime() - lastSeenTime
-        return self.lastSeen 
+        return self.lastSeen
 
     @staticmethod
     def fromEncodedString(encodedString):
         """
         Copy constructor for Device object encoded wit hencodeForTransport
         """
-        visibleName, url = Device.decode(encodedString) 
+        visibleName, url = Device.decode(encodedString)
         return Device("remote", visibleName=visibleName, url=url)
 
     def __eq__(self, other):

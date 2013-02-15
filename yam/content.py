@@ -22,6 +22,7 @@ class Mock(object):
      def __str__(self):
         return str(self.__dict__)
 
+#Whenever a view is read, it is stored in in VIEWS dictionnary.
 VIEWS = {}
 
 class Track:
@@ -31,7 +32,7 @@ class Track:
         self.albumTitle= ""
         self.lengthMS = ""
         self.num = ""
-        self.albumCoverPath = "" 
+        self.albumCoverPath = ""
         self.filePath = ""
 
     def __repr__(self):
@@ -41,141 +42,20 @@ class Track:
         return str(self.__dict__)
 
 @profile
-def getAlbums(_tracks = None):
-    tracks = _tracks or load()
-    albums = []
-
-    if tracks:
-        for track in tracks:
-            album = track.albumTitle
-            if not album in albums:
-                albums.append(album)
-    return sorted(albums)
-
-
-def getArtistsWithRandomCover(_tracks = None):
-    if not viewExists("artistsWithRandomCover"):
-        indexArtistsWithRandomCover()
-
-    return loadView("artistsWithRandomCover")
-
-
-def getArtists(tracks):
-    artists = []
-    if tracks:
-        for track in tracks:
-            artist = track.artist
-            if not artist in artists:
-                artists.append(artist)
-    return sorted(artists)
-
-
-def getArtistsAlbums():
-    result = loadView('artistsAlbums')
-    return result
-
-@profile
-def getTracks():
-    return load()
-
-
-def getAlbum(albumTitle):
-    tracksForAlbum = getTracksForAlbum(albumTitle)
-    cover = ""
-    for track in tracksForAlbum:
-        if os.path.isfile(track.albumCoverPath):
-            cover = track.albumCoverPath
-            break
-
-    return {'album': albumTitle, 'artist':tracksForAlbum[0].artist, 'albumCoverPath': cover}
-
-def getTracksForAlbum(albumTitle, artistName = None, _tracks = None):
-    if not viewExists("albums"):
-        indexAlbums()
-    albums = loadView("albums")
-    print albums[albumTitle]
-    return albums[albumTitle]
-
 def indexAlbums():
-    tracks = load()
+    tracks = getTracks()
     albums = {}
     if tracks:
         for track in tracks:
             if not track.albumTitle in albums:
-                albums[track.albumTitle] = []    
-            
+                albums[track.albumTitle] = []
+
             albums[track.albumTitle].append(track)
     saveView("albums", albums)
-    
-def save(tracks):
-    print "Saving tracks to file..."
-    print config.getConfigFolder() + 'artists.mc'
-    try:
-        with open(config.getConfigFolder() + 'artists.mc', 'wb') as _file:
-            json.dump(tracks, _file)
-            return True
-    except IOError as e:
-        logging.debug(e)
-        print e
-    return False
 
-def load():
-    try:
-        indexLocation = config.getConfigFolder() + 'artists.mc'
-        with open(indexLocation, 'rb') as _file:
-            tracks = json.load(_file)
-            return tracks
-    except IOError as e:
-        logging.debug(e)
-        print e
-    return None
-
-def saveView(viewName, data):
-    print "Saving view to file..."
-    viewFileName = config.getConfigFolder() + viewName + ".mc"
-    print viewFileName
-    try:
-        with open(viewFileName, 'wb') as _file:
-            json.dump( data, _file)
-            return True
-    except IOError as e:
-        logging.debug(e)
-        print e
-    return False
-
-
-def loadView(viewName):
-    if viewName in VIEWS:
-        print "Loading view from memory: {0}".format(viewName)
-        return VIEWS[viewName]
-
-    print "Loading view from file: {0}".format(viewName)
-    try:
-        indexLocation = config.getConfigFolder() + viewName + ".mc"
-        print indexLocation
-        with open(indexLocation, 'rb') as _file:
-            viewData = json.load(_file)
-            VIEWS[viewName] = viewData
-            return viewData
-    except IOError as e:
-        logging.debug(e)
-        print e
-    return None
-
-def viewExists(viewName):
-    viewPath = config.getConfigFolder() + viewName + ".mc"
-    print "Check if view exists by looking at the file: ", viewPath
-    try:
-        with open(viewPath) as f:
-            print "The view file was found. ", f
-            return True
-    except IOError as e:
-        print "The view file could not be found: ", e
-        return False
-        
-
+@profile
 def indexArtistsWithRandomCover():
-    tracks = load()
+    tracks = getTracks()
     artists = []
     artists_names = []
 
@@ -194,6 +74,143 @@ def indexArtistsWithRandomCover():
                 artists.append([artist, '../art/nocover1.jpg'])
     data = sorted(artists, key=lambda x: x[0])
     saveView("artistsWithRandomCover", data)
+
+
+@profile
+def getAlbums(_tracks = None):
+    """
+    Returns distinct album names from the specified tracks.
+
+    Tracks is expected to be an [] of Track
+
+    Result example: [albumTitle1, albumTitle2, ...]
+    """
+    tracks = _tracks or getTracks()
+    albums = []
+
+    if tracks:
+        for track in tracks:
+            album = track.albumTitle
+            if not album in albums:
+                albums.append(album)
+    return sorted(albums)
+
+@profile
+def getArtistsWithRandomCover():
+    """
+    Returns a list of all artists with a cover choosed randomly among the artist albums.
+
+    Result example : [ {artist1, art/cover1.png}, {artist2, art/cover2.png}, ...]
+    """
+    if not viewExists("artistsWithRandomCover"):
+        indexArtistsWithRandomCover()
+
+    return loadView("artistsWithRandomCover")
+
+@profile
+def getArtists(tracks):
+    """
+    Returns distinct artists names from the specified tracks.
+
+    The names are sorted alphabetically.
+
+    Tracks is expected to be an [] of Track
+
+    Result example: [artistName1, artistName2, ...]
+    """
+    artists = []
+    if tracks:
+        for track in tracks:
+            artist = track.artist
+            if not artist in artists:
+                artists.append(artist)
+    return sorted(artists)
+
+@profile
+def getArtistsAlbums():
+    """
+    Return a list of every album with full Track object.
+
+    Result example: { {albumTitle: [Track1, Track2, ...]}, {title2, Tracks2[]},... }
+    """
+    if not viewExists("albums"):
+        indexAlbums()
+    return loadView('albums')
+
+@profile
+def getTracks():
+    """
+    Return a list of Track objects.
+
+    Result example : [Track1, Track2, ...]
+    """
+    return loadView('tracks')
+
+@profile
+def getAlbum(albumTitle):
+    """
+    Return the artist name and album cover path for the specified album.
+
+    As an example, if albumTile=18,
+    the result will be: {'album': 18, 'artist':Moby, 'albumCoverPath': cover.png}
+    """
+    tracksForAlbum = getTracksForAlbum(albumTitle)
+    cover = ""
+    artistName = ""
+    if tracksForAlbum and len(tracksForAlbum > 0):
+        cover = tracksForAlbum[0].albumCoverPath
+        artistName = tracksForAlbum[0].artist
+
+    return {'album': albumTitle, 'artist':artistName, 'albumCoverPath': cover}
+
+@profile
+def getTracksForAlbum(albumTitle, artistName = None, _tracks = None):
+    if not viewExists("albums"):
+        indexAlbums()
+    albums = loadView("albums")
+    return albums[albumTitle]
+
+def saveView(viewName, data):
+    workspace = config.getWorkspaceLocation()
+    viewFileName = workspace + "/" + viewName + ".mc"
+    print "Saving view '{0}'into workspce: {1}".format(viewName, workspace)
+    try:
+        with open(viewFileName, 'wb') as _file:
+            json.dump( data, _file)
+            return True
+    except IOError as e:
+        logging.debug(e)
+        print e
+    return False
+
+def loadView(viewName):
+    if viewName in VIEWS:
+        print "Loading view from memory: {0}".format(viewName)
+        return VIEWS[viewName]
+
+    print "Loading view from file: {0}".format(viewName)
+    try:
+        indexLocation = config.getFullFileName(viewName + ".mc")
+        print indexLocation
+        with open(indexLocation, 'rb') as _file:
+            viewData = json.load(_file)
+            VIEWS[viewName] = viewData
+            return viewData
+    except IOError as e:
+        logging.debug(e)
+        print e
+    return None
+
+def viewExists(viewName):
+    viewPath = config.getFullFileName(viewName + ".mc")
+    print "Checking if view exists by looking at the file: ", viewPath
+    try:
+        with open(viewPath) as f:
+            print "The view file was found. ", f
+            return True
+    except IOError as e:
+        print "The view file could not be found: ", e
+        return False
 
 
 class LibraryIndexationTask(QtCore.QThread):
@@ -216,12 +233,14 @@ class LibraryIndexationTask(QtCore.QThread):
 @profile
 def reIndex(pathToIndex = None, progressCallback = None):
     from indexation import MusicIndexer
+    global VIEWS
+    VIEWS.clear()
+
     tracks, report = MusicIndexer(pathToIndex, progressCallback).run()
-    save(tracks)
+    saveView('tracks', tracks)
 
     indexAlbums()
     indexArtistsWithRandomCover()
-   
 
 def extractArtwork():
     config.setConfigFolder('../config/')
@@ -253,7 +272,7 @@ def extractArtwork():
             if not os.path.isfile(coverFullname):
                 print "will write {0}".format(coverFullname)
                 with open(coverFullname, 'wb') as f:
-                    f.write(artwork) # write artwork to new image    
+                    f.write(artwork) # write artwork to new image
 
 if __name__ == '__main__':
     import config

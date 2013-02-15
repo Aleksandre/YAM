@@ -92,6 +92,10 @@ class MainWindow(QtGui.QMainWindow):
         self.show()
         self.raise_()
 
+        if not config.workspaceIsSet():
+            self.showConfigPanel()
+
+
 
 class IndexReportView(QtGui.QWidget):
     def __init__(self, parent=None):
@@ -228,7 +232,8 @@ class ConfigurationWizard(QtGui.QWizard):
         configLocationDialog.clicked.connect(self._showFolderDialog)
 
         self.directoryEdit = QtGui.QLineEdit()
-        self.directoryEdit.setText(config.getConfigFolder())
+        self.directoryEdit.textChanged.connect(self._workspaceValueChanged)
+        self.directoryEdit.setText(config.getWorkspaceLocation())
         layout = QtGui.QGridLayout()
         layout.addWidget(configLocationDialog, 0, 0)
         layout.addWidget(self.directoryEdit, 0, 1)
@@ -236,13 +241,19 @@ class ConfigurationWizard(QtGui.QWizard):
 
         return page
 
+    def _workspaceValueChanged(self, sender):
+            workspace = self.directoryEdit.text()
+            print "Setting workspace location:", workspace
+            config.setWorkspaceLocation(workspace)
+
     def _showFolderDialog(self):
         options = QtGui.QFileDialog.DontResolveSymlinks | QtGui.QFileDialog.ShowDirsOnly
         directory = QtGui.QFileDialog.getExistingDirectory(self,
                 "QFileDialog.getExistingDirectory()",
                 self.directoryEdit.text(), options)
         if directory:
-           self.directoryEdit.setText(directory)
+            self.directoryEdit.setText(directory)
+
 
     def _showLibraryDialog(self):
         options = QtGui.QFileDialog.DontResolveSymlinks | QtGui.QFileDialog.ShowDirsOnly
@@ -281,8 +292,8 @@ class ConfigurationWizard(QtGui.QWizard):
         print "Saving configuration changes..."
 
         workFolder = self.directoryEdit.text().encode("utf-8")
-        print "Setting work folder location:", workFolder
-        config.setConfigFolder(workFolder)
+        print "Setting workspace location:", workFolder
+        config.writeWorkspaceLocation(workFolder)
 
         musicLibraryFolder = self.libraryDirectoryEdit.text().encode("utf-8")
         print "Setting music library location:", musicLibraryFolder
@@ -290,6 +301,7 @@ class ConfigurationWizard(QtGui.QWizard):
 
         print "Settings were changed."
         APP.mainWin.showDefaultMusicView()
+        APP.updatePlayer()
         return self.done(0)
 
 
@@ -376,6 +388,7 @@ class ListModel(QtCore.QAbstractListModel):
         self.os_list = os_list
 
     def rowCount(self, parent):
+        if not self.os_list: return 0
         return len(self.os_list)
 
     def data(self, index, role = QtCore.Qt.DisplayRole):
@@ -461,7 +474,7 @@ class TrackTable(QtGui.QTableWidget):
 
         def _playTrack(self, row):
             track = self._findTrack(row)
-            if not track == None:
+            if APP.player and track:
                 APP.player.playTrack(track)
 
         def _queueTrack(self, row):
@@ -591,7 +604,8 @@ class AlbumList(QtGui.QListWidget):
 
         def _playAlbum(self, albumTitle):
             tracks = self._getTracksForSelectedAlbum(albumTitle)
-            APP.player.playTracks(tracks)
+            if APP.player:
+                APP.player.playTracks(tracks)
 
         def _queueAlbum(self, albumTitle):
             tracks = self._getTracksForSelectedAlbum(albumTitle)
@@ -626,7 +640,7 @@ class ArtistList(QtGui.QListView):
 
      def setArtists(self, artistsAndCovers):
         self.artistsAndCovers = artistsAndCovers
-        if len(self.artistsAndCovers) > 0:
+        if self.artistsAndCovers and len(self.artistsAndCovers) > 0:
             firstEntry = self.artistsAndCovers[0]
             if isinstance(firstEntry, list):
                 self.allArtistsEntry = ('All {0} artists'.format(len(artistsAndCovers)),"")
@@ -692,6 +706,9 @@ class PlayerStatusPanel(QtGui.QWidget):
             self.refreshState(self.player.getCurrentTrack())
 
         def _bindToPlayerSignals(self):
+            if not self.player:
+                return
+
             self.player.stateChanged.connect(self._onPlayerStateChanged)
             self.player.ticked.connect(self._onPlayerTicked)
             self.playAction.triggered.connect(self.player.togglePlayState)
@@ -799,7 +816,8 @@ class PlayerStatusPanel(QtGui.QWidget):
 
         def refreshState(self, track=None):
             activeDevice = APP.deviceMan.getActiveDevice()
-            self.currentPlayerLabel.setText(activeDevice.visibleName)
+            if activeDevice:
+                self.currentPlayerLabel.setText(activeDevice.visibleName)
 
             if track:
                 pixmap = QPixmap(track.albumCoverPath).scaledToHeight(300)
@@ -898,6 +916,7 @@ class Client(QtCore.QObject):
     def __init__(self, showApp=False):
         QtCore.QObject.__init__(self)
         self.showApp = showApp
+        self.player = None
         self.deviceMan = DeviceManager(startWatcher=True)
         self.updatePlayer()
 
@@ -918,12 +937,11 @@ class Client(QtCore.QObject):
 
     def updatePlayer(self):
         activeDevice = self.deviceMan.getActiveDevice()
-        #if self.player != None:
-            #.player.unregisterToStateChanges(activeDevice.host)
 
-        self.player = players.getPlayerByType(activeDevice)
-        self.player.registerToStateChanges(activeDevice.host)
-        self.playerChanged.emit()
+        if activeDevice:
+            self.player = players.getPlayerByType(activeDevice)
+            self.player.registerToStateChanges(activeDevice.host)
+            self.playerChanged.emit()
 
     def playerStateChanged(self, state):
         self.player.stateChanged.emit(state)
@@ -944,12 +962,11 @@ class Client(QtCore.QObject):
         self.player.stop()
 
     def stop(self):
-        self.deviceMan.dispose()
-        self.app.exit()
-        self.player.stop()
+        if self.deviceMan: self.deviceMan.dispose()
+        if self.app: self.app.exit()
+        if self.player: self.player.stop()
 
 def main(argv=None):
-    config.setConfigFolder('../config/')
     client = setupClient()
     client.start()
 

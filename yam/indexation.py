@@ -4,7 +4,7 @@ This module contains music indexation logic.
 """
 import os
 from profiling import profile
-from mutagen import mutagen  
+from mutagen import mutagen
 from content import Track
 import os.path
 import time
@@ -45,22 +45,22 @@ class MusicIndexer:
         #Try to extract audio metadata from files
         i = 0
         tracks = []
-        unhandled_files = []    
+        unhandled_files = []
         result.totalFileCount = len(musicFiles)
         for audioFile in musicFiles:
             try:
                 metadata = mutagen.File(audioFile.strip(), easy=True)
-                if metadata :  
+                if metadata :
                     track = self._indexTrack(metadata, audioFile)
                     if track:
                         result.numberOfIndexedFiles +=1;
                         tracks.append(track)
                     else :
                         unhandled_files.append(audioFile)
-                else :  
+                else :
                     unhandled_files.append(audioFile)
             except Exception as e:
-                print e 
+                print e
                 unhandled_files.append(audioFile)
 
             i = i + 1
@@ -73,7 +73,7 @@ class MusicIndexer:
         self._saveResult(result)
         self.progressCallback(result.totalFileCount)
         return tracks, result
-    
+
 
     def getNumberOfFilesToHandle(self):
         """Scan the configured path to get how many files will be handled
@@ -91,7 +91,7 @@ class MusicIndexer:
 
     def resetArt(self, tracks):
         for track in tracks:
-            track.albumCoverPath = ""          
+            track.albumCoverPath = ""
         return tracks
 
     def _indexTrack(self, trackData, track_path):
@@ -103,15 +103,15 @@ class MusicIndexer:
             track.lengthMS = trackData.info.length
             track.num = trackData["tracknumber"][0]
             track.filePath = track_path.encode('utf-8')
-            track.albumCoverPath = self._getAlbumCover(os.path.dirname(track.filePath )).encode('utf-8') 
+            track.albumCoverPath = self._getAlbumCover(os.path.dirname(track.filePath )).encode('utf-8')
         except Exception as e:
             print e
             return None
         return track
-        
+
     def _getAlbumCover(self, albumRootDir):
         coverPath = ""
-        #For each file found in album folder  
+        #For each file found in album folder
         for _file in os.listdir(albumRootDir):
             #Don't recurse. If it's a dir, skip to next file.
             if os.path.isdir(_file):
@@ -135,7 +135,7 @@ class MusicIndexer:
         return coverPath
 
     def _saveResult(self, result):
-        reportFolder = config.getConfigFolder() + "reports/"
+        reportFolder = config.getFullFileName("reports/")
         from datetime import datetime
         now = datetime.now()
         resultFilename = reportFolder + "{0}.txt".format(datetime(now.year, now.month, now.day, now.hour, now.minute))
@@ -174,7 +174,7 @@ def reIndexArt():
     indexer = MusicIndexer()
     tracks = content.load()
     for track in tracks:
-        track.albumCoverPath = indexer._getAlbumCover(os.path.dirname(track.filePath)).encode("utf-8")  
+        track.albumCoverPath = indexer._getAlbumCover(os.path.dirname(track.filePath)).encode("utf-8")
     content.save(tracks)
 
 

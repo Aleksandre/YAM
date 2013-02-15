@@ -15,9 +15,17 @@ except ImportError as error:
     print error
     sys.exit(1)
 
+LOCAL_PLAYER = None
+
 def getPlayerByType(device):
+    if not device:
+        return None
+
     if device.type == "local":
-        return LocalPlayer(prefinishMark=0)
+        global LOCAL_PLAYER
+        if not LOCAL_PLAYER:
+            LOCAL_PLAYER = LocalPlayer(prefinishMark=0)
+        return LOCAL_PLAYER
     if device.type == "remote":
         return RemotePlayer(device.host, device.port)
 
@@ -37,7 +45,7 @@ class LocalPlayer(QtCore.QObject):
     #Emit a signal whenever the player source changes
     sourceChanged = QtCore.Signal(Track)
 
-    #Emit time elapsed in ms since the current source started playing 
+    #Emit time elapsed in ms since the current source started playing
     ticked = QtCore.Signal(int)
 
     #Holds a list of hosts interested by the player state
@@ -46,7 +54,7 @@ class LocalPlayer(QtCore.QObject):
     _playlist = []
     _playlistIdx = 0
 
-    def __init__(self, loadForClient = False, prefinishMark=5000, log_played_tracks=True): 
+    def __init__(self, loadForClient = False, prefinishMark=5000, log_played_tracks=True):
         QtCore.QObject.__init__(self)
         try:
             self.app = QtGui.QApplication(sys.argv)
@@ -89,11 +97,11 @@ class LocalPlayer(QtCore.QObject):
         self.player.seek(long(timeInMs))
 
     def currentPlaylist(self):
-        return self._playlist 
-    
+        return self._playlist
+
     def hasNextTrack(self):
-        return self._playlistIdx + 1 < len(self._playlist) 
-    
+        return self._playlistIdx + 1 < len(self._playlist)
+
     def hasPreviousTrack(self):
         return  self._playlistIdx > 0
 
@@ -105,7 +113,7 @@ class LocalPlayer(QtCore.QObject):
 
         trackPath = os.path.realpath(track.filePath)
         print "Playing track: ", track.title
-        
+
         self.player.setCurrentSource(Phonon.MediaSource(trackPath))
         self._playlist.append(track)
         self.player.play()
@@ -230,7 +238,7 @@ class LocalPlayer(QtCore.QObject):
 
     def _tick(self, timeSinceBeginInMs):
         self.ticked.emit(timeSinceBeginInMs)
-    
+
     def _resetPlaylist(self):
         self._playlist = []
         self._playlistIdx = 0
@@ -259,7 +267,6 @@ class LocalPlayer(QtCore.QObject):
         """
         if len(self._playlist) > 0:
             track =  self._playlist[self._playlistIdx]
-            print "Current track is: {0}".format(track)
             return track
         return None
 
@@ -285,7 +292,7 @@ class RemotePlayer(QtCore.QObject):
 
     ticked = QtCore.Signal(int)
 
-    def __init__(self, host, port, remoteClient = None): 
+    def __init__(self, host, port, remoteClient = None):
        QtCore.QObject.__init__(self)
        if not remoteClient:
             self.remoteClient = RemoteClient(host, port)
@@ -308,8 +315,8 @@ class RemotePlayer(QtCore.QObject):
 
     def currentPlaylist(self):
         print "Play list requested"
-        return self._playlist 
-    
+        return self._playlist
+
     def hasNextTrack(self):
         request = 'player;hasNextTrack'
         result = bool(self.remoteClient.sendRequest(request))
@@ -383,7 +390,7 @@ class RemotePlayer(QtCore.QObject):
     def unregisterToStateChanges(self, target):
         request = 'player;unregisterToStateChanges;{0}'.format(target)
         return self.remoteClient.sendRequest(request)
-    
+
     def getFullState(self):
         request = 'player;getFullState'
         return Mock(eval(self.remoteClient.sendRequest(request)))
@@ -410,7 +417,7 @@ def test():
     player.playNextTrack()
     assert player.currentlyPlayingTrack() is tracks[0]
 
-    sys.exit(qapp.exec_())    
+    sys.exit(qapp.exec_())
 
 if __name__ == "__main__":
     test()
