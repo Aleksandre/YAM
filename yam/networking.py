@@ -27,7 +27,7 @@ class RemoteClient():
     def connect(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-        self.sock.settimeout(5)
+        self.sock.settimeout(7.0)
         print "Connecting to {0}:{1}".format(self.tcpIP,self.tcpPort)
         self.sock.connect((self.tcpIP, self.tcpPort))
         print "Connected."
@@ -40,7 +40,7 @@ class RemoteClient():
             self.sock.sendall(request + "\n")
             answer = data = self.sock.recv(4096)
             print "Receiving data from server: {0}".format(answer)
-            while not data.endswith("\n"): 
+            while not data.endswith("\n"):
                 data = self.sock.recv(4096)
                 answer = answer + data
             print "Got complete answer from server: {0}".format(answer)
@@ -66,18 +66,18 @@ class EchoRequestHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         print "Server received request..."
         request = data = self.request.recv(4096)
-        while not data.endswith("\n"): 
+        while not data.endswith("\n"):
             data = self.request.recv(4096)
             request = request + data
         print "Handling request: {0}".format(request)
         self.request.sendall(request)
 
 class YamRequestHandler(SocketServer.BaseRequestHandler):
-    
+
     def handle(self):
         print "Server received request..."
         request = data = self.request.recv(4096)
-        while not data.endswith("\n"): 
+        while not data.endswith("\n"):
             data = self.request.recv(4096)
             request = request + data
         print "Handling request: {0}".format(request)
@@ -100,11 +100,11 @@ class YamRequestHandler(SocketServer.BaseRequestHandler):
         args = requestData.strip().split(';')
         if len(args) < 2:
             print "Could not parse request (not enough args): {0}".format(args)
-            self.request.sendall(ERRORS[2]) 
+            self.request.sendall(ERRORS[2])
             return
-       
+
         controllerName = args[0].strip()
-        method = args[1].strip()   
+        method = args[1].strip()
 
         if controllerName == None:
             print "Could not find the specified controller: {0}".format(controllerName)
@@ -157,18 +157,18 @@ class YamRequestHandler(SocketServer.BaseRequestHandler):
             pass
 
 class RequestServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
-    
+
     def __init__(self, server_address = ('localhost', 0), handler_class=YamRequestHandler, player = None):
         SocketServer.TCPServer.__init__(self, server_address, handler_class, bind_and_activate=False)
         #Attribute necessery to be accessed from YamRequetHandler instance
         self.player = player
 
-    def start(self, name="RequestServer"):   
+    def start(self, name="RequestServer"):
         "Starting RequestServer..."
         self.allow_reuse_address = True # Prevent 'cannot bind to address' errors on restart
         self.server_bind()     # Manually bind, to support allow_reuse_address
         self.server_activate() # (see above comment)
-        
+
         self.t = threading.Thread(target=self.serve_forever, name=name)
         self.t.start()
 
@@ -191,7 +191,7 @@ class IfParser():
 
     def __init__(self):
         pass
-        
+
     def interfaces(self):
         """
         TODO : - Make it cross-platform
@@ -282,7 +282,7 @@ class DeviceStateMulticaster():
 	        self.thread.start()
 
     def _run(self):
-    	state = self.player.getFullState() 
+    	state = self.player.getFullState()
     	for host in self.player.hostsInterestedByState:
 	        try:
 	        	print "Sending player state to host: {0} on port {1}".format(host, self.port)

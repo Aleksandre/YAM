@@ -903,7 +903,7 @@ class DefaultMusicCollectionView(QtGui.QWidget):
         print "Clicked on artist: ", artistName
 
         albumsForArtist = filter(lambda x:x.artist == artistName, self.tracks)
-        self.albumsView.setAlbums(albumsForArtist)
+        self.albumsView.setAlbumssocket.settimeout(value)(albumsForArtist)
 
         pixmap = QPixmap(cover).scaledToHeight(200)
         self.visibleCoverLabel.setPixmap(pixmap)

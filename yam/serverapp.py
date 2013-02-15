@@ -144,7 +144,7 @@ def main():
     TARGET_PORT = options.broadcast_port
     WORKSPACE = options.workspace
 
-    config.setConfigFolder(WORKSPACE)
+    config.setWorkspaceLocation(WORKSPACE)
     server = assembleServer(HOST, PORT, TARGET_PORT)
 
     try:
