@@ -1,21 +1,24 @@
 ##Introduction
-YAMC is a distributed cross-platform media center built with Python. 
+YAMC is a free and open source media player application availaible for multiple operating-systems.
 
-##Capabilities
-The media center is made of clients and servers. The client has a user interface while the server is headless.
+##Description
+Three YAMC device types are availaible : a client, a server and a mobile application.
 
-**The client can:**
+<b>The client</b> is a desktop application that can:
 
 - Play music locally
 - Play music remotely on any client or server instance
 - Run on Windows, Linux and Mac
 
-**The server can:**
+<b>The server</b> is an headless python server that can:
 
 - Play music locally
 - Be controlled by any client or server instance
 - Run on Windows, Linux and Mac
 - Run on a Raspberry Pi
+
+**The mobile application can:**
+ Do nothing for now.
 
 ##Requirements
 - Python2.7
@@ -26,6 +29,15 @@ The media center is made of clients and servers. The client has a user interface
 
 ##Usage
 ###To start the client
-python yam/clientapp.py
+<code>python yam/clientapp.py</code>
 ###To start a server instance
-python yam/serverapp.py
+<code>python yam/serverapp.py</code>
+
+###Example
+To start a server instance that:
+- Listen for TCP requests on port 1000
+- Broadcast it's presence with UPD messages on port 2000
+
+Run the following command:
+<code>python --REQUEST_PORT 1000 --BROADCAST_PORT 2000 </code>
+

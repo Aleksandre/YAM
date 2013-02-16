@@ -127,20 +127,20 @@ def main():
 
     parser = OptionParser()
     parser.add_option("-a", "--address", dest="host", action="store", default=socket.gethostname(), type="str", help="the address or host name on which the server is listening")
-    parser.add_option("-p", "--port",
-                      action="store", dest="port", default=5005, type="int",
-                      help="the port number on which the server is listening.")
+    parser.add_option("-p", "--request_port",
+                      action="store", dest="request_port", default=5005, type="int",
+                      help="the port number on which the server is listening for tcp requests.")
     parser.add_option("-w", "--workspace",
                       action="store", dest="workspace", default='../config/', type="str",
                       help="the server workspace location.")
     parser.add_option("-b", "--broadcast_port",
-                      action="store", dest="broadcast_port", default='5555', type="str",
+                      action="store", dest="broadcast_port", default='5555', type="int",
                       help="the port on which the server is broadcasting it's presence.")
 
     options, args = parser.parse_args()
 
     HOST = options.host
-    PORT = options.port
+    PORT = options.request_port
     TARGET_PORT = options.broadcast_port
     WORKSPACE = options.workspace
 
