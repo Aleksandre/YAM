@@ -39,5 +39,5 @@ To start a server instance that:
 - Broadcast it's presence with UPD messages on port 2000
 
 Run the following command:
-<code>python --REQUEST_PORT 1000 --BROADCAST_PORT 2000 </code>
+<code>python yam/serverapp.py --request_port 2000 --broadcast_port 3000</code>
 
