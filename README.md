@@ -35,8 +35,8 @@ Three YAMC device types are availaible : a client, a server and a mobile applica
 
 ###Example
 To start a server instance that:
-- Listen for TCP requests on port 1000
-- Broadcast it's presence with UPD messages on port 2000
+- Listen for TCP requests on port 2000
+- Broadcast it's presence with UPD messages on port 3000
 
 Run the following command:
 <code>python yam/serverapp.py --request_port 2000 --broadcast_port 3000</code>
