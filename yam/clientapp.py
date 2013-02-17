@@ -215,7 +215,7 @@ class ConfigurationWizard(QtGui.QWizard):
         return page
 
     def _handleLibraryPathChanged(self, newPath):
-        print newPath
+        print unicode(newPath).encode('utf-8')
         if os.path.isdir(newPath):
             self.indexLibraryButton.setEnabled(True)
         else :
@@ -485,12 +485,13 @@ class TrackTable(QtGui.QTableWidget):
                 APP.player.queueTrack(track)
 
         def _findTrack(self, row):
-            trackTitle = self.item(row,1).text()
+            trackTitle = self.item(row,1).text().encode('utf-8')
             print "Looking for track with title: ", trackTitle
 
-            tracksWithTitle = filter(lambda x:x.title == trackTitle, self.tracks)
+            tracksWithTitle = filter(lambda x:x.title.encode('utf-8') == trackTitle, self.tracks)
             if len(tracksWithTitle) > 0:
                 track = tracksWithTitle[0]
+                print "Found track."
                 return track
             return None
 
@@ -513,7 +514,10 @@ class TrackTable(QtGui.QTableWidget):
             row = 0
             for track in self.tracks:
                 trackNumberItem = QTableWidgetItem()
-                trackNumberItem.setData(0 ,int(track.num))
+                try:
+                    trackNumberItem.setData(0 ,int(track.num or 0))
+                except ValueError:
+                    trackNumberItem.setData(0 , row + 1)
                 self.setItem(row, 0, trackNumberItem)
                 self.setItem(row, 1, QTableWidgetItem(track.title ,1))
                 self.setItem(row, 2, QTableWidgetItem(track.artist, 2))
@@ -828,8 +832,11 @@ class PlayerStatusPanel(QtGui.QWidget):
                 self.currentPlayerLabel.setText(activeDevice.visibleName)
 
             if track:
-                pixmap = QPixmap(track.albumCoverPath).scaledToHeight(300)
-                self.imgLabel.setPixmap(pixmap)
+                pixmap = QPixmap(track.getAlbumCoverPath())
+                if not pixmap:
+                    pixmap = QPixmap('../art/nocover1.jpg')
+                scaledPixmap = pixmap.scaledToHeight(300)
+                self.imgLabel.setPixmap(scaledPixmap)
                 self.imgLabel.setFixedSize(QSize(300,300))
                 self.albumTitleLabel.setText(track.albumTitle)
                 self.artistNameLabel.setText(track.artist)
@@ -902,19 +909,26 @@ class DefaultMusicCollectionView(QtGui.QWidget):
 
         self.rightVBox.addWidget(self.tracksTable)
 
-        cover = tracksForAlbum[0].albumCoverPath
-        pixmap = QPixmap(cover).scaledToHeight(200)
-        self.visibleCoverLabel.setPixmap(pixmap)
+        cover = tracksForAlbum[0].getAlbumCoverPath()
+        print cover
+        pixmap = QPixmap(cover)
+        if not pixmap:
+            pixmap = QPixmap('../art/nocover1.jpg')
+        scaledPixmap = pixmap.scaledToHeight(200)
+        self.visibleCoverLabel.setPixmap(scaledPixmap)
 
      def artistClicked(self, artistRowModel):
         artistName, cover = self.artistsAndCovers[artistRowModel.row()]
-        print "Clicked on artist: ", artistName
+        print "Clicked on artist: ", artistName.encode('utf-8')
 
         albumsForArtist = filter(lambda x:x.artist == artistName, self.tracks)
         self.albumsView.setAlbums(albumsForArtist)
 
-        pixmap = QPixmap(cover).scaledToHeight(200)
-        self.visibleCoverLabel.setPixmap(pixmap)
+        pixmap = QPixmap(cover)
+        if not pixmap:
+            pixmap = QPixmap('../art/nocover1.jpg')
+        scaledPixmap = pixmap.scaledToHeight(200)
+        self.visibleCoverLabel.setPixmap(scaledPixmap)
 
 
 class Client(QtCore.QObject):
@@ -940,7 +954,7 @@ class Client(QtCore.QObject):
         self.bindEvents()
         self.deviceStateChangeWatcher = DeviceWatcher(portToWatch=5556, callback=self.playerStateChanged)
         self.deviceStateChangeWatcher.start()
-        self.devicePresenceBroadcaster.start()
+        #self.devicePresenceBroadcaster.start()
 
 
     def bindEvents(self):

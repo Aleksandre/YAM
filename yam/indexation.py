@@ -97,16 +97,18 @@ class MusicIndexer:
     def _indexTrack(self, trackData, track_path):
         track = Track()
         try:
-            track.title = trackData["title"][0].encode('utf-8')
-            track.artist = trackData["artist"][0].encode('utf-8')
-            track.albumTitle = trackData["album"][0].encode('utf-8')
+            if "title" in trackData: track.title = trackData["title"][0].title() or 'No Title({0})'.format(row + 1)
+            if "artist" in trackData: track.artist = trackData["artist"][0].title() or 'Unknown Artist'
+            if "album" in trackData: track.albumTitle = trackData["album"][0].title() or 'Unknown {0} Album'.format(track.artist)
             track.lengthMS = trackData.info.length
-            track.num = trackData["tracknumber"][0]
-            track.filePath = track_path.encode('utf-8')
-            track.albumCoverPath = self._getAlbumCover(os.path.dirname(track.filePath )).encode('utf-8')
+            if "tracknumber" in trackData:
+                trackNum = trackData["tracknumber"][0]
+                track.num = trackNum
+            track.filePath = track_path
+            track.albumCoverPath = self._getAlbumCover(os.path.dirname(track.filePath))
         except Exception as e:
             print e
-            return None
+            return track
         return track
 
     def _getAlbumCover(self, albumRootDir):
@@ -132,6 +134,7 @@ class MusicIndexer:
                     #The name is weird, keep it anyway in case no other
                     #image is found.
                     coverPath = os.path.join(albumRootDir,ext)
+
         return coverPath
 
     def _saveResult(self, result):

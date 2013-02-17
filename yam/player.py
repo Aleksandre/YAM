@@ -111,8 +111,8 @@ class LocalPlayer(QtCore.QObject):
     def playTrack(self, track):
         self._resetPlaylist()
 
-        trackPath = os.path.realpath(track.filePath)
-        print "Playing track: ", track.title
+        trackPath = os.path.realpath(track.filePath.decode('utf-8'))
+        print "Playing track: ", track.title.encode('utf-8')
 
         self.player.setCurrentSource(Phonon.MediaSource(trackPath))
         self._playlist.append(track)

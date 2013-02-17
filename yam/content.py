@@ -41,6 +41,9 @@ class Track:
     def __str__(self):
         return str(self.__dict__)
 
+    def getAlbumCoverPath(self):
+        return os.path.realpath(self.albumCoverPath.decode('utf-8'))
+
 @profile
 def indexAlbums():
     tracks = getTracks()
