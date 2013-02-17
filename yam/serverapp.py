@@ -14,9 +14,10 @@ from player import LocalPlayer
 import socket
 import sys
 import config
-from networking import RemoteClient, EchoRequestHandler, YamRequestHandler, RequestServer, DeviceStateMulticaster, NetworkInterfaceWatcher
+from networking import RemoteClient, EchoRequestHandler, YamRequestHandler, RequestServer, DeviceStateMulticaster
 from devices import DevicePresenceBroadcaster, Device, DeviceWatcher
 from optparse import OptionParser
+import devices
 
 class ServerApp():
     def __init__(self, tcpServer, player = None, presenceBroadcaster=None, playerStateBroadcaster = None):
@@ -113,6 +114,7 @@ def assembleServer(host, port, broadcast_port):
 
     #init device
     thisDevice = Device(type="local", visibleName="rpi-yamserver", url="{0}:{1}".format(host,port))
+    thisDevice.setCapabilities([devices.Capability.PlayMusic])
 
     #init presence broadcaster
     presenceBroadcaster = DevicePresenceBroadcaster(thisDevice, broadcast_port)

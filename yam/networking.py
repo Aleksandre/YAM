@@ -113,6 +113,8 @@ class YamRequestHandler(SocketServer.BaseRequestHandler):
 
         if controllerName == "player":
         	controller = server.player
+        elif controllerName == "content":
+            controller = server.contentProvider
 
         if not hasattr(controller, method):
             print "Could not find the specified method: {0}".format(method)
@@ -181,88 +183,6 @@ class RequestServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
 
     def getProcName(self):
         return self.t.name
-
-
-
-class IfParser():
-    """
-    Get network interface status on Linux2 systems.
-    """
-
-    def __init__(self):
-        pass
-
-    def interfaces(self):
-        """
-        TODO : - Make it cross-platform
-        """
-        import array
-        import struct
-        import socket
-        import fcntl
-
-        SIOCGIFCONF = 0x8912  #define SIOCGIFCONF
-        BYTES = 4096          # Simply define the byte size
-
-        # create the socket object to get the interface list
-        sck = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-        # prepare the struct variable
-        names = array.array('B', '\0' * BYTES)
-
-        # the trick is to get the list from ioctl
-        bytelen = struct.unpack('iL', fcntl.ioctl(sck.fileno(), SIOCGIFCONF, struct.pack('iL', BYTES, names.buffer_info()[0])))[0]
-
-        # convert it to string
-        namestr = names.tostring()
-
-        # return the interfaces as array
-        ifaces =[namestr[i:i+32].split('\0', 1)[0] for i in range(0, bytelen, 32)]
-
-        return ifaces
-
-
-class NetworkInterfaceWatcher():
-    """
-    Check periodically if the system main network interface is up.
-
-    If the interface is down, the watcher will try to bring it up.
-    """
-    def __init__(self, delayInSec = 15):
-        self.delay = delayInSec or config.getProperty("network_interface_watcher_delay_seconds")
-        self.running = False
-        self.thread = threading.Thread(target=self._run, name="broadcaster")
-        self.networkConfigParser = IfParser()
-
-    def start(self):
-        print "Starting NetworkInterfaceWatcher with delay =", self.delay, "seconds"
-        self.running = True
-        self.thread.start()
-
-    def isRunning(self):
-        return self.running
-
-    def stop(self):
-        print "Stopping NetworkInterfaceWatcher..."
-        self.running = False
-        print "Stopped NetworkInterfaceWatcher."
-
-    def _run(self):
-        """
-        TODO : -Consider passing the interface name to watch as a parameter
-        """
-        print "Started NetworkInterfaceWatcher."
-        try:
-            while self.running:
-                interfaces = self.networkConfigParser.interfaces()
-                for iface in interfaces:
-                    bashCommand = ["/sbin/ifconfig", iface, "up"]
-                    process = subprocess.Popen(bashCommand, stdin=subprocess.PIPE)
-                    result = process.communicate()
-                if self.running:
-                    time.sleep(self.delay)
-        finally:
-            self.stop()
 
 class DeviceStateMulticaster():
     """

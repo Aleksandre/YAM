@@ -1,0 +1,4 @@
+include art/*
+include yam/*.py
+include yam/config.ini
+include tests/*

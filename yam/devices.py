@@ -14,6 +14,13 @@ import select
 import os
 import threading
 
+
+class Capability:
+    ProvideContent="ProvideContent"
+    PlayMusic="PlayMusic"
+    PlayVideo="PlayVideo"
+    SyncToStream="SyncToStream"
+
 class DeviceManager:
     """
     Keeps a registry of known devices.
@@ -151,6 +158,12 @@ class DeviceManager:
         print "Set '{0}' as active device.".format(device.visibleName)
         self.activeDevice = device
 
+    def setActiveDeviceCapabilities(self, capabilities = []):
+        activeDevice = self.getActiveDevice()
+        if activeDevice:
+            return activeDevice.setCapabilities(capabilities)
+        return False
+
     def updateDeviceLastSeenTime(self, device):
         filesRead = self.parser.read(config.getFullFileName("devices.ini"))
 
@@ -210,7 +223,6 @@ class DeviceWatcher():
         self.callback = callback
         self.sock = socket(AF_INET, SOCK_DGRAM)
         self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-        #self.sock.setblocking(0)
         self.sock.bind(('', self.portToWatch))
         self.thread = threading.Thread(target=self._run, name="watcher")
 
@@ -297,11 +309,13 @@ class Device:
     """
     A 'Device' is any computer running the clientapp or the serverapp
     """
-    def __init__(self, type="local", visibleName = None, url = None, lastSeen = None):
+    def __init__(self, type="local", visibleName = None, url = None, lastSeen = None, capabilities = None):
         self.visibleName = visibleName
         self.url = url or "0:0"
         self.lastSeen = lastSeen or time.localtime()
         self.type = type
+        self.capabilities = capabilities or []
+
         if ':' in url:
             self.host, self.port = url.split(':')
         else:
@@ -310,15 +324,15 @@ class Device:
     def isLikelyActive(self):
         lastSeenTime = time.fromtimestamp(self.lastSeen)
         print time.localtime() - lastSeenTime
-        return self.lastSeen
+        return False
 
     @staticmethod
     def fromEncodedString(encodedString):
         """
         Copy constructor for Device object encoded wit hencodeForTransport
         """
-        visibleName, url = Device.decode(encodedString)
-        return Device("remote", visibleName=visibleName, url=url)
+        visibleName, url, capabilities = Device.decode(encodedString)
+        return Device("remote", visibleName=visibleName, url=url, capabilities=capabilities)
 
     def __eq__(self, other):
         return (isinstance(other, self.__class__)
@@ -335,15 +349,35 @@ class Device:
 
 
     def encodeForTransport(self):
-        return "{0};{1}".format(self.visibleName, self.url)
+        """
+        Encode this device to a string for transport via tcp
+
+        @param capabilities a string with format: 'capability1 | capability 2 | ...'
+
+        @return { 'deviceName'; 192.168.1.1:80; capabilities }
+        """
+        capabilityString = ""
+        for cap in self.capabilities:
+            capabilityString = capabilityString + cap + "|"
+        #Remove trailing '|'
+        capabilityString =  capabilityString[:-1]
+
+        encodedDevice = "{0};{1};{2}".format(self.visibleName, self.url, capabilityString)
+        print encodedDevice
+        return encodedDevice
 
     @staticmethod
     def decode(encodedString):
+        print encodedString
         args =  encodedString.split(';')
         name = args[0]
         url = args[1]
-        #print "Decoded device string: {0}, {1}: ".format(name, url)
-        return name, url
+        capabilities = args[2].split('|')
+        return name, url, capabilities
+
+    def setCapabilities(self, capabilities):
+        self.capabilities = capabilities
+
 
 def testPresenceBroadcaster():
     thisDevice = Device(url="localhost:5000", visibleName="test-device")

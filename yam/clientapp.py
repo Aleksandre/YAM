@@ -17,7 +17,8 @@ import PySide.QtGui as QtGui
 import config as config
 import content as content
 from content import Mock
-from devices import DeviceManager, Device, DeviceWatcher
+from devices import DeviceManager, Device, DeviceWatcher, DevicePresenceBroadcaster
+import devices
 import player as players
 from profiling import profile
 import os
@@ -68,6 +69,7 @@ class MainWindow(QtGui.QMainWindow):
         self.toolbar.setStyleSheet(style_str % dark)
 
         self.setWindowTitle('YAM')
+        self.setWindowIcon(QtGui.QIcon('../art/Music_Black.png'))
 
     def showConfigPanel(self):
         wizard = ConfigurationWizard()
@@ -502,20 +504,26 @@ class TrackTable(QtGui.QTableWidget):
             self.horizontalHeader().setResizeMode(3, QtGui.QHeaderView.ResizeToContents)
             self.horizontalHeader().setResizeMode(4, QtGui.QHeaderView.ResizeToContents)
 
-        def setTracks(self, data):
-            print "Loading tracks into track table...", str(len(data))
-            self.tracks = data
+        def setTracks(self, tracks):
+            print "Loading tracks into track table...", str(len(tracks))
+            self.setSortingEnabled(False)
+            self.tracks = tracks
             self.clear()
-            self.setRowCount(len(data))
+            self.setRowCount(len(self.tracks))
             row = 0
-            for track in data:
-                self.setItem(row, 0, QTableWidgetItem(track.num ,0))
+            for track in self.tracks:
+                trackNumberItem = QTableWidgetItem()
+                trackNumberItem.setData(0 ,int(track.num))
+                self.setItem(row, 0, trackNumberItem)
                 self.setItem(row, 1, QTableWidgetItem(track.title ,1))
                 self.setItem(row, 2, QTableWidgetItem(track.artist, 2))
                 self.setItem(row, 3, QTableWidgetItem(track.albumTitle, 3))
                 self.setItem(row, 4, QTableWidgetItem("{:4.2f}".format(track.lengthMS/60), 4))
                 row = row + 1
+
+            self.setSortingEnabled(True)
             self.setHeader()
+            self.sortItems(0, QtCore.Qt.AscendingOrder)
 
 
 
@@ -903,7 +911,7 @@ class DefaultMusicCollectionView(QtGui.QWidget):
         print "Clicked on artist: ", artistName
 
         albumsForArtist = filter(lambda x:x.artist == artistName, self.tracks)
-        self.albumsView.setAlbumssocket.settimeout(value)(albumsForArtist)
+        self.albumsView.setAlbums(albumsForArtist)
 
         pixmap = QPixmap(cover).scaledToHeight(200)
         self.visibleCoverLabel.setPixmap(pixmap)
@@ -919,6 +927,8 @@ class Client(QtCore.QObject):
         self.player = None
         self.deviceMan = DeviceManager(startWatcher=True)
         self.updatePlayer()
+        self.deviceMan.setActiveDeviceCapabilities([devices.Capability.ProvideContent, devices.Capability.PlayMusic])
+        self.devicePresenceBroadcaster = DevicePresenceBroadcaster(self.deviceMan.getActiveDevice())
 
     def init(self):
         try:
@@ -930,6 +940,7 @@ class Client(QtCore.QObject):
         self.bindEvents()
         self.deviceStateChangeWatcher = DeviceWatcher(portToWatch=5556, callback=self.playerStateChanged)
         self.deviceStateChangeWatcher.start()
+        self.devicePresenceBroadcaster.start()
 
 
     def bindEvents(self):
