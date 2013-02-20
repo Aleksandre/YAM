@@ -111,7 +111,7 @@ class LocalPlayer(QtCore.QObject):
     def playTrack(self, track):
         self._resetPlaylist()
 
-        trackPath = os.path.realpath(track.filePath.decode('utf-8'))
+        trackPath = track.getFilePath()
         print "Playing track: ", track.title.encode('utf-8')
 
         self.player.setCurrentSource(Phonon.MediaSource(trackPath))
@@ -124,7 +124,7 @@ class LocalPlayer(QtCore.QObject):
         for track in tracks:
             self.queueTrack(track, emit=False)
 
-        firstTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].filePath)
+        firstTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].getFilePath())
         self.player.setCurrentSource(firstTrack)
         self.player.play()
         return self.getState() == "PLAYING"
@@ -133,7 +133,7 @@ class LocalPlayer(QtCore.QObject):
         print "Playing next track..."
         if self.hasNextTrack():
             self._playlistIdx = self._playlistIdx + 1
-            nextTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].filePath)
+            nextTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].getFilePath())
             print nextTrack
             print self.player.setCurrentSource(nextTrack)
             print self.player.play()
@@ -142,13 +142,13 @@ class LocalPlayer(QtCore.QObject):
     def playPreviousTrack(self):
         if self.hasPreviousTrack():
             self._playlistIdx = self._playlistIdx - 1
-            previousTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].filePath)
+            previousTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].getFilePath())
             self.player.setCurrentSource(previousTrack)
             self.player.play()
         return self.getState() == "PLAYING"
 
     def queueTrack(self, track, emit=True):
-        print "Queuing track: ", track
+        print "Queuing track: ", track.title.encode('utf-8')
         self._playlist.append(track)
         self.stateChanged.emit(self.getState())
         return track in self._playlist
@@ -224,7 +224,7 @@ class LocalPlayer(QtCore.QObject):
                 self.playNextTrack()
             else:
                 self._playlistIdx = self._playlistIdx + 1
-                nextTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].filePath)
+                nextTrack = Phonon.MediaSource(self._playlist[self._playlistIdx].getFilePath())
                 self.player.enqueue(nextTrack)
         else:
             print "It was the last track, do nothing."

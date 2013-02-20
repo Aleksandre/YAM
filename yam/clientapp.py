@@ -832,12 +832,8 @@ class PlayerStatusPanel(QtGui.QWidget):
                 self.currentPlayerLabel.setText(activeDevice.visibleName)
 
             if track:
-                pixmap = QPixmap(track.getAlbumCoverPath())
-                if not pixmap:
-                    pixmap = QPixmap('../art/nocover1.jpg')
-                scaledPixmap = pixmap.scaledToHeight(300)
+                scaledPixmap = track.getCoverPixmap(300)
                 self.imgLabel.setPixmap(scaledPixmap)
-                self.imgLabel.setFixedSize(QSize(300,300))
                 self.albumTitleLabel.setText(track.albumTitle)
                 self.artistNameLabel.setText(track.artist)
                 self.trackTitleLabel.setText(track.title)
@@ -877,8 +873,8 @@ class DefaultMusicCollectionView(QtGui.QWidget):
         self.visibleCoverLabel = QLabel("No album selected")
         pixmap = QPixmap("../art/nocover1.jpg")
         if pixmap:
-            self.visibleCoverLabel.setPixmap(pixmap)
-        self.visibleCoverLabel.setFixedSize(QSize(200,200))
+            scaledPixmap = pixmap.scaled(200, 200, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+            self.visibleCoverLabel.setPixmap(scaledPixmap)
 
         self.topHBox.addWidget(self.visibleCoverLabel)
         self.topHBox.addWidget(self.albumsView)
@@ -909,12 +905,7 @@ class DefaultMusicCollectionView(QtGui.QWidget):
 
         self.rightVBox.addWidget(self.tracksTable)
 
-        cover = tracksForAlbum[0].getAlbumCoverPath()
-        print cover
-        pixmap = QPixmap(cover)
-        if not pixmap:
-            pixmap = QPixmap('../art/nocover1.jpg')
-        scaledPixmap = pixmap.scaledToHeight(200)
+        scaledPixmap = tracksForAlbum[0].getCoverPixmap(200)
         self.visibleCoverLabel.setPixmap(scaledPixmap)
 
      def artistClicked(self, artistRowModel):
@@ -927,7 +918,7 @@ class DefaultMusicCollectionView(QtGui.QWidget):
         pixmap = QPixmap(cover)
         if not pixmap:
             pixmap = QPixmap('../art/nocover1.jpg')
-        scaledPixmap = pixmap.scaledToHeight(200)
+        scaledPixmap = pixmap.scaled(200, 200, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
         self.visibleCoverLabel.setPixmap(scaledPixmap)
 
 

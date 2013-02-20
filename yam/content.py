@@ -44,6 +44,19 @@ class Track:
     def getAlbumCoverPath(self):
         return os.path.realpath(self.albumCoverPath.decode('utf-8'))
 
+    def getCoverPixmap(self, resizeTo=None):
+        pixmap = QPixmap(self.getAlbumCoverPath())
+        if not pixmap:
+            pixmap = QPixmap("../art/nocover1.jpg")
+
+        if resizeTo:
+            return pixmap.scaled(resizeTo,resizeTo , QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+        else:
+            return pixmap
+
+    def getFilePath(self):
+        return os.path.realpath(self.filePath.decode('utf-8'))
+
 @profile
 def indexAlbums():
     tracks = getTracks()
