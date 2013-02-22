@@ -57,6 +57,16 @@ class Track:
     def getFilePath(self):
         return os.path.realpath(self.filePath.decode('utf-8'))
 
+    def getTrackNumber(self):
+        try:
+            return int(self.num or 0)
+        except ValueError:
+            return 0
+
+def getImportErrorsFromLastIndexRun():
+    #Find latest report
+    latestReport = None
+
 @profile
 def indexAlbums():
     tracks = getTracks()
@@ -67,6 +77,10 @@ def indexAlbums():
                 albums[track.albumTitle] = []
 
             albums[track.albumTitle].append(track)
+
+    for album in albums:
+        tracks = albums[album]
+        albums[album] = sorted(tracks , key=lambda x: x.getTrackNumber())
     saveView("albums", albums)
 
 @profile
@@ -184,7 +198,38 @@ def getTracksForAlbum(albumTitle, artistName = None, _tracks = None):
     if not viewExists("albums"):
         indexAlbums()
     albums = loadView("albums")
-    return albums[albumTitle]
+
+    try:
+        return albums[albumTitle]
+    except KeyError:
+        print "No tracks were found with the specified album title: {0}".format(albumTitle)
+        return []
+
+@profile
+def getTracksForArtist(artistName, tracks = None):
+    """
+    Return a Track object for each track found with the specified artistName.
+    """
+    tracksToSearch = tracks or getTracks()
+    return filter(lambda x:x.artist == artistName, tracksToSearch)
+
+@profile
+def getAlbumsForArtist(artistName, tracks = None):
+    """
+    Return an array of distinct album title for the specified artist.
+
+    return [albumTitle1, albumTitle2, ...]
+    """
+    tracksToSearch = tracks or getTracks()
+
+    #Find all track for the specified artist
+    tracksForArtist = getTracksForArtist(artistName, tracksToSearch)
+
+    #Get distinct album names for the specified tracks
+    albums = getAlbums(tracksForArtist)
+
+    #return albums
+    return albums
 
 def saveView(viewName, data):
     workspace = config.getWorkspaceLocation()
@@ -292,6 +337,6 @@ def extractArtwork():
 
 if __name__ == '__main__':
     import config
-    config.setConfigFolder('../config/')
+    config.setWorkspaceLocation('/media/dat/app/yam/workspace')
     indexArtistsWithRandomCover()
     indexAlbums()

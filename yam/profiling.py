@@ -6,6 +6,8 @@ PROF_DATA = {}
 def profile(fn):
     @wraps(fn)
     def with_profiling(*args, **kwargs):
+        if not __debug__: return
+
         start_time = time.time()
 
         ret = fn(*args, **kwargs)
@@ -22,6 +24,8 @@ def profile(fn):
     return with_profiling
 
 def print_prof_data():
+    if not __debug__: return
+
     for fname, data in PROF_DATA.items():
         max_time = max(data[1])
         avg_time = sum(data[1]) / len(data[1])

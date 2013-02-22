@@ -40,8 +40,6 @@ class MainWindow(QtGui.QMainWindow):
         self.centerStackedWidget.addWidget(self.currentView)
         self.setCentralWidget(self.centerStackedWidget)
 
-        self.setGeometry(0,0,1680,1050)
-
         musicAction = QtGui.QAction(QtGui.QIcon('../art/Music.png'), 'Show music collection', self)
         musicAction.triggered.connect(self.showDefaultMusicView)
 
@@ -63,6 +61,7 @@ class MainWindow(QtGui.QMainWindow):
         self.toolbar.addSeparator()
         self.toolbar.addAction(fileErrorsAction)
         self.toolbar.setIconSize(QtCore.QSize(60,60))
+        self.addToolBar(QtCore.Qt.LeftToolBarArea, self.toolbar)
 
         dark = "#2D2D2D"
         style_str = "QWidget {background-color: %s}"
@@ -91,21 +90,37 @@ class MainWindow(QtGui.QMainWindow):
         deviceManPanel.exec_()
 
     def show_and_raise(self):
-        self.show()
+        self.showMaximized()
         self.raise_()
 
         if not config.workspaceIsSet():
             self.showConfigPanel()
 
+    def keyPressEvent(self, event):
+            key = event.key()
+            ctrl = event.modifiers() & Qt.ControlModifier
+            print "MainWindow received KeyPressed event: ", key
+            if ctrl:
+                if key == QtCore.Qt.Key_W:
+                    self.close()
+            return super(QMainWindow, self).keyPressEvent(event)
+
 
 
 class IndexReportView(QtGui.QWidget):
+
     def __init__(self, parent=None):
-        QtCore.QObject.__init__(self)
+        super(IndexReportView, self).__init__(parent)
         self.initUI()
 
     def initUI(self):
-        pass
+        self.importErrors = ImportErrorsTable()
+        tracksInError = content.getTracks()
+        self.importErrors.setTracks(tracksInError)
+
+        mainLayout = QtGui.QVBoxLayout()
+        mainLayout.addWidget(self.importErrors)
+        self.setLayout(mainLayout)
 
     def show_and_raise(self):
         self.show()
@@ -408,6 +423,125 @@ class ListModel(QtCore.QAbstractListModel):
 
 
 
+class ImportErrorsTable(QtGui.QTableWidget):
+
+        def __init__(self):
+            super(ImportErrorsTable, self).__init__()
+            self.initUI()
+            self.bindEvents()
+
+        def initUI(self):
+            self.setColumnCount(5)
+            self.setSortingEnabled(True)
+            self.setAlternatingRowColors(True)
+            self.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+            self.setAutoScroll(True)
+            self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+            self.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+
+        def bindEvents(self):
+            self.itemDoubleClicked.connect(self.trackClicked)
+
+        def keyPressEvent(self, event):
+            key = event.key()
+            ctrl = event.modifiers() & Qt.ControlModifier
+            print "Track table received KeyPressed event: ", key
+
+            if ctrl:
+                if key == QtCore.Qt.Key_P or key == QtCore.Qt.Key_Return:
+                    self._playTrack(self.currentItem().row())
+                    return
+                elif key == QtCore.Qt.Key_Q:
+                    self._queueTrack(self.currentItem().row())
+                    return
+                elif key == QtCore.Qt.Key_S:
+                    APP.player.stop()
+                    return
+                elif key == QtCore.Qt.Key_Left:
+                    self.focusPreviousChild()
+                    return
+                elif key == QtCore.Qt.Key_Right:
+                    self.focusNextChild()
+                    return
+                elif key == QtCore.Qt.Key_Space:
+                    APP.player.togglePlayState()
+                    return
+                elif key == QtCore.Qt.Key_N:
+                    APP.player.playNextTrack()
+                    return
+                elif key == QtCore.Qt.Key_Up:
+                    currentRow = self.currentRow()
+                    if currentRow > 0:
+                        currentRow = currentRow - 1
+                        self.setCurrentCell(currentRow, 0)
+                    else:
+                        self.focusPreviousChild()
+                    return
+                elif key == QtCore.Qt.Key_Down:
+                    currentRow = self.currentRow()
+                    if currentRow  < (self.rowCount() - 1):
+                        currentRow = currentRow + 1
+                        self.setCurrentCell(currentRow, 0)
+                    else:
+                        self.setCurrentCell(0, 0)
+                    return
+
+            return super(QTableWidget, self).keyPressEvent(event)
+
+        def trackClicked(self, clickedItem):
+            row = clickedItem.row()
+            self._playTrack(row)
+
+
+        def _findTrack(self, row):
+            trackTitle = self.item(row,1).text().encode('utf-8')
+            print "Looking for track with title: ", trackTitle
+
+            tracksWithTitle = filter(lambda x:x.title.encode('utf-8') == trackTitle, self.tracks)
+            if len(tracksWithTitle) > 0:
+                track = tracksWithTitle[0]
+                print "Found track."
+                return track
+            return None
+
+        def sortByAlbum(self):
+            self.sortItems(3, QtCore.Qt.AscendingOrder)
+
+        def setHeader(self, _labels = None):
+            labels = ('Track', 'Title','Artist','Album', 'Path')
+            self.setHorizontalHeaderLabels(labels)
+            self.horizontalHeader().setStretchLastSection(True)
+            self.horizontalHeader().setResizeMode(0, QtGui.QHeaderView.ResizeToContents)
+            self.horizontalHeader().setResizeMode(1, QtGui.QHeaderView.ResizeToContents)
+            self.horizontalHeader().setResizeMode(2, QtGui.QHeaderView.ResizeToContents)
+            self.horizontalHeader().setResizeMode(3, QtGui.QHeaderView.ResizeToContents)
+            self.horizontalHeader().setResizeMode(4, QtGui.QHeaderView.ResizeToContents)
+
+        def setTracks(self, tracks):
+            print "Loading tracks into track table...", str(len(tracks))
+            self.setSortingEnabled(False)
+            self.tracks = tracks
+            self.clear()
+            self.setRowCount(len(self.tracks))
+            row = 0
+            for track in self.tracks:
+                trackNumberItem = QTableWidgetItem()
+                try:
+                    trackNumberItem.setData(0 ,int(track.num or 0))
+                except ValueError:
+                    trackNumberItem.setData(0 , row + 1)
+                self.setItem(row, 0, trackNumberItem)
+                self.setItem(row, 1, QTableWidgetItem(track.title ,1))
+                self.setItem(row, 2, QTableWidgetItem(track.artist, 2))
+                self.setItem(row, 3, QTableWidgetItem(track.albumTitle, 3))
+                self.setItem(row, 4, QTableWidgetItem(track.filePath, 4))
+                row = row + 1
+
+            self.setSortingEnabled(True)
+            self.setHeader()
+            #Sort by filepath
+            self.sortItems(4, QtCore.Qt.AscendingOrder)
+
 class TrackTable(QtGui.QTableWidget):
 
         def __init__(self):
@@ -429,46 +563,49 @@ class TrackTable(QtGui.QTableWidget):
 
         def keyPressEvent(self, event):
             key = event.key()
+            ctrl = event.modifiers() & Qt.ControlModifier
             print "Track table received KeyPressed event: ", key
-            if key == QtCore.Qt.Key_P or key == QtCore.Qt.Key_Return:
-                self._playTrack(self.currentItem().row())
-                return
-            elif key == QtCore.Qt.Key_Q:
-                self._queueTrack(self.currentItem().row())
-                return
-            elif key == QtCore.Qt.Key_S:
-                APP.player.stop()
-                return
-            elif key == QtCore.Qt.Key_Left:
-                self.focusPreviousChild()
-                return
-            elif key == QtCore.Qt.Key_Right:
-                self.focusNextChild()
-                return
-            elif key == QtCore.Qt.Key_Space:
-                APP.player.togglePlayState()
-                return
-            elif key == QtCore.Qt.Key_N:
-                APP.player.playNextTrack()
-                return
-            elif key == QtCore.Qt.Key_Up:
-                currentRow = self.currentRow()
-                if currentRow > 0:
-                    currentRow = currentRow - 1
-                    self.setCurrentCell(currentRow, 0)
-                else:
+
+            if ctrl:
+                if key == QtCore.Qt.Key_P or key == QtCore.Qt.Key_Return:
+                    self._playTrack(self.currentItem().row())
+                    return
+                elif key == QtCore.Qt.Key_Q:
+                    self._queueTrack(self.currentItem().row())
+                    return
+                elif key == QtCore.Qt.Key_S:
+                    APP.player.stop()
+                    return
+                elif key == QtCore.Qt.Key_Left:
                     self.focusPreviousChild()
-                return
-            elif key == QtCore.Qt.Key_Down:
-                currentRow = self.currentRow()
-                if currentRow  < (self.rowCount() - 1):
-                    currentRow = currentRow + 1
-                    self.setCurrentCell(currentRow, 0)
-                else:
-                    self.setCurrentCell(0, 0)
-                return
-            else:
-                QtGui.QWidget.keyPressEvent(self, event)
+                    return
+                elif key == QtCore.Qt.Key_Right:
+                    self.focusNextChild()
+                    return
+                elif key == QtCore.Qt.Key_Space:
+                    APP.player.togglePlayState()
+                    return
+                elif key == QtCore.Qt.Key_N:
+                    APP.player.playNextTrack()
+                    return
+                elif key == QtCore.Qt.Key_Up:
+                    currentRow = self.currentRow()
+                    if currentRow > 0:
+                        currentRow = currentRow - 1
+                        self.setCurrentCell(currentRow, 0)
+                    else:
+                        self.focusPreviousChild()
+                    return
+                elif key == QtCore.Qt.Key_Down:
+                    currentRow = self.currentRow()
+                    if currentRow  < (self.rowCount() - 1):
+                        currentRow = currentRow + 1
+                        self.setCurrentCell(currentRow, 0)
+                    else:
+                        self.setCurrentCell(0, 0)
+                    return
+
+            return super(QTableWidget, self).keyPressEvent(event)
 
         def trackClicked(self, clickedItem):
             row = clickedItem.row()
@@ -494,6 +631,9 @@ class TrackTable(QtGui.QTableWidget):
                 print "Found track."
                 return track
             return None
+
+        def sortByAlbum(self):
+            self.sortItems(3, QtCore.Qt.AscendingOrder)
 
         def setHeader(self, _labels = None):
             labels = ('Track', 'Title','Artist','Album', 'Time')
@@ -522,7 +662,7 @@ class TrackTable(QtGui.QTableWidget):
                 self.setItem(row, 1, QTableWidgetItem(track.title ,1))
                 self.setItem(row, 2, QTableWidgetItem(track.artist, 2))
                 self.setItem(row, 3, QTableWidgetItem(track.albumTitle, 3))
-                self.setItem(row, 4, QTableWidgetItem("{:4.2f}".format(track.lengthMS/60), 4))
+                self.setItem(row, 4, QTableWidgetItem("{:4.2f}".format(int(track.lengthMS or 0)/60), 4))
                 row = row + 1
 
             self.setSortingEnabled(True)
@@ -548,57 +688,32 @@ class AlbumList(QtGui.QListWidget):
 
         def keyPressEvent(self, event):
             key = event.key()
+            ctrl = event.modifiers() & Qt.ControlModifier
             print "Album list received KeyPressed event: ", key
 
-            if key == QtCore.Qt.Key_P:
-                albumTitle = self.item(self.currentRow()).text()
-                self._playAlbum(albumTitle)
-                return
-            elif key == QtCore.Qt.Key_Return:
-                self._albumClicked(self.currentItem())
-                return
-            elif key == QtCore.Qt.Key_Q:
-                albumTitle = self.item(self.currentRow()).text()
-                self._queueAlbum(albumTitle)
-                return
-            elif key == QtCore.Qt.Key_S:
-                APP.player.stop()
-                return
-            elif key == QtCore.Qt.Key_Space:
-                APP.player.togglePlayState()
-                return
-            elif key == QtCore.Qt.Key_Left:
-                self.focusPreviousChild()
-                return
-            elif key == QtCore.Qt.Key_Right:
-                self.focusNextChild()
-                return
-            elif key == QtCore.Qt.Key_Up:
-                currentRow = self.currentRow()
-                if currentRow > 0:
-                    currentRow = currentRow - 1
-                    self.setCurrentRow(currentRow)
-                else:
-                    self.focusPreviousChild()
-                self._albumClicked(self.currentItem())
-                return
-            elif key == QtCore.Qt.Key_Down:
-                currentRow = self.currentRow()
-                if currentRow < (self.count() - 1):
-                    currentRow = currentRow + 1
-                    self.setCurrentRow(currentRow)
-                else:
-                    self.focusNextChild()
-                self._albumClicked(self.currentItem())
-                return
-            else:
-                return super(QListWidget, self).keyPressEvent(event)
+            if ctrl:
+                if key == QtCore.Qt.Key_P:
+                    albumTitle = self.item(self.currentRow()).text()
+                    self._playAlbum(albumTitle)
+                    return
+                elif key == QtCore.Qt.Key_Return:
+                    self._albumClicked(self.currentItem())
+                    return
+                elif key == QtCore.Qt.Key_Q:
+                    albumTitle = self.item(self.currentRow()).text()
+                    self._queueAlbum(albumTitle)
+                    return
+                elif key == QtCore.Qt.Key_S:
+                    APP.player.stop()
+                    return
+                elif key == QtCore.Qt.Key_Space:
+                    APP.player.togglePlayState()
+                    return
+            return super(QListWidget, self).keyPressEvent(event)
 
-        def setAlbums(self, tracks):
-            print "Loading albums into listview..."
+        def setAlbums(self, albums):
+            print "Loading albums into list widget..."
             self.clear()
-            self.tracks = tracks
-            albums = content.getAlbums(tracks)
 
             index = 0
             headerText = "All albums (" + str(len(albums)) + ")"
@@ -615,24 +730,37 @@ class AlbumList(QtGui.QListWidget):
             pass
 
         def _playAlbum(self, albumTitle):
-            tracks = self._getTracksForSelectedAlbum(albumTitle)
-            if APP.player:
-                APP.player.playTracks(tracks)
+            print "Album clicked, playing selected..."
+            if "All" in albumTitle:
+                APP.player.clear()
+                for i in range(self.count()):
+                    item = self.item(i)
+                    if not "All" in item.text():
+                        album = item.text()
+                        tracks = content.getTracksForAlbum(album)
+                        APP.player.queueTracks(tracks)
+                APP.player.resume()
+            else:
+                tracks = content.getTracksForAlbum(albumTitle)
+                if APP.player:
+                    APP.player.playTracks(tracks)
 
         def _queueAlbum(self, albumTitle):
-            tracks = self._getTracksForSelectedAlbum(albumTitle)
+            tracks = content.getTracksAlbum(albumTitle)
             APP.player.queueTracks(tracks)
 
-        def _getTracksForSelectedAlbum(self, albumTitle):
-            tracksForAlbum = content.getTracksForAlbum(albumTitle, self.tracks)
-            return tracksForAlbum
-
         def selectionChanged(self, newSelection, oldSelection):
-            self.albumClicked.emit(self.currentItem().text())
+            currentItem = self.currentItem()
+            selectedAlbum = ""
+            if currentItem:
+                selectedAlbum = currentItem.text()
+            self.albumClicked.emit(selectedAlbum)
 
 
 class ArtistList(QtGui.QListView):
+
      artistClicked = QtCore.Signal(QModelIndex)
+
      def __init__(self):
         super(ArtistList, self).__init__()
         self.artistsAndCovers = None
@@ -649,7 +777,6 @@ class ArtistList(QtGui.QListView):
      def bindEvents(self):
         pass
 
-
      def setArtists(self, artistsAndCovers):
         self.artistsAndCovers = artistsAndCovers
         if self.artistsAndCovers and len(self.artistsAndCovers) > 0:
@@ -660,7 +787,6 @@ class ArtistList(QtGui.QListView):
 
         list_model = ListModel(self.artistsAndCovers)
         self.setModel(list_model)
-
 
      def _getNextArtistQIndex(self):
         if len(self.selectedIndexes()) > 0:
@@ -718,8 +844,7 @@ class PlayerStatusPanel(QtGui.QWidget):
             self.refreshState(self.player.getCurrentTrack())
 
         def _bindToPlayerSignals(self):
-            if not self.player:
-                return
+            if not self.player: return
 
             self.player.stateChanged.connect(self._onPlayerStateChanged)
             self.player.ticked.connect(self._onPlayerTicked)
@@ -740,14 +865,12 @@ class PlayerStatusPanel(QtGui.QWidget):
 
         def _onPlayerStateChanged(self):
             fullState = self.player.getFullState()
-            #self.currenTrack = Mock(eval(fullState.currentTrack()))
             self.currenTrack = self.player.getCurrentTrack()
             self.refreshState(self.currenTrack)
             self.playAction.setEnabled(fullState.state == "PAUSED")
             self.pauseAction.setEnabled(fullState.state == "PLAYING")
             self.nextAction.setEnabled(fullState.hasNextTrack)
             self.previousAction.setEnabled(fullState.hasPreviousTrack)
-            #self.timeLcd.setValue(fullState.currentTime)
 
         def setupActions(self):
             self.playAction = QtGui.QAction(QIcon('../art/Play.png'), "Play" ,self)
@@ -866,7 +989,6 @@ class DefaultMusicCollectionView(QtGui.QWidget):
 
         #Prepare albums view
         self.albumsView = AlbumList()
-        self.albumsView.setAlbums(self.tracks)
 
         self.topHBox = QHBoxLayout()
 
@@ -897,29 +1019,31 @@ class DefaultMusicCollectionView(QtGui.QWidget):
 
 
      def albumClicked(self, albumTitle):
-        tracksForAlbum = content.getTracksForAlbum(albumTitle, self.tracks)
-        self.tracksTable.close()
-        self.rightVBox.removeWidget(self.tracksTable)
-        self.tracksTable = TrackTable()
-        self.tracksTable.setTracks(tracksForAlbum)
+        if "All" in albumTitle:
+            tracksForArtist = content.getTracksForArtist(self.artistName)
+            self.tracksTable.setTracks(tracksForArtist)
+            self.tracksTable.sortByAlbum()
+            pixmap = QPixmap(self.cover)
+            if not pixmap:
+                pixmap = QPixmap('../art/nocover1.jpg')
+            scaledPixmap = pixmap.scaled(200, 200, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+            self.visibleCoverLabel.setPixmap(scaledPixmap)
+        else:
+            tracksForAlbum = content.getTracksForAlbum(albumTitle, self.tracks)
+            self.tracksTable.setTracks(tracksForAlbum)
 
-        self.rightVBox.addWidget(self.tracksTable)
-
-        scaledPixmap = tracksForAlbum[0].getCoverPixmap(200)
-        self.visibleCoverLabel.setPixmap(scaledPixmap)
+            if tracksForAlbum and len(tracksForAlbum) > 0:
+                scaledPixmap = tracksForAlbum[0].getCoverPixmap(200)
+                self.visibleCoverLabel.setPixmap(scaledPixmap)
 
      def artistClicked(self, artistRowModel):
-        artistName, cover = self.artistsAndCovers[artistRowModel.row()]
-        print "Clicked on artist: ", artistName.encode('utf-8')
+        self.artistName, self.cover = self.artistsAndCovers[artistRowModel.row()]
+        print "Clicked on artist: ",  self.artistName.encode('utf-8')
 
-        albumsForArtist = filter(lambda x:x.artist == artistName, self.tracks)
-        self.albumsView.setAlbums(albumsForArtist)
-
-        pixmap = QPixmap(cover)
-        if not pixmap:
-            pixmap = QPixmap('../art/nocover1.jpg')
-        scaledPixmap = pixmap.scaled(200, 200, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
-        self.visibleCoverLabel.setPixmap(scaledPixmap)
+        albums = content.getAlbumsForArtist( self.artistName)
+        self.albumsView.setAlbums(albums)
+        self.albumsView.item(0).setSelected(True)
+        self.albumClicked("All")
 
 
 class Client(QtCore.QObject):

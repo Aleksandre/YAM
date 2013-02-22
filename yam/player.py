@@ -109,7 +109,7 @@ class LocalPlayer(QtCore.QObject):
         return self._playlist[self._playlistIdx]
 
     def playTrack(self, track):
-        self._resetPlaylist()
+        self.clearPlaylist()
 
         trackPath = track.getFilePath()
         print "Playing track: ", track.title.encode('utf-8')
@@ -120,7 +120,7 @@ class LocalPlayer(QtCore.QObject):
         return self.getState() == "PLAYING"
 
     def playTracks(self, tracks=[]):
-        self._resetPlaylist()
+        self.clearPlaylist()
         for track in tracks:
             self.queueTrack(track, emit=False)
 
@@ -150,7 +150,8 @@ class LocalPlayer(QtCore.QObject):
     def queueTrack(self, track, emit=True):
         print "Queuing track: ", track.title.encode('utf-8')
         self._playlist.append(track)
-        self.stateChanged.emit(self.getState())
+        if emit:
+            self.stateChanged.emit(self.getState())
         return track in self._playlist
 
     def queueTracks(self, tracks):
@@ -159,13 +160,24 @@ class LocalPlayer(QtCore.QObject):
         self.stateChanged.emit(self.getState())
         return True
 
+    def clear(self):
+        #stop playback
+        self.player.clear()
+
+        #Reset playlist
+        self.clearPlaylist()
+
     def stop(self):
         print "Stopping player"
         self.player.stop()
         return self.getState() == "STOPPED"
 
     def resume(self):
-        self.player.play()
+        currentSource = self.player.currentSource()
+        print Phonon.MediaSource.Type.Empty
+        if currentSource.type() == Phonon.MediaSource.Type.Empty:
+            self.player.setCurrentSource(self._playlist[self._playlistIdx].getFilePath())
+        print self.player.play()
         return self.getState() == "PLAYING"
 
     def pause(self):
@@ -239,7 +251,7 @@ class LocalPlayer(QtCore.QObject):
     def _tick(self, timeSinceBeginInMs):
         self.ticked.emit(timeSinceBeginInMs)
 
-    def _resetPlaylist(self):
+    def clearPlaylist(self):
         self._playlist = []
         self._playlistIdx = 0
         self.player.clearQueue()
